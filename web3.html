@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web3 共识层 · 合力指数</title>
+<style>
+:root {
+  --deep-blue: #0a1628; --blue-900: #0f2044; --blue-800: #1a3260; --blue-700: #1e4090;
+  --consensus-gold: #c9a84c; --gold-light: #e8d48b; --white: #ffffff;
+  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
+  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937;
+  --red: #ef4444; --green: #22c55e;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
+.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; }
+.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
+.nav-cta { display: flex; gap: 10px; }
+.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; }
+.btn-login { color: rgba(255,255,255,0.8); } .btn-login:hover { color: var(--white); }
+.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; } .btn-register:hover { background: var(--gold-light); }
+
+.hero { background: linear-gradient(135deg, #0a0a1a 0%, #0f2044 40%, #1a1a3e 100%); color: var(--white); padding: 70px 20px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(99,102,241,0.04) 0%, transparent 50%); }
+.hero-badge { display: inline-block; background: rgba(201,168,76,0.15); color: var(--consensus-gold); border: 1px solid rgba(201,168,76,0.3); padding: 5px 16px; border-radius: 20px; font-size: 12px; margin-bottom: 20px; position: relative; }
+.hero h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 800; margin-bottom: 12px; position: relative; }
+.hero h1 span { background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: 15px; color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto 24px; position: relative; }
+.hero-stats { display: flex; justify-content: center; gap: 40px; position: relative; flex-wrap: wrap; }
+.hero-stat { text-align: center; }
+.hero-stat .num { font-size: 28px; font-weight: 800; color: var(--consensus-gold); }
+.hero-stat .label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* 三个模块 */
+.module { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 28px; margin-bottom: 24px; }
+.module-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.module-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.icon-vote { background: linear-gradient(135deg, #ede9fe, #c4b5fd); }
+.icon-nft { background: linear-gradient(135deg, #fef3c7, #fcd34d); }
+.icon-points { background: linear-gradient(135deg, #dbeafe, #93c5fd); }
+.module-title { font-size: 18px; font-weight: 700; color: var(--gray-800); }
+.module-sub { font-size: 12px; color: var(--gray-500); }
+
+/* 链上记录表 */
+.chain-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.chain-table th { text-align: left; padding: 10px 12px; background: var(--gray-50); color: var(--gray-500); font-weight: 600; font-size: 11px; border-bottom: 1px solid var(--gray-200); }
+.chain-table td { padding: 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); }
+.chain-table tr:hover td { background: var(--gray-50); }
+.hash-link { font-family: monospace; color: var(--blue-700); font-size: 12px; }
+.hash-link:hover { color: var(--consensus-gold); }
+.status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.status-confirmed { background: #dcfce7; color: #166534; }
+.status-pending { background: #fef3c7; color: #92400e; }
+
+/* NFT展示 */
+.nft-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.nft-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; text-align: center; transition: all 0.2s; }
+.nft-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); border-color: var(--consensus-gold); }
+.nft-card.owned { border-color: var(--consensus-gold); background: linear-gradient(135deg, rgba(201,168,76,0.04), rgba(201,168,76,0.01)); }
+.nft-card.locked { opacity: 0.55; }
+.nft-hex { width: 64px; height: 56px; margin: 0 auto 10px; position: relative; }
+.nft-hex::before { content: ''; position: absolute; inset: 0; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+.nft-hex.gold::before { background: linear-gradient(135deg, #c9a84c, #e8d48b); }
+.nft-hex.purple::before { background: linear-gradient(135deg, #8b5cf6, #c4b5fd); }
+.nft-hex.silver::before { background: linear-gradient(135deg, #94a3b8, #cbd5e1); }
+.nft-hex.bronze::before { background: linear-gradient(135deg, #d97706, #fbbf24); }
+.nft-hex.gray::before { background: var(--gray-300); }
+.nft-hex-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; z-index: 1; }
+.nft-name { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+.nft-date { font-size: 11px; color: var(--gray-400); }
+.nft-hash { font-size: 10px; font-family: monospace; color: var(--gray-400); margin-top: 6px; word-break: break-all; }
+.nft-locked-label { font-size: 11px; color: var(--gray-400); font-style: italic; margin-top: 4px; }
+
+/* 积分记录 */
+.points-summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.points-card { background: linear-gradient(135deg, var(--deep-blue), var(--blue-900)); color: var(--white); border-radius: 12px; padding: 18px; text-align: center; }
+.points-card .num { font-size: 26px; font-weight: 800; color: var(--consensus-gold); }
+.points-card .label { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+/* 预告 */
+.preview { background: linear-gradient(135deg, var(--deep-blue), var(--blue-900)); color: var(--white); border-radius: 14px; padding: 40px 28px; text-align: center; margin-top: 16px; }
+.preview h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+.preview p { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 500px; margin: 0 auto 20px; }
+.preview .badge { display: inline-block; background: rgba(201,168,76,0.2); color: var(--consensus-gold); padding: 6px 16px; border-radius: 20px; font-size: 13px; border: 1px solid rgba(201,168,76,0.3); }
+
+.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 30px 20px 20px; font-size: 13px; margin-top: 40px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+.footer a { color: var(--consensus-gold); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+      <span>合力指数</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="index-detail.html">指数详情</a>
+      <a href="achievements.html">成就体系</a>
+      <a href="web3.html" class="active">Web3共识层</a>
+      <a href="agent.html">AI助手</a>
+    </div>
+    <div class="nav-cta">
+      <a href="login.html" class="btn-login">登录</a>
+      <a href="register.html" class="btn-register">注册</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">⛓️ Phase 4 · Web3 共识层</div>
+  <h1>不可篡改的<span>共识记录引擎</span></h1>
+  <p>投票存证、成就NFT铸造、积分记录上链——构建可信透明的资本市场共识基础设施</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">12,847</div><div class="label">链上投票记录</div></div>
+    <div class="hero-stat"><div class="num">3,204</div><div class="label">已铸造 NFT</div></div>
+    <div class="hero-stat"><div class="num">842K</div><div class="label">链上 HP 积分</div></div>
+  </div>
+</section>
+
+<div class="container">
+  <!-- 投票存证 -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-icon icon-vote">🗳️</div>
+      <div><div class="module-title">投票存证记录</div><div class="module-sub">每次投票操作均生成链上哈希，不可篡改，永久可查</div></div>
+    </div>
+    <table class="chain-table">
+      <tr><th>时间</th><th>操作</th><th>标的</th><th>链上哈希</th><th>状态</th></tr>
+      <tr>
+        <td>2026-07-05 14:32</td><td>诊断季投票（看好）</td><td>宁德时代 300750</td><td><span class="hash-link">0x7a3b...8f2e1c</span></td>
+        <td><span class="status-badge status-confirmed">已确认</span></td>
+      </tr>
+      <tr>
+        <td>2026-07-05 14:28</td><td>诊断季投票（看好）</td><td>比亚迪 002594</td><td><span class="hash-link">0x4d2c...a91b3f</span></td>
+        <td><span class="status-badge status-confirmed">已确认</span></td>
+      </tr>
+      <tr>
+        <td>2026-07-04 10:15</td><td>诊断季投票（中性）</td><td>药明康德 603259</td><td><span class="hash-link">0x9e1a...72d4b8</span></td>
+        <td><span class="status-badge status-confirmed">已确认</span></td>
+      </tr>
+      <tr>
+        <td>2026-07-03 16:40</td><td>热力值投票</td><td>中芯国际 688981</td><td><span class="hash-link">0x3f8b...c0e2d5</span></td>
+        <td><span class="status-badge status-confirmed">已确认</span></td>
+      </tr>
+      <tr>
+        <td>2026-07-06 09:02</td><td>诊断季提问</td><td>华为技术 002502</td><td><span class="hash-link">0xb6d1...45a7f9</span></td>
+        <td><span class="status-badge status-pending">确认中</span></td>
+      </tr>
+    </table>
+    <p style="font-size:11px;color:var(--gray-400);margin-top:12px;">* 以上为 Demo 用户 (Nebula) 的链上记录</p>
+  </div>
+
+  <!-- 成就NFT -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-icon icon-nft">🏅</div>
+      <div><div class="module-title">成就 NFT 铸造</div><div class="module-sub">已获得的成就勋章在区块链上铸造为不可转让的 NFT 徽章</div></div>
+    </div>
+    <div class="nft-grid">
+      <div class="nft-card owned">
+        <div class="nft-hex gold"><div class="nft-hex-icon">🧭</div></div>
+        <div class="nft-name">初识共识</div>
+        <div class="nft-date">获得于 2026-06-15</div>
+        <div class="nft-hash">NFT #1204 · 0xa1b2...c3d4</div>
+      </div>
+      <div class="nft-card owned">
+        <div class="nft-hex bronze"><div class="nft-hex-icon">📅</div></div>
+        <div class="nft-name">持之以恒</div>
+        <div class="nft-date">获得于 2026-06-22</div>
+        <div class="nft-hash">NFT #1887 · 0xe5f6...g7h8</div>
+      </div>
+      <div class="nft-card owned">
+        <div class="nft-hex bronze"><div class="nft-hex-icon">🗳️</div></div>
+        <div class="nft-name">投票达人</div>
+        <div class="nft-date">获得于 2026-07-01</div>
+        <div class="nft-hash">NFT #2501 · 0xi9j0...k1l2</div>
+      </div>
+      <div class="nft-card locked">
+        <div class="nft-hex gray"><div class="nft-hex-icon">❓</div></div>
+        <div class="nft-name">尖锐提问者</div>
+        <div class="nft-locked-label">🔒 未获得</div>
+      </div>
+      <div class="nft-card locked">
+        <div class="nft-hex gray"><div class="nft-hex-icon">🔒</div></div>
+        <div class="nft-name">共识领袖</div>
+        <div class="nft-locked-label">🔒 未获得</div>
+      </div>
+      <div class="nft-card locked">
+        <div class="nft-hex gray"><div class="nft-hex-icon">🔒</div></div>
+        <div class="nft-name">生态建设者</div>
+        <div class="nft-locked-label">🔒 未获得</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--gray-500);margin-top:14px;">NFT 标准：ERC-721（不可转让）· 链：Polygon PoS · <a href="achievements.html" style="color:var(--consensus-gold);">查看完整成就体系 →</a></p>
+  </div>
+
+  <!-- 积分记录 -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-icon icon-points">💰</div>
+      <div><div class="module-title">HP 积分记录上链</div><div class="module-sub">所有积分获取与消费记录均在链上可查</div></div>
+    </div>
+    <div class="points-summary">
+      <div class="points-card"><div class="num">1,240</div><div class="label">当前 HP 余额</div></div>
+      <div class="points-card"><div class="num">2,850</div><div class="label">累计获取 HP</div></div>
+      <div class="points-card"><div class="num">1,610</div><div class="label">已消费 HP</div></div>
+      <div class="points-card"><div class="num">29</div><div class="label">质押天数</div></div>
+    </div>
+    <table class="chain-table">
+      <tr><th>时间</th><th>来源</th><th>数量</th><th>类型</th><th>哈希</th></tr>
+      <tr><td>2026-07-05</td><td>诊断季投票</td><td style="color:var(--green);font-weight:600;">+10 HP</td><td>获取</td><td><span class="hash-link">0x7a3b...8f2e</span></td></tr>
+      <tr><td>2026-07-04</td><td>连续签到奖励</td><td style="color:var(--green);font-weight:600;">+25 HP</td><td>获取</td><td><span class="hash-link">0x9e1a...72d4</span></td></tr>
+      <tr><td>2026-07-01</td><td>成就解锁奖励</td><td style="color:var(--green);font-weight:600;">+50 HP</td><td>获取</td><td><span class="hash-link">0xc4d5...e1f2</span></td></tr>
+      <tr><td>2026-06-28</td><td>质押合约</td><td style="color:var(--red);font-weight:600;">-200 HP</td><td>消费</td><td><span class="hash-link">0xf3a4...b5c6</span></td></tr>
+    </table>
+  </div>
+
+  <!-- Phase 4 预告 -->
+  <div class="preview">
+    <div class="badge" style="margin-bottom:16px;">🚀 Phase 4 · 2026 Q4 上线</div>
+    <h3>更多 Web3 功能即将到来</h3>
+    <p>智能合约托管投票权重、DAO 治理投票、链上数据开放 API、跨链互操作等高级功能正在开发中。</p>
+    <a href="api.html" style="color:var(--consensus-gold);text-decoration:none;font-weight:600;">查看开放API文档 →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>© 2026 合力指数 Heli-Index · Web3共识层由 Polygon 提供基础设施 · <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

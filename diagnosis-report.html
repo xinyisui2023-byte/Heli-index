@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诊断报告 · 合力指数</title>
+<style>
+:root {
+  --deep-blue: #0a1628; --blue-900: #0f2044; --blue-800: #1a3260; --blue-700: #1e4090;
+  --consensus-gold: #c9a84c; --gold-light: #e8d48b; --white: #ffffff;
+  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
+  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937;
+  --red: #ef4444; --green: #22c55e;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
+.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; }
+.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
+.nav-cta { display: flex; gap: 10px; }
+.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; }
+.btn-login { color: rgba(255,255,255,0.8); } .btn-login:hover { color: var(--white); }
+.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; } .btn-register:hover { background: var(--gold-light); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--gray-500); text-decoration: none; font-size: 13px; margin-bottom: 24px; }
+.back-link:hover { color: var(--consensus-gold); }
+
+/* 报告头部 */
+.report-header { background: linear-gradient(135deg, var(--deep-blue), var(--blue-900)); color: var(--white); border-radius: 14px; padding: 32px; margin-bottom: 24px; }
+.report-header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.report-company { font-size: 24px; font-weight: 800; }
+.report-company small { display: block; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.6); margin-top: 4px; }
+.report-date { font-size: 12px; color: rgba(255,255,255,0.5); text-align: right; }
+.score-circle { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--consensus-gold); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-circle .score-num { font-size: 32px; font-weight: 800; color: var(--consensus-gold); }
+.score-circle .score-label { font-size: 11px; color: rgba(255,255,255,0.6); }
+.report-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+.report-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.7); }
+.report-meta-item strong { color: var(--white); }
+
+/* 得分卡片 */
+.score-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.score-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; text-align: center; }
+.score-card-label { font-size: 13px; color: var(--gray-500); margin-bottom: 8px; }
+.score-card-value { font-size: 28px; font-weight: 800; }
+.score-excellent { color: var(--consensus-gold); }
+.score-good { color: var(--green); }
+.score-warning { color: #f59e0b; }
+.score-danger { color: var(--red); }
+.score-card-bar { height: 6px; border-radius: 3px; margin-top: 8px; background: var(--gray-100); overflow: hidden; }
+.score-card-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+
+/* 雷达图区域 */
+.radar-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+.radar-section h3 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin-bottom: 16px; }
+.radar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+.radar-item { text-align: center; }
+.radar-item .radar-label { font-size: 12px; color: var(--gray-500); margin-bottom: 6px; }
+.radar-item .radar-value { font-size: 20px; font-weight: 700; color: var(--gray-800); }
+.radar-item .radar-bar { height: 8px; border-radius: 4px; background: var(--gray-100); margin-top: 6px; overflow: hidden; }
+.radar-item .radar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue-700), var(--consensus-gold)); }
+
+/* 共识度 */
+.consensus-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+.consensus-bar { height: 24px; border-radius: 12px; background: var(--gray-100); display: flex; overflow: hidden; margin-bottom: 12px; }
+.consensus-bar .bull { background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--white); font-weight: 700; }
+.consensus-bar .neutral { background: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--white); font-weight: 700; }
+.consensus-bar .bear { background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--white); font-weight: 700; }
+.consensus-legend { display: flex; gap: 20px; font-size: 12px; color: var(--gray-500); }
+
+/* 风险提示 */
+.risk-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+.risk-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
+.risk-item:last-child { border-bottom: none; }
+.risk-level { padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.risk-high { background: #fef2f2; color: var(--red); }
+.risk-medium { background: #fffbeb; color: #d97706; }
+.risk-low { background: #f0fdf4; color: var(--green); }
+.risk-text { font-size: 13px; color: var(--gray-700); }
+
+/* Q&A */
+.qa-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+.qa-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+.qa-item:last-child { border-bottom: none; }
+.qa-q { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; }
+.qa-q::before { content: "Q: "; color: var(--consensus-gold); }
+.qa-a { font-size: 13px; color: var(--gray-600); padding-left: 16px; border-left: 3px solid var(--consensus-gold); }
+.qa-a::before { content: "A: "; color: var(--blue-700); font-weight: 600; }
+
+/* 相关链接 */
+.related { display: flex; gap: 14px; flex-wrap: wrap; }
+.related-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px 20px; text-decoration: none; color: inherit; flex: 1; min-width: 200px; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
+.related-card:hover { border-color: var(--consensus-gold); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.related-icon { font-size: 28px; }
+.related-title { font-size: 14px; font-weight: 700; color: var(--gray-800); }
+.related-desc { font-size: 12px; color: var(--gray-400); }
+
+.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 30px 20px 20px; font-size: 13px; margin-top: 40px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+.footer a { color: var(--consensus-gold); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+      <span>合力指数</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="index-detail.html">指数详情</a>
+      <a href="diagnosis.html">诊断季</a>
+      <a href="diagnosis-report.html" class="active">诊断报告</a>
+      <a href="agent.html">AI助手</a>
+    </div>
+    <div class="nav-cta">
+      <a href="login.html" class="btn-login">登录</a>
+      <a href="register.html" class="btn-register">注册</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <a href="diagnosis.html" class="back-link">← 返回诊断季</a>
+
+  <div class="report-header">
+    <div class="report-header-top">
+      <div>
+        <div class="report-company">宁德时代 CATL<small>300750 · 先进制造 · 动力电池</small></div>
+      </div>
+      <div class="score-circle">
+        <div class="score-num">92.4</div>
+        <div class="score-label">新质生产力评分</div>
+      </div>
+    </div>
+    <div class="report-meta">
+      <div class="report-meta-item">📅 诊断期：<strong>2026 Q3（7月15日-7月31日）</strong></div>
+      <div class="report-meta-item">👥 参与投资者：<strong>985人</strong></div>
+      <div class="report-meta-item">📊 行业排名：<strong>先进制造 #1</strong></div>
+      <div class="report-meta-item">🤖 报告生成：<strong>Heli-Agent</strong></div>
+    </div>
+  </div>
+
+  <!-- 得分卡 -->
+  <h2 style="font-size:20px;font-weight:700;color:var(--gray-800);margin-bottom:16px;">诊断维度评分</h2>
+  <div class="score-grid">
+    <div class="score-card">
+      <div class="score-card-label">技术创新力</div>
+      <div class="score-card-value score-excellent">95</div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:95%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-label">AI+战略深度</div>
+      <div class="score-card-value score-excellent">91</div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:91%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-label">绿色转型进度</div>
+      <div class="score-card-value score-excellent">88</div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:88%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-label">财务健康度</div>
+      <div class="score-card-value score-good">85</div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:85%;background:var(--green);"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-label">IR透明度</div>
+      <div class="score-card-value score-good">82</div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:82%;background:var(--green);"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-label">产业链话语权</div>
+      <div class="score-card-value score-excellent">93</div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:93%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+    </div>
+  </div>
+
+  <!-- 多维度指标 -->
+  <div class="radar-section">
+    <h3>📊 新质生产力多维度指标</h3>
+    <div class="radar-grid">
+      <div class="radar-item">
+        <div class="radar-label">研发投入强度</div>
+        <div class="radar-value">6.8%</div>
+        <div class="radar-bar"><div class="radar-fill" style="width:85%;"></div></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-label">专利技术密度</div>
+        <div class="radar-value">12,400+</div>
+        <div class="radar-bar"><div class="radar-fill" style="width:95%;"></div></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-label">AI技术应用率</div>
+        <div class="radar-value">高</div>
+        <div class="radar-bar"><div class="radar-fill" style="width:90%;"></div></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-label">碳减排进度</div>
+        <div class="radar-value">领先</div>
+        <div class="radar-bar"><div class="radar-fill" style="width:78%;"></div></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-label">人才储备</div>
+        <div class="radar-value">16,000+</div>
+        <div class="radar-bar"><div class="radar-fill" style="width:88%;"></div></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-label">全球市占率</div>
+        <div class="radar-value">37.5%</div>
+        <div class="radar-bar"><div class="radar-fill" style="width:92%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 共识度 -->
+  <div class="consensus-section">
+    <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:8px;">🎯 投资者共识度</h3>
+    <p style="font-size:12px;color:var(--gray-500);margin-bottom:16px;">基于985名投资者投票，共识度：<b style="color:var(--consensus-gold);">87%</b>（高共识）</p>
+    <div class="consensus-bar">
+      <div class="bull" style="width:79.5%;">看好 79.5% (783票)</div>
+      <div class="neutral" style="width:15.8%;">中性 15.8%</div>
+      <div class="bear" style="width:4.7%;">看空 4.7%</div>
+    </div>
+    <div class="consensus-legend">
+      <span>🟢 分歧度：0.12（低分歧）</span>
+      <span>📈 情绪指数：+74.8</span>
+      <span>🔄 投票变化：↑ 12% vs Q2</span>
+    </div>
+  </div>
+
+  <!-- 风险提示 -->
+  <div class="risk-section">
+    <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:12px;">⚠️ 风险提示与改进建议</h3>
+    <div class="risk-item">
+      <span class="risk-level risk-high">高风险</span>
+      <div class="risk-text"><b>原材料价格波动：</b>锂、钴等关键原材料价格波动可能影响毛利率。建议加强上游资源布局与长协锁定。</div>
+    </div>
+    <div class="risk-item">
+      <span class="risk-level risk-medium">中风险</span>
+      <div class="risk-text"><b>海外政策不确定性：</b>欧美新能源补贴政策调整可能影响海外市场增速。建议多元化市场布局。</div>
+    </div>
+    <div class="risk-item">
+      <span class="risk-level risk-medium">中风险</span>
+      <div class="risk-text"><b>技术路线竞争：</b>固态电池、钠离子电池等技术路线演进可能带来替代风险。</div>
+    </div>
+    <div class="risk-item">
+      <span class="risk-level risk-low">低风险</span>
+      <div class="risk-text"><b>产能过剩：</b>行业扩产激进，需关注产能消化节奏。当前产能利用率维持85%+，风险可控。</div>
+    </div>
+  </div>
+
+  <!-- 投资者核心提问 -->
+  <div class="qa-section">
+    <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:12px;">💬 投资者核心提问与回复</h3>
+    <div class="qa-item">
+      <div class="qa-q">固态电池研发进展如何？预计何时量产？</div>
+      <div class="qa-a">公司固态电池研发已进入B样阶段，能量密度达到400Wh/kg，预计2027年实现小批量量产。</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">公司在AI+制造方面有哪些具体应用？</div>
+      <div class="qa-a">已在产线部署AI视觉检测系统，缺陷检出率提升至99.7%；AI辅助材料研发周期缩短40%。</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">海外产能布局进展如何？</div>
+      <div class="qa-a">匈牙利工厂已投产，德国工厂建设中，印尼项目预计2027年投产。海外产能占比目标30%。</div>
+    </div>
+  </div>
+
+  <!-- 相关链接 -->
+  <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:14px;">相关功能</h3>
+  <div class="related">
+    <a href="diagnosis.html" class="related-card">
+      <span class="related-icon">🔬</span>
+      <div><div class="related-title">诊断季活动</div><div class="related-desc">参与本期投票与提问</div></div>
+    </a>
+    <a href="agent.html" class="related-card">
+      <span class="related-icon">🤖</span>
+      <div><div class="related-title">AI 深度分析</div><div class="related-desc">更多公司诊断查询</div></div>
+    </a>
+    <a href="index-detail.html" class="related-card">
+      <span class="related-icon">📊</span>
+      <div><div class="related-title">指数详情</div><div class="related-desc">查看热力值排名</div></div>
+    </a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>© 2026 合力指数 Heli-Index · 诊断报告由 Heli-Agent AI 辅助生成 · <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

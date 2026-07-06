@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诊断季 · 合力指数</title>
+<style>
+/* 设计系统 */
+:root {
+  --deep-blue: #0a1628;
+  --blue-900: #0f2044;
+  --blue-800: #1a3260;
+  --blue-700: #1e4090;
+  --consensus-gold: #c9a84c;
+  --gold-light: #e8d48b;
+  --gold-dark: #a07e2e;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --red: #ef4444;
+  --green: #22c55e;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
+
+/* 导航 */
+.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); backdrop-filter: blur(8px); }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
+.nav-cta { display: flex; gap: 10px; }
+.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; transition: all 0.2s; }
+.btn-login { color: rgba(255,255,255,0.8); }
+.btn-login:hover { color: var(--white); }
+.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; }
+.btn-register:hover { background: var(--gold-light); }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--blue-900) 50%, var(--blue-800) 100%); color: var(--white); padding: 60px 20px 50px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(201,168,76,0.08) 0%, transparent 60%); }
+.hero-badge { display: inline-block; background: rgba(201,168,76,0.15); color: var(--consensus-gold); border: 1px solid rgba(201,168,76,0.3); padding: 4px 14px; border-radius: 20px; font-size: 12px; margin-bottom: 16px; }
+.hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; margin-bottom: 12px; position: relative; }
+.hero h1 span { color: var(--consensus-gold); }
+.hero p { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 24px; }
+.countdown { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+.countdown-item { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 16px; min-width: 60px; text-align: center; }
+.countdown-num { font-size: 24px; font-weight: 800; color: var(--consensus-gold); }
+.countdown-label { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+/* 当前诊断 */
+.section { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
+.section-header { text-align: center; margin-bottom: 36px; }
+.section-header h2 { font-size: 26px; font-weight: 800; color: var(--deep-blue); margin-bottom: 8px; }
+.section-header p { color: var(--gray-500); font-size: 14px; }
+.card { background: var(--white); border-radius: 14px; padding: 28px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 1px solid var(--gray-200); }
+.diagnosis-current { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 700px) { .diagnosis-current { grid-template-columns: 1fr; } }
+.diagnosis-main { background: linear-gradient(135deg, var(--deep-blue), var(--blue-900)); color: var(--white); border-radius: 14px; padding: 28px; }
+.diagnosis-main .tag { display: inline-block; background: rgba(201,168,76,0.2); color: var(--consensus-gold); padding: 3px 10px; border-radius: 12px; font-size: 11px; margin-bottom: 12px; }
+.diagnosis-main h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.diagnosis-main p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 16px; }
+.diagnosis-meta { display: flex; gap: 16px; font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+.diagnosis-meta span { display: flex; align-items: center; gap: 4px; }
+.btn-join { display: inline-block; background: var(--consensus-gold); color: var(--deep-blue); padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.btn-join:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+/* 参与公司 */
+.company-list { }
+.company-item { display: flex; align-items: center; gap: 14px; padding: 14px; border-bottom: 1px solid var(--gray-100); transition: background 0.2s; }
+.company-item:hover { background: var(--gray-50); }
+.company-item:last-child { border-bottom: none; }
+.company-rank { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: var(--deep-blue); }
+.rank-2 { background: linear-gradient(135deg, #d1d5db, #9ca3af); color: var(--deep-blue); }
+.rank-3 { background: linear-gradient(135deg, #d97706, #b45309); color: var(--white); }
+.rank-n { background: var(--gray-100); color: var(--gray-600); }
+.company-info { flex: 1; }
+.company-name { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+.company-sub { font-size: 12px; color: var(--gray-400); }
+.company-heat { font-size: 12px; font-weight: 600; }
+.heat-up { color: var(--red); }
+.heat-down { color: var(--green); }
+
+/* 投票区 */
+.vote-section { margin-top: 36px; }
+.vote-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.vote-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; transition: all 0.2s; }
+.vote-card:hover { border-color: var(--consensus-gold); box-shadow: 0 4px 16px rgba(201,168,76,0.1); }
+.vote-question { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 12px; }
+.vote-options { display: flex; flex-direction: column; gap: 8px; }
+.vote-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--gray-200); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 13px; }
+.vote-option:hover { border-color: var(--consensus-gold); background: rgba(201,168,76,0.04); }
+.vote-option input { accent-color: var(--consensus-gold); }
+.vote-bar { height: 4px; background: var(--gray-100); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.vote-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--consensus-gold), var(--gold-light)); transition: width 0.6s; }
+
+/* 提问区 */
+.qa-section { margin-top: 36px; }
+.qa-list { display: flex; flex-direction: column; gap: 12px; }
+.qa-item { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; }
+.qa-question { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.qa-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--blue-700), var(--consensus-gold)); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.qa-meta { flex: 1; }
+.qa-user { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+.qa-time { font-size: 11px; color: var(--gray-400); }
+.qa-text { font-size: 13px; color: var(--gray-700); line-height: 1.6; }
+.qa-reply { margin-top: 10px; padding: 10px 14px; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--consensus-gold); }
+.qa-reply-user { font-size: 12px; font-weight: 600; color: var(--blue-700); }
+.qa-reply-text { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+.qa-input { margin-top: 16px; display: flex; gap: 10px; }
+.qa-input input { flex: 1; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+.qa-input input:focus { border-color: var(--consensus-gold); }
+.qa-input button { background: var(--consensus-gold); color: var(--deep-blue); border: none; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.qa-input button:hover { background: var(--gold-light); }
+
+/* 往期诊断 */
+.past-diagnosis { margin-top: 36px; }
+.past-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.past-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; transition: all 0.2s; }
+.past-card:hover { border-color: var(--consensus-gold); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.past-date { font-size: 11px; color: var(--gray-400); margin-bottom: 8px; }
+.past-title { font-size: 15px; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
+.past-desc { font-size: 12px; color: var(--gray-500); line-height: 1.6; margin-bottom: 12px; }
+.past-stats { display: flex; gap: 16px; font-size: 12px; color: var(--gray-500); }
+.past-stats span { display: flex; align-items: center; gap: 4px; }
+
+/*  Footer */
+.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 20px 20px; font-size: 13px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+@media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.footer-brand svg { width: 24px; height: 24px; }
+.footer-brand span { color: var(--white); font-weight: 700; font-size: 15px; }
+.footer p { font-size: 12px; line-height: 1.7; }
+.footer h4 { color: var(--white); font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.footer a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px; display: block; margin-bottom: 6px; transition: color 0.2s; }
+.footer a:hover { color: var(--consensus-gold); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; display: flex; justify-content: space-between; font-size: 11px; }
+@media (max-width: 500px) { .footer-bottom { flex-direction: column; gap: 8px; } }
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="location.href='index.html'">
+      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+      <span>合力指数</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="index-detail.html">指数详情</a>
+      <a href="roadshow.html">全球路演</a>
+      <a href="awards.html">金鲲鹏颁奖</a>
+      <a href="diagnosis.html" class="active">诊断季</a>
+      <a href="achievements.html">成就体系</a>
+      <a href="agent.html">AI助手</a>
+      <a href="api.html">开放API</a>
+    </div>
+    <div class="nav-cta">
+      <a href="login.html" class="btn-login">登录</a>
+      <a href="register.html" class="btn-register">注册</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">🔬 2026 Q3 诊断季进行中</div>
+  <h1>诊断季 <span>Diagnostics</span></h1>
+  <p>每季度一次的深度价值诊断，由投资者、分析师与上市公司共同参与的共识构建活动</p>
+  <div class="countdown">
+    <div class="countdown-item"><div class="countdown-num" id="cd-days">18</div><div class="countdown-label">天</div></div>
+    <div class="countdown-item"><div class="countdown-num" id="cd-hours">07</div><div class="countdown-label">时</div></div>
+    <div class="countdown-item"><div class="countdown-num" id="cd-mins">42</div><div class="countdown-label">分</div></div>
+    <div class="countdown-item"><div class="countdown-num" id="cd-secs">15</div><div class="countdown-label">秒</div></div>
+  </div>
+</section>
+
+<!-- 当前诊断 -->
+<section class="section">
+  <div class="section-header">
+    <h2>本期诊断活动</h2>
+    <p>2026年第三季度 · 7月15日 - 7月31日</p>
+  </div>
+  <div class="diagnosis-current">
+    <div class="diagnosis-main">
+      <div class="tag">🔬 进行中</div>
+      <h3>2026 Q3 新质生产力诊断季</h3>
+      <p>本期聚焦先进制造与数字经济领域，邀请20家标杆上市公司参与深度诊断。投资者可通过投票、提问、分析三个维度参与共识构建。</p>
+      <div class="diagnosis-meta">
+        <span>📅 2026.07.15 - 07.31</span>
+        <span>🏢 20 家上市公司</span>
+        <span>👥 1,283 名投资者参与</span>
+      </div>
+      <a href="#vote" class="btn-join">立即参与诊断</a>
+    </div>
+    <div class="card">
+      <h4 style="font-size:15px;font-weight:700;color:var(--gray-800);margin-bottom:14px;">参与公司热力榜</h4>
+      <div class="company-list">
+        <div class="company-item">
+          <div class="company-rank rank-1">1</div>
+          <div class="company-info">
+            <div class="company-name">宁德时代 300750</div>
+            <div class="company-sub">先进制造 · 动力电池</div>
+          </div>
+          <div class="company-heat heat-up">↑ 92.4</div>
+        </div>
+        <div class="company-item">
+          <div class="company-rank rank-2">2</div>
+          <div class="company-info">
+            <div class="company-name">比亚迪 002594</div>
+            <div class="company-sub">先进制造 · 新能源汽车</div>
+          </div>
+          <div class="company-heat heat-up">↑ 88.7</div>
+        </div>
+        <div class="company-item">
+          <div class="company-rank rank-3">3</div>
+          <div class="company-info">
+            <div class="company-name">华为技术 002502</div>
+            <div class="company-sub">数字经济 · 通信设备</div>
+          </div>
+          <div class="company-heat heat-up">↑ 85.3</div>
+        </div>
+        <div class="company-item">
+          <div class="company-rank rank-n">4</div>
+          <div class="company-info">
+            <div class="company-name">药明康德 603259</div>
+            <div class="company-sub">生物医药 · CRO</div>
+          </div>
+          <div class="company-heat heat-down">↓ 79.1</div>
+        </div>
+        <div class="company-item">
+          <div class="company-rank rank-n">5</div>
+          <div class="company-info">
+            <div class="company-name">中芯国际 688981</div>
+            <div class="company-sub">先进制造 · 半导体</div>
+          </div>
+          <div class="company-heat heat-up">↑ 76.8</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 投票区 -->
+<section class="section" id="vote" style="background:var(--white);">
+  <div class="section-header">
+    <h2>共识投票</h2>
+    <p>您的投票将影响最终诊断报告与热力值排名 · <a href="diagnosis-report.html" style="color:var(--consensus-gold);">查看示例诊断报告 →</a></p>
+  </div>
+  <div class="vote-grid">
+    <div class="vote-card">
+      <div class="vote-question">宁德时代（300750）是否值得当前估值？</div>
+      <div class="vote-options">
+        <label class="vote-option"><input type="radio" name="v1" checked> 值得，技术壁垒坚实</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:62%"></div></div>
+        <label class="vote-option"><input type="radio" name="v1"> 偏高，需观察产能释放</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:28%"></div></div>
+        <label class="vote-option"><input type="radio" name="v1"> 偏低，市场低估了AI协同价值</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:10%"></div></div>
+      </div>
+    </div>
+    <div class="vote-card">
+      <div class="vote-question">比亚迪（002594）海外扩张风险是否可控？</div>
+      <div class="vote-options">
+        <label class="vote-option"><input type="radio" name="v2"> 可控，本地化策略成熟</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:45%"></div></div>
+        <label class="vote-option"><input type="radio" name="v2" checked> 部分可控，需关注地缘政治</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:38%"></div></div>
+        <label class="vote-option"><input type="radio" name="v2"> 风险较高，建议谨慎</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:17%"></div></div>
+      </div>
+    </div>
+    <div class="vote-card">
+      <div class="vote-question">本期最值得关注的新质生产力公司是？</div>
+      <div class="vote-options">
+        <label class="vote-option"><input type="radio" name="v3" checked> 华为技术</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:35%"></div></div>
+        <label class="vote-option"><input type="radio" name="v3"> 中芯国际</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:25%"></div></div>
+        <label class="vote-option"><input type="radio" name="v3"> 药明康德</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:22%"></div></div>
+        <label class="vote-option"><input type="radio" name="v3"> 其他</label>
+        <div class="vote-bar"><div class="vote-bar-fill" style="width:18%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 提问区 -->
+<section class="section" id="qa">
+  <div class="section-header">
+    <h2>投资者提问</h2>
+    <p>向参与诊断的上市公司提问，IR团队将直接回复</p>
+  </div>
+  <div class="qa-list">
+    <div class="qa-item">
+      <div class="qa-question">
+        <div class="qa-avatar">李</div>
+        <div class="qa-meta">
+          <div class="qa-user">李明远 <span style="font-weight:400;color:var(--gray-400);font-size:11px;">· 专业投资者</span></div>
+          <div class="qa-time">2小时前 · 提问宁德时代</div>
+        </div>
+      </div>
+      <div class="qa-text">公司在固态电池量产进度上是否有更新时间表？与丰田合作的进展如何？这是影响长期估值的关键变量。</div>
+      <div class="qa-reply">
+        <div class="qa-reply-user">宁德时代 IR 回复</div>
+        <div class="qa-reply-text">感谢提问。固态电池中试线已于2026年Q2投产，预计2027年Q4量产。与丰田的合作目前处于联合研发阶段，双方将在2026年Q4发布技术路线图。</div>
+      </div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-question">
+        <div class="qa-avatar">王</div>
+        <div class="qa-meta">
+          <div class="qa-user">王思远 <span style="font-weight:400;color:var(--gray-400);font-size:11px;">· C端投资者</span></div>
+          <div class="qa-time">5小时前 · 提问比亚迪</div>
+        </div>
+      </div>
+      <div class="qa-text">比亚迪半导体分拆上市后，对母公司估值有什么影响？是否会摊薄现有股东权益？</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-question">
+        <div class="qa-avatar">张</div>
+        <div class="qa-meta">
+          <div class="qa-user">张海洋 <span style="font-weight:400;color:var(--gray-400);font-size:11px;">· 分析师</span></div>
+          <div class="qa-time">8小时前 · 提问华为技术</div>
+        </div>
+      </div>
+      <div class="qa-text">华为AI芯片（昇腾系列）在算力能效比上与国际领先水平（英伟达H100）的差距是否在缩小？2026年是否有望实现关键突破？</div>
+      <div class="qa-reply">
+        <div class="qa-reply-user">华为IR 回复</div>
+        <div class="qa-reply-text">昇腾910C在推理场景能效比已接近H100的80%，训练场景差距仍在缩小。2026年Q2将发布下一代产品，预计进一步缩小差距。</div>
+      </div>
+    </div>
+  </div>
+  <div class="qa-input">
+    <input type="text" placeholder="提出你的问题…（需登录后参与）">
+    <button onclick="alert('请先登录')">提交提问</button>
+  </div>
+</section>
+
+<!-- 往期诊断 -->
+<section class="section" style="background:var(--white);">
+  <div class="section-header">
+    <h2>往期诊断回顾</h2>
+    <p>历史诊断季活动与共识结果</p>
+  </div>
+  <div class="past-grid">
+    <div class="past-card">
+      <div class="past-date">2026 Q2</div>
+      <div class="past-title">2026 Q2 新质生产力诊断季</div>
+      <div class="past-desc">聚焦生物医药与绿色能源，18家上市公司参与，最终共识报告已发布。</div>
+      <div class="past-stats">
+        <span>👥 1,052 人参与</span>
+        <span>📝 328 条提问</span>
+      </div>
+    </div>
+    <div class="past-card">
+      <div class="past-date">2026 Q1</div>
+      <div class="past-title">2026 Q1 新质生产力诊断季</div>
+      <div class="past-desc">首期诊断季，聚焦数字经济核心产业，15家上市公司参与，建立了诊断季标准流程。</div>
+      <div class="past-stats">
+        <span>👥 876 人参与</span>
+        <span>📝 254 条提问</span>
+      </div>
+    </div>
+    <div class="past-card">
+      <div class="past-date">2025 Q4</div>
+      <div class="past-title">2025 Q4 试点诊断</div>
+      <div class="past-desc">诊断季试点项目，5家上市公司参与，验证了投票+提问+分析的共识构建模式。</div>
+      <div class="past-stats">
+        <span>👥 312 人参与</span>
+        <span>📝 89 条提问</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+          <span>合力指数</span>
+        </div>
+        <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界的多方共识平台。</p>
+      </div>
+      <div>
+        <h4>产品</h4>
+        <a href="index-detail.html">指数详情</a>
+        <a href="roadshow.html">全球路演</a>
+        <a href="awards.html">金鲲鹏颁奖</a>
+        <a href="diagnosis.html">诊断季</a>
+      </div>
+      <div>
+        <h4>关于</h4>
+        <a href="#">团队介绍</a>
+        <a href="#">方法论</a>
+        <a href="#">合作伙伴</a>
+        <a href="#">联系我们</a>
+      </div>
+      <div>
+        <h4>联系我们</h4>
+        <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a>
+        <a href="#">香港中环皇后大道中 88 号</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 合力指数 Heli-Index. All rights reserved.</span>
+      <span>新质生产力的资本市场共识平台</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Countdown timer
+function updateCountdown() {
+  const target = new Date('2026-07-31T23:59:59+08:00');
+  setInterval(() => {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) return;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+  }, 1000);
+}
+updateCountdown();
+</script>
+</body>
+</html>

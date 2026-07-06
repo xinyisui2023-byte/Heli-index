@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 · 合力指数</title>
+<style>
+:root {
+  --deep-blue: #0a1628;
+  --consensus-gold: #c9a84c;
+  --gold-light: #e8d48b;
+  --white: #ffffff;
+  --gray-200: #e5e7eb;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+.nav { background: var(--deep-blue); }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; gap: 20px; }
+.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
+
+.main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; background: linear-gradient(135deg, rgba(201,168,76,0.04), rgba(10,22,40,0.02)); }
+.login-card { background: var(--white); border-radius: 16px; padding: 36px; max-width: 420px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid var(--gray-200); }
+.login-card h1 { font-size: 24px; font-weight: 800; color: var(--deep-blue); margin-bottom: 6px; }
+.login-card > p { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
+
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; display: block; }
+.form-input { width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; font-family: inherit; }
+.form-input:focus { border-color: var(--consensus-gold); }
+.form-options { display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 20px; }
+.form-options a { color: var(--consensus-gold); text-decoration: none; }
+.btn-login { width: 100%; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.btn-login:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(201,168,76,0.3); }
+
+.divider { text-align: center; font-size: 12px; color: var(--gray-400); margin: 20px 0; position: relative; }
+.divider::before { content: ''; position: absolute; left: 0; top: 50%; width: 45%; height: 1px; background: var(--gray-200); }
+.divider::after { content: ''; position: absolute; right: 0; top: 50%; width: 45%; height: 1px; background: var(--gray-200); }
+
+.btn-social { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); font-size: 14px; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; font-family: inherit; }
+.btn-social:hover { border-color: var(--consensus-gold); }
+
+.form-footer { text-align: center; font-size: 13px; color: var(--gray-500); margin-top: 16px; }
+.form-footer a { color: var(--consensus-gold); text-decoration: none; font-weight: 600; }
+
+.footer { background: var(--deep-blue); color: rgba(255,255,255,0.5); padding: 20px; text-align: center; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="location.href='index.html'">
+      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+      <span>合力指数</span>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="login-card">
+    <h1>登录合力指数</h1>
+    <p>欢迎回来，继续参与共识构建</p>
+
+    <form onsubmit="event.preventDefault(); alert('登录功能Demo，实际部署需接入后端')">
+      <div class="form-group">
+        <label class="form-label">手机号 / 邮箱</label>
+        <input type="text" class="form-input" placeholder="请输入手机号或邮箱">
+      </div>
+      <div class="form-group">
+        <label class="form-label">密码</label>
+        <input type="password" class="form-input" placeholder="请输入密码">
+      </div>
+      <div class="form-options">
+        <label style="font-size:12px;color:var(--gray-600);display:flex;align-items:center;gap:4px;">
+          <input type="checkbox"> 记住我
+        </label>
+        <a href="#">忘记密码？</a>
+      </div>
+      <button type="submit" class="btn-login">登录</button>
+    </form>
+
+    <div class="divider">或</div>
+
+    <button class="btn-social" onclick="alert('Demo')">📱 微信登录</button>
+    <button class="btn-social" onclick="alert('Demo')">📧 邮箱登录</button>
+
+    <div class="form-footer">
+      还没有账号？<a href="register.html">立即注册</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">© 2026 合力指数 Heli-Index</footer>
+</body>
+</html>

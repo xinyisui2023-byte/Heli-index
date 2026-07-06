@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成就体系 · 合力指数</title>
+<style>
+:root {
+  --deep-blue: #0a1628;
+  --blue-900: #0f2044;
+  --blue-800: #1a3260;
+  --blue-700: #1e4090;
+  --consensus-gold: #c9a84c;
+  --gold-light: #e8d48b;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
+
+/* 导航 */
+.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
+.nav-cta { display: flex; gap: 10px; }
+.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; }
+.btn-login { color: rgba(255,255,255,0.8); }
+.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--blue-900) 50%, #1a1a3e 100%); color: var(--white); padding: 60px 20px 50px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, rgba(201,168,76,0.1) 0%, transparent 50%); }
+.hero h1 { font-size: clamp(26px, 5vw, 36px); font-weight: 800; margin-bottom: 12px; position: relative; }
+.hero h1 span { color: var(--consensus-gold); }
+.hero p { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 20px; }
+.hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
+.hero-stat-num { font-size: 28px; font-weight: 800; color: var(--consensus-gold); }
+.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+/* 成就系列 */
+.section { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
+.section-header { text-align: center; margin-bottom: 36px; }
+.section-header h2 { font-size: 26px; font-weight: 800; color: var(--deep-blue); margin-bottom: 8px; }
+.section-header p { color: var(--gray-500); font-size: 14px; }
+
+.achievement-series { background: var(--white); border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 1px solid var(--gray-200); }
+.series-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-100); }
+.series-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.series-icon.c-investor { background: rgba(201,168,76,0.12); }
+.series-icon.pro-investor { background: rgba(59,130,246,0.12); }
+.series-icon.b-company { background: rgba(34,197,94,0.12); }
+.series-title { font-size: 18px; font-weight: 700; color: var(--gray-800); }
+.series-desc { font-size: 13px; color: var(--gray-500); }
+
+.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; }
+
+.badge-item { background: var(--gray-50); border: 1.5px solid var(--gray-200); border-radius: 14px; padding: 18px 12px; text-align: center; transition: all 0.3s; position: relative; cursor: pointer; }
+.badge-item:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); border-color: var(--consensus-gold); }
+.badge-item.locked { opacity: 0.35; filter: grayscale(1); }
+.badge-item.locked:hover { transform: none; box-shadow: none; border-color: var(--gray-200); }
+
+.badge-hex { width: 64px; height: 64px; margin: 0 auto 10px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+/* 六边形背景 */
+.badge-hex::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(232,212,139,0.08)); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+.badge-item.locked .badge-hex::before { background: var(--gray-200); }
+
+/* 等级光效 */
+.badge-item[data-rarity="epic"] .badge-hex::before { background: linear-gradient(135deg, #c4b5fd, #a78bfa, #7c3aed); opacity: 0.25; }
+.badge-item[data-rarity="legendary"] .badge-hex::before { background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706); opacity: 0.3; box-shadow: 0 0 20px rgba(251,191,36,0.3); }
+.badge-item[data-rarity="rare"] .badge-hex::before { background: linear-gradient(135deg, #93c5fd, #60a5fa, #3b82f6); opacity: 0.2; }
+
+.badge-name { font-size: 12px; font-weight: 600; color: var(--gray-700); line-height: 1.3; margin-bottom: 6px; }
+.badge-item.locked .badge-name { color: var(--gray-400); }
+
+.badge-rarity { font-size: 10px; padding: 2px 8px; border-radius: 10px; display: inline-block; font-weight: 600; }
+.rarity-basic { background: var(--gray-100); color: var(--gray-500); }
+.rarity-advanced { background: #fef3c7; color: #92400e; }
+.rarity-rare { background: #dbeafe; color: #1e40af; }
+.rarity-epic { background: #ede9fe; color: #5b21b6; }
+.rarity-legendary { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: var(--deep-blue); box-shadow: 0 0 8px rgba(251,191,36,0.3); }
+
+.badge-date { font-size: 10px; color: var(--gray-400); margin-top: 6px; }
+
+/* Tooltip */
+.badge-tooltip { display: none; position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--deep-blue); color: var(--white); padding: 10px 14px; border-radius: 10px; font-size: 12px; width: 200px; text-align: left; z-index: 100; line-height: 1.6; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.badge-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--deep-blue); }
+.badge-item:hover .badge-tooltip { display: block; }
+.badge-item.locked:hover .badge-tooltip { display: block; }
+
+/* 成就规则 */
+.rules { background: linear-gradient(135deg, var(--deep-blue), var(--blue-900)); color: var(--white); border-radius: 16px; padding: 30px; margin-top: 30px; }
+.rules h3 { font-size: 18px; font-weight: 700; color: var(--consensus-gold); margin-bottom: 16px; }
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 600px) { .rules-grid { grid-template-columns: 1fr; } }
+.rule-item { display: flex; gap: 10px; align-items: flex-start; }
+.rule-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.rule-text { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+/* Footer */
+.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 20px 20px; font-size: 13px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+.footer-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.footer-brand svg { width: 24px; height: 24px; }
+.footer-brand span { color: var(--white); font-weight: 700; font-size: 15px; }
+.footer h4 { color: var(--white); font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.footer a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px; display: block; margin-bottom: 6px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; display: flex; justify-content: space-between; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="location.href='index.html'">
+      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+      <span>合力指数</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="index-detail.html">指数详情</a>
+      <a href="roadshow.html">全球路演</a>
+      <a href="awards.html">金鲲鹏颁奖</a>
+      <a href="diagnosis.html">诊断季</a>
+      <a href="achievements.html" class="active">成就体系</a>
+      <a href="agent.html">AI助手</a>
+      <a href="api.html">开放API</a>
+      <a href="web3.html">Web3共识层</a>
+    </div>
+    <div class="nav-cta">
+      <a href="login.html" class="btn-login">登录</a>
+      <a href="register.html" class="btn-register">注册</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>成就体系 <span>Achievements</span></h1>
+  <p>在合力指数平台参与共识构建，赢得独一无二的成就勋章。勋章以NFT形式铸造于Web3共识层，永久记录您的贡献。</p>
+  <div class="hero-stats">
+    <div><div class="hero-stat-num">28</div><div class="hero-stat-label">勋章总数</div></div>
+    <div><div class="hero-stat-num">3</div><div class="hero-stat-label">成就系列</div></div>
+    <div><div class="hero-stat-num">5</div><div class="hero-stat-label">稀有度等级</div></div>
+  </div>
+</section>
+
+<!-- 成就系列 -->
+<section class="section">
+
+  <!-- C端投资者 -->
+  <div class="achievement-series">
+    <div class="series-header">
+      <div class="series-icon c-investor">🏅</div>
+      <div>
+        <div class="series-title">共识参与者系列（C端投资者）</div>
+        <div class="series-desc">通过投票、提问、签到参与共识构建，适合所有个人投资者</div>
+      </div>
+    </div>
+    <div class="badge-grid">
+      <div class="badge-item" data-rarity="basic">
+        <div class="badge-hex">🧭</div>
+        <div class="badge-name">初识共识</div>
+        <div class="badge-rarity rarity-basic">基础</div>
+        <div class="badge-date">2026.03.15 获得</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>完成首次投票<br><strong>权益：</strong>解锁基础投票权重</div>
+      </div>
+      <div class="badge-item" data-rarity="basic">
+        <div class="badge-hex">📅</div>
+        <div class="badge-name">持之以恒</div>
+        <div class="badge-rarity rarity-basic">基础</div>
+        <div class="badge-date">2026.04.02 获得</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>连续签到7天<br><strong>权益：</strong>每日签到积分+10%</div>
+      </div>
+      <div class="badge-item" data-rarity="advanced">
+        <div class="badge-hex">🗳️</div>
+        <div class="badge-name">投票达人</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-date">2026.05.20 获得</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>累计完成50次投票<br><strong>权益：</strong>投票历史导出</div>
+      </div>
+      <div class="badge-item locked" data-rarity="advanced">
+        <div class="badge-hex">❓</div>
+        <div class="badge-name">尖锐提问者</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>提问累计10次被推至Top5<br><strong>权益：</strong>提问优先展示</div>
+      </div>
+      <div class="badge-item locked" data-rarity="advanced">
+        <div class="badge-hex">🔬</div>
+        <div class="badge-name">诊断季常客</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>参与5期诊断季活动<br><strong>权益：</strong>诊断报告优先读</div>
+      </div>
+      <div class="badge-item locked" data-rarity="advanced">
+        <div class="badge-hex">🔒</div>
+        <div class="badge-name">质押信仰者</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>质押HP超1000且超30天<br><strong>权益：</strong>质押收益+5%</div>
+      </div>
+      <div class="badge-item locked" data-rarity="rare">
+        <div class="badge-hex">🌐</div>
+        <div class="badge-name">生态建设者</div>
+        <div class="badge-rarity rarity-rare">稀有</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>邀请3位认证专业投资者<br><strong>权益：</strong>邀请链接永久有效</div>
+      </div>
+      <div class="badge-item locked" data-rarity="epic">
+        <div class="badge-hex">🏑</div>
+        <div class="badge-name">共识领袖</div>
+        <div class="badge-rarity rarity-epic">史诗</div>
+        <div class="badge-tooltip"><strong>合成条件：</strong>集齐"投票达人""尖锐提问者""质押信仰者"<br><strong>权益：</strong>投票权重×1.2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 专业投资者 -->
+  <div class="achievement-series">
+    <div class="series-header">
+      <div class="series-icon pro-investor">🔬</div>
+      <div>
+        <div class="series-title">洞察领航者系列（专业投资者）</div>
+        <div class="series-desc">通过深度分析与专业判断引领共识方向，需完成专业投资者认证</div>
+      </div>
+    </div>
+    <div class="badge-grid">
+      <div class="badge-item" data-rarity="basic">
+        <div class="badge-hex">📜</div>
+        <div class="badge-name">认证分析师</div>
+        <div class="badge-rarity rarity-basic">基础</div>
+        <div class="badge-date">2026.03.10 获得</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>完成专业投资者认证<br><strong>权益：</strong>投票权重×1.5</div>
+      </div>
+      <div class="badge-item" data-rarity="basic">
+        <div class="badge-hex">🔍</div>
+        <div class="badge-name">深度洞察</div>
+        <div class="badge-rarity rarity-basic">基础</div>
+        <div class="badge-date">2026.04.18 获得</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>发布3篇以上深度分析<br><strong>权益：</strong>分析被IR引用标识</div>
+      </div>
+      <div class="badge-item" data-rarity="advanced">
+        <div class="badge-hex">📢</div>
+        <div class="badge-name">影响力声音</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-date">2026.06.05 获得</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>分析获赞超过100次<br><strong>权益：</strong>优先获得路演邀请</div>
+      </div>
+      <div class="badge-item" data-rarity="advanced">
+        <div class="badge-hex">🎯</div>
+        <div class="badge-name">共识捕手</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>诊断季投票与最终共识偏差<10%<br><strong>权益：</strong>共识准确度标识</div>
+      </div>
+      <div class="badge-item locked" data-rarity="advanced">
+        <div class="badge-hex">🔮</div>
+        <div class="badge-name">跨行业视野</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>对3个以上行业发表分析<br><strong>权益：</strong>跨行业对比报告</div>
+      </div>
+      <div class="badge-item locked" data-rarity="rare">
+        <div class="badge-hex">💼</div>
+        <div class="badge-name">路演智识</div>
+        <div class="badge-rarity rarity-rare">稀有</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>参与路演闭门会并发表观点<br><strong>权益：</strong>路演永久前排席位</div>
+      </div>
+      <div class="badge-item locked" data-rarity="epic">
+        <div class="badge-hex">⭐</div>
+        <div class="badge-name">年度共识之星</div>
+        <div class="badge-rarity rarity-epic">史诗</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>获得金鲲鹏"年度共识领袖"奖<br><strong>权益：</strong>年度共识报告联署</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B端上市公司 -->
+  <div class="achievement-series">
+    <div class="series-header">
+      <div class="series-icon b-company">🏢</div>
+      <div>
+        <div class="series-title">价值披露先锋系列（B端上市公司）</div>
+        <div class="series-desc">通过透明披露与积极互动建立投资者共识，需完成公司认领</div>
+      </div>
+    </div>
+    <div class="badge-grid">
+      <div class="badge-item locked" data-rarity="basic" style="opacity:0.35;">
+        <div class="badge-hex">🚩</div>
+        <div class="badge-name">新质入场</div>
+        <div class="badge-rarity rarity-basic">基础</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>完成公司认领并完善AI+战略信息</div>
+      </div>
+      <div class="badge-item locked" data-rarity="basic" style="opacity:0.35;">
+        <div class="badge-hex">💬</div>
+        <div class="badge-name">坦诚对话</div>
+        <div class="badge-rarity rarity-basic">基础</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>累计回复投资者提问超20条</div>
+      </div>
+      <div class="badge-item locked" data-rarity="advanced" style="opacity:0.35;">
+        <div class="badge-hex">🔬</div>
+        <div class="badge-name">诊断勇气</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>参与1期诊断季活动</div>
+      </div>
+      <div class="badge-item locked" data-rarity="advanced" style="opacity:0.35;">
+        <div class="badge-hex">⭐</div>
+        <div class="badge-name">共识之选</div>
+        <div class="badge-rarity rarity-advanced">进阶</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>热力值连续4周居行业前10%</div>
+      </div>
+      <div class="badge-item locked" data-rarity="rare" style="opacity:0.35;">
+        <div class="badge-hex">🌍</div>
+        <div class="badge-name">路演先锋</div>
+        <div class="badge-rarity rarity-rare">稀有</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>参与至少1站全球巡回路演</div>
+      </div>
+      <div class="badge-item locked" data-rarity="epic" style="opacity:0.35;">
+        <div class="badge-hex">🏆</div>
+        <div class="badge-name">金鲲鹏得主</div>
+        <div class="badge-rarity rarity-epic">史诗</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>获得金鲲鹏年度奖项</div>
+      </div>
+      <div class="badge-item locked" data-rarity="legendary" style="opacity:0.35;">
+        <div class="badge-hex">💎</div>
+        <div class="badge-name">新质生产力标杆</div>
+        <div class="badge-rarity rarity-legendary">传说</div>
+        <div class="badge-tooltip"><strong>获得条件：</strong>年度热力值总排名第一</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--gray-400);margin-top:12px;">* 以上为B端上市公司成就系列展示。上市公司完成认领后可开始解锁。</p>
+  </div>
+
+  <!-- 成就规则 -->
+  <div class="rules">
+    <h3>📜 成就勋章规则</h3>
+    <div class="rules-grid">
+      <div class="rule-item"><div class="rule-icon">🔗</div><div class="rule-text"><strong>链上铸造：</strong>获得的勋章以NFT形式铸造于Web3共识层，不可转让，永久记录。</div></div>
+      <div class="rule-item"><div class="rule-icon">🎨</div><div class="rule-text"><strong>稀有度：</strong>基础(灰)、进阶(铜)、稀有(银蓝)、史诗(紫金)、传说(金色光效)，稀有度越高设计越精致。</div></div>
+      <div class="rule-item"><div class="rule-icon">🏆</div><div class="rule-text"><strong>合成机制：</strong>部分史诗勋章需集齐指定进阶勋章后自动合成，不可直接获得。</div></div>
+      <div class="rule-item"><div class="rule-icon">⚡</div><div class="rule-text"><strong>权益加成：</strong>高级勋章持有者获得投票权重提升、路演优先席位等实际权益。</div></div>
+      <div class="rule-item"><div class="rule-icon">📸</div><div class="rule-text"><strong>分享功能：</strong>获得勋章时可生成分享卡片，附带链上哈希，便于在社交媒体展示。</div></div>
+      <div class="rule-item"><div class="rule-icon">🔐</div><div class="rule-text"><strong>隐私控制：</strong>可选择隐藏部分勋章，仅展示希望公开的成就。</div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+          <span>合力指数</span>
+        </div>
+        <p>新质生产力的资本市场共识平台。</p>
+      </div>
+      <div>
+        <h4>产品</h4>
+        <a href="index-detail.html">指数详情</a>
+        <a href="diagnosis.html">诊断季</a>
+        <a href="awards.html">金鲲鹏颁奖</a>
+      </div>
+      <div>
+        <h4>联系我们</h4>
+        <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 合力指数</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
