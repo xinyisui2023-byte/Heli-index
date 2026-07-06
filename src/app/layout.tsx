@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -33,25 +34,25 @@ function Nav() {
   return (
     <nav className="sticky top-0 z-50 bg-deep-blue/95 backdrop-blur text-white">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2 font-bold text-lg">
+        <Link href="/" className="flex items-center gap-2 font-bold text-lg">
           <span className="text-consensus-gold">⬡</span>
           <span>合力指数</span>
-        </a>
+        </Link>
         <div className="hidden md:flex items-center gap-6 text-sm">
-          <a href="/" className="hover:text-consensus-gold transition">首页</a>
-          <a href="/index" className="hover:text-consensus-gold transition">指数详情</a>
-          <a href="/roadshow" className="hover:text-consensus-gold transition">全球路演</a>
-          <a href="/awards" className="hover:text-consensus-gold transition">金鲲鹏颁奖</a>
-          <a href="/profile/demo" className="hover:text-consensus-gold transition">成就体系</a>
+          <Link href="/" className="hover:text-consensus-gold transition">首页</Link>
+          <Link href="/index" className="hover:text-consensus-gold transition">指数详情</Link>
+          <Link href="/roadshow" className="hover:text-consensus-gold transition">全球路演</Link>
+          <Link href="/awards" className="hover:text-consensus-gold transition">金鲲鹏颁奖</Link>
+          <Link href="/profile/demo" className="hover:text-consensus-gold transition">成就体系</Link>
         </div>
         <div className="flex items-center gap-3 text-sm">
-          <a href="/login" className="hover:text-consensus-gold transition">登录</a>
-          <a
+          <Link href="/login" className="hover:text-consensus-gold transition">登录</Link>
+          <Link
             href="/register"
             className="bg-consensus-gold text-deep-blue px-4 py-1.5 rounded-full font-semibold hover:bg-consensus-gold-light transition"
           >
             注册
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
@@ -72,16 +73,16 @@ function Footer() {
         <div>
           <h4 className="text-white font-semibold mb-3">平台</h4>
           <ul className="space-y-2 text-sm">
-            <li><a href="/index" className="hover:text-consensus-gold">指数详情</a></li>
-            <li><a href="/roadshow" className="hover:text-consensus-gold">全球路演</a></li>
-            <li><a href="/awards" className="hover:text-consensus-gold">金鲲鹏颁奖</a></li>
+            <li><Link href="/index" className="hover:text-consensus-gold">指数详情</Link></li>
+            <li><Link href="/roadshow" className="hover:text-consensus-gold">全球路演</Link></li>
+            <li><Link href="/awards" className="hover:text-consensus-gold">金鲲鹏颁奖</Link></li>
           </ul>
         </div>
         <div>
           <h4 className="text-white font-semibold mb-3">社区</h4>
           <ul className="space-y-2 text-sm">
-            <li><a href="/register" className="hover:text-consensus-gold">注册加入</a></li>
-            <li><a href="/profile/demo" className="hover:text-consensus-gold">成就体系</a></li>
+            <li><Link href="/register" className="hover:text-consensus-gold">注册加入</Link></li>
+            <li><Link href="/profile/demo" className="hover:text-consensus-gold">成就体系</Link></li>
           </ul>
         </div>
         <div>
