@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理后台 · 合力指数</title>
+<style>
+:root {
+  --deep-blue: #0a1628; --blue-900: #0f2044; --blue-800: #1a3260; --blue-700: #1e4090;
+  --consensus-gold: #c9a84c; --gold-light: #e8d48b; --gold-dark: #a68a34; --white: #ffffff;
+  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
+  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937;
+  --red: #ef4444; --red-bg: #fee2e2; --green: #22c55e; --green-bg: #dcfce7;
+  --amber: #f59e0b; --amber-bg: #fef3c7; --indigo: #6366f1; --indigo-bg: #e0e7ff;
+  --purple: #a855f7; --purple-bg: #f3e8ff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; min-height: 100vh; }
+
+/* 导航 */
+.nav { background: var(--deep-blue); position: sticky; top: 0; z-index: 50; }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
+.nav-tag { color: var(--consensus-gold); font-size: 11px; padding: 2px 8px; border: 1px solid rgba(201,168,76,0.4); border-radius: 10px; }
+.nav-links { display: flex; gap: 16px; }
+.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; }
+.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
+.nav-user { display: flex; align-items: center; gap: 8px; }
+.nav-user .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--consensus-gold); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--deep-blue); }
+.nav-user span { color: rgba(255,255,255,0.8); font-size: 13px; }
+.nav-user a { color: rgba(255,255,255,0.5); font-size: 12px; text-decoration: none; }
+
+/* 主布局 */
+.admin-layout { display: flex; min-height: calc(100vh - 56px); }
+.sidebar { width: 200px; background: var(--white); border-right: 1px solid var(--gray-200); padding: 16px 0; flex-shrink: 0; }
+.sidebar-item { display: block; padding: 10px 20px; font-size: 13px; color: var(--gray-600); text-decoration: none; transition: all 0.15s; border-left: 3px solid transparent; cursor: pointer; }
+.sidebar-item:hover, .sidebar-item.active { color: var(--consensus-gold); background: rgba(201,168,76,0.05); border-left-color: var(--consensus-gold); font-weight: 600; }
+.sidebar-divider { margin: 12px 20px; border-top: 1px solid var(--gray-100); }
+.sidebar-heading { padding: 6px 20px; font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.main-content { flex: 1; padding: 24px; max-width: calc(100vw - 200px); overflow-x: auto; }
+@media (max-width: 800px) { .admin-layout { flex-direction: column; } .sidebar { width: 100%; display: flex; overflow-x: auto; padding: 8px 10px; border-right: none; border-bottom: 1px solid var(--gray-200); } .sidebar-item { white-space: nowrap; border-left: none; border-bottom: 2px solid transparent; padding: 8px 12px; } .sidebar-item.active { border-left: none; border-bottom-color: var(--consensus-gold); } .sidebar-divider, .sidebar-heading { display: none; } .main-content { max-width: 100%; padding: 16px; } }
+
+/* 页面标题 */
+.page-header { margin-bottom: 24px; }
+.page-header h1 { font-size: 22px; font-weight: 800; color: var(--deep-blue); }
+.page-header p { font-size: 13px; color: var(--gray-500); margin-top: 4px; }
+
+/* 统计卡片 */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; }
+.stat-card .num { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+.stat-card .label { font-size: 12px; color: var(--gray-500); }
+.stat-card .change { font-size: 11px; margin-top: 4px; font-weight: 600; }
+.stat-card .change.up { color: var(--green); }
+.stat-card .change.down { color: var(--red); }
+.num-gold { color: var(--consensus-gold); }
+.num-blue { color: var(--blue-700); }
+.num-indigo { color: var(--indigo); }
+.num-purple { color: var(--purple); }
+.num-green { color: var(--green); }
+.num-red { color: var(--red); }
+
+/* 卡片 */
+.card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; margin-bottom: 20px; overflow: hidden; }
+.card-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-100); display: flex; justify-content: space-between; align-items: center; }
+.card-header h3 { font-size: 15px; font-weight: 700; }
+.card-header .badge-count { background: var(--red); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+.card-body { padding: 0; }
+
+/* 表格 */
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 10px 20px; font-size: 11px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.03em; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
+td { padding: 14px 20px; font-size: 13px; border-bottom: 1px solid var(--gray-100); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gray-50); }
+
+/* 审核按钮 */
+.btn-approve { font-size: 11px; padding: 4px 14px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+.btn-approve.green { background: var(--green); color: #fff; }
+.btn-approve.green:hover { background: #16a34a; }
+.btn-approve.red { background: var(--red-bg); color: var(--red); }
+.btn-approve.red:hover { background: #fecaca; }
+.btn-approve.amber { background: var(--amber-bg); color: #92400e; }
+.btn-approve.amber:hover { background: #fde68a; }
+
+/* 标签 */
+.tag { font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; display: inline-block; }
+.tag-green { background: var(--green-bg); color: #166534; }
+.tag-red { background: var(--red-bg); color: #991b1b; }
+.tag-amber { background: var(--amber-bg); color: #92400e; }
+.tag-blue { background: var(--indigo-bg); color: #3730a3; }
+.tag-gray { background: var(--gray-100); color: var(--gray-600); }
+
+/* 发布面板 */
+.publish-form { padding: 20px; }
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+.form-row input, .form-row select, .form-row textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 13px; font-family: inherit; }
+.form-row textarea { resize: vertical; min-height: 100px; }
+.btn-publish { background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); padding: 10px 28px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+
+/* 图表模拟 */
+.chart-bar-group { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding: 0 20px 8px; }
+.chart-bar { flex: 1; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, var(--consensus-gold), var(--gold-light)); position: relative; transition: all 0.3s; }
+.chart-bar:hover { filter: brightness(1.1); }
+.chart-bar-label { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--gray-500); white-space: nowrap; }
+.chart-bar-value { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 700; color: var(--gray-700); }
+
+/* 饼图模拟 */
+.donut-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; padding: 20px; }
+.donut-item { text-align: center; }
+.donut-circle { width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 8px; border: 6px solid; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; }
+.donut-label { font-size: 11px; color: var(--gray-600); }
+.donut-value { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+
+/* 双列布局 */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+/* 页脚 */
+.footer { background: var(--deep-blue); color: rgba(255,255,255,0.5); padding: 20px; font-size: 11px; text-align: center; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="index.html" class="nav-logo">
+        <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
+        <span>合力指数</span>
+      </a>
+      <span class="nav-tag">管理员</span>
+    </div>
+    <div class="nav-user">
+      <div class="avatar">N</div>
+      <span>Nebula</span>
+      <a href="index.html">退出</a>
+    </div>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <!-- 侧边栏 -->
+  <div class="sidebar">
+    <div class="sidebar-item active">📊 仪表盘</div>
+    <div class="sidebar-item">👥 用户管理</div>
+    <div class="sidebar-item">✅ 认证审核</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-heading">活动管理</div>
+    <div class="sidebar-item">🌍 路演管理</div>
+    <div class="sidebar-item">🏆 颁奖管理</div>
+    <div class="sidebar-item">📝 报名审核</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-heading">内容管理</div>
+    <div class="sidebar-item">📄 报告发布</div>
+    <div class="sidebar-item">📰 资讯管理</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-heading">系统</div>
+    <div class="sidebar-item">⛓️ Web3 管理</div>
+    <div class="sidebar-item">⚙️ 系统设置</div>
+  </div>
+
+  <!-- 主内容区 -->
+  <div class="main-content">
+    <div class="page-header">
+      <h1>📊 管理仪表盘</h1>
+      <p>合力指数平台管理后台 · 实时数据概览</p>
+    </div>
+
+    <!-- 核心统计 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num num-blue">12,847</div>
+        <div class="label">注册用户总数</div>
+        <div class="change up">↑ 384 本月新增</div>
+      </div>
+      <div class="stat-card">
+        <div class="num num-gold">486</div>
+        <div class="label">已认领上市公司</div>
+        <div class="change up">↑ 12 本月新增</div>
+      </div>
+      <div class="stat-card">
+        <div class="num num-indigo">1,203</div>
+        <div class="label">专业投资者</div>
+        <div class="change up">↑ 45 待认证</div>
+      </div>
+      <div class="stat-card">
+        <div class="num num-purple">85</div>
+        <div class="label">产学研机构</div>
+        <div class="change up">↑ 3 本月新增</div>
+      </div>
+      <div class="stat-card">
+        <div class="num num-green">28,591</div>
+        <div class="label">累计投票数</div>
+        <div class="change up">↑ 1,204 本周</div>
+      </div>
+      <div class="stat-card">
+        <div class="num num-red">14</div>
+        <div class="label">待处理审核</div>
+        <div class="change down">↓ 需要处理</div>
+      </div>
+    </div>
+
+    <!-- 双列布局 -->
+    <div class="two-col">
+      <!-- 待审核认证 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>✅ 认证审核队列</h3>
+          <span class="badge-count">7</span>
+        </div>
+        <div class="card-body">
+          <table>
+            <thead>
+              <tr><th>申请人</th><th>角色</th><th>机构</th><th>提交时间</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>张明远</td><td><span class="tag tag-blue">专业投资者</span></td><td>中信证券</td><td>2026-07-05</td>
+                <td><button class="btn-approve green">通过</button> <button class="btn-approve red" style="margin-left:4px;">驳回</button></td>
+              </tr>
+              <tr>
+                <td>陈研究员</td><td><span class="tag tag-blue">专业投资者</span></td><td>嘉实基金</td><td>2026-07-04</td>
+                <td><button class="btn-approve green">通过</button> <button class="btn-approve red" style="margin-left:4px;">驳回</button></td>
+              </tr>
+              <tr>
+                <td>李教授</td><td><span class="tag tag-amber">产学研机构</span></td><td>清华大学</td><td>2026-07-03</td>
+                <td><button class="btn-approve green">通过</button> <button class="btn-approve red" style="margin-left:4px;">驳回</button></td>
+              </tr>
+              <tr>
+                <td>蔚来汽车</td><td><span class="tag tag-green">上市公司</span></td><td>NIO Inc.</td><td>2026-07-02</td>
+                <td><button class="btn-approve amber">核实域名</button></td>
+              </tr>
+              <tr>
+                <td>理想汽车</td><td><span class="tag tag-green">上市公司</span></td><td>Li Auto</td><td>2026-07-01</td>
+                <td><button class="btn-approve green">通过</button> <button class="btn-approve red" style="margin-left:4px;">驳回</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 报名审核 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>📝 活动报名审核</h3>
+          <span class="badge-count">5</span>
+        </div>
+        <div class="card-body">
+          <table>
+            <thead>
+              <tr><th>申请者</th><th>活动</th><th>类型</th><th>日期</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>宁德时代</td><td>金鲲鹏年度颁奖</td><td><span class="tag tag-amber">提名</span></td><td>07-05</td>
+                <td><button class="btn-approve green">通过</button></td>
+              </tr>
+              <tr>
+                <td>周投资</td><td>路演·伦敦站</td><td><span class="tag tag-blue">参会</span></td><td>07-04</td>
+                <td><button class="btn-approve green">通过</button> <button class="btn-approve red" style="margin-left:4px;">驳回</button></td>
+              </tr>
+              <tr>
+                <td>赵分析师</td><td>路演·纽约站</td><td><span class="tag tag-blue">闭门会</span></td><td>07-03</td>
+                <td><button class="btn-approve amber">待核实</button></td>
+              </tr>
+              <tr>
+                <td>中芯国际</td><td>金鲲鹏·行业先锋</td><td><span class="tag tag-amber">提名</span></td><td>07-02</td>
+                <td><button class="btn-approve green">通过</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 平台活跃度图表 -->
+    <div class="card">
+      <div class="card-header">
+        <h3>📈 平台活跃度趋势（2026 H1）</h3>
+        <span style="font-size:12px;color:var(--gray-500);">单位：千次交互</span>
+      </div>
+      <div class="card-body" style="padding:20px 24px 32px;">
+        <div class="chart-bar-group">
+          <div class="chart-bar" style="height:65px;"><span class="chart-bar-value">2.1</span><span class="chart-bar-label">1月</span></div>
+          <div class="chart-bar" style="height:78px;"><span class="chart-bar-value">2.8</span><span class="chart-bar-label">2月</span></div>
+          <div class="chart-bar" style="height:96px;"><span class="chart-bar-value">3.5</span><span class="chart-bar-label">3月</span></div>
+          <div class="chart-bar" style="height:110px;"><span class="chart-bar-value">4.2</span><span class="chart-bar-label">4月</span></div>
+          <div class="chart-bar" style="height:98px;"><span class="chart-bar-value">3.8</span><span class="chart-bar-label">5月</span></div>
+          <div class="chart-bar" style="height:118px;"><span class="chart-bar-value">4.9</span><span class="chart-bar-label">6月</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 双列：报告发布 + 用户分布 -->
+    <div class="two-col">
+      <!-- 报告发布面板 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>📄 快速发布报告</h3>
+        </div>
+        <div class="card-body">
+          <div class="publish-form">
+            <div class="form-row">
+              <label>报告标题</label>
+              <input type="text" placeholder="例：2026 Q2 新质生产力季度诊断报告" value="">
+            </div>
+            <div class="form-row">
+              <label>报告类型</label>
+              <select>
+                <option>诊断季报告</option>
+                <option>指数月度报告</option>
+                <option>行业专题报告</option>
+                <option>路演回顾总结</option>
+                <option>颁奖活动公告</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>摘要</label>
+              <textarea placeholder="输入报告摘要..."></textarea>
+            </div>
+            <button class="btn-publish">发布报告</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 用户角色分布 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>👥 用户角色分布</h3>
+        </div>
+        <div class="card-body">
+          <div class="donut-grid">
+            <div class="donut-item">
+              <div class="donut-circle" style="border-color:var(--blue-700);">87%</div>
+              <div class="donut-label">注册投资者</div>
+              <div class="donut-value">11,158 人</div>
+            </div>
+            <div class="donut-item">
+              <div class="donut-circle" style="border-color:var(--indigo);">9.4%</div>
+              <div class="donut-label">专业投资者</div>
+              <div class="donut-value">1,203 人</div>
+            </div>
+            <div class="donut-item">
+              <div class="donut-circle" style="border-color:var(--consensus-gold);">3.1%</div>
+              <div class="donut-label">上市公司</div>
+              <div class="donut-value">486 家</div>
+            </div>
+            <div class="donut-item">
+              <div class="donut-circle" style="border-color:var(--purple);">0.7%</div>
+              <div class="donut-label">产学研机构</div>
+              <div class="donut-value">85 家</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 最近活动日志 -->
+    <div class="card">
+      <div class="card-header">
+        <h3>📜 最近操作日志</h3>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead>
+            <tr><th>时间</th><th>操作者</th><th>操作</th><th>详情</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2026-07-06 14:30</td><td>Nebula</td><td><span class="tag tag-green">认证通过</span></td><td>批准 张明远 专业投资者认证</td></tr>
+            <tr><td>2026-07-06 11:15</td><td>Nebula</td><td><span class="tag tag-blue">报告发布</span></td><td>发布《2026 Q2 新质生产力季度诊断报告》</td></tr>
+            <tr><td>2026-07-05 16:42</td><td>Nebula</td><td><span class="tag tag-green">报名通过</span></td><td>批准 宁德时代 金鲲鹏年度颁奖提名</td></tr>
+            <tr><td>2026-07-05 10:08</td><td>Nebula</td><td><span class="tag tag-red">驳回</span></td><td>驳回 某匿名用户 不实公司认领申请</td></tr>
+            <tr><td>2026-07-04 09:30</td><td>系统</td><td><span class="tag tag-gray">自动</span></td><td>每日数据快照生成完成</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  © 2026 合力指数 Heli-Index · 新质生产力的资本市场共识平台 | <a href="mailto:nebula@heli-ai.com" style="color:var(--consensus-gold);">nebula@heli-ai.com</a>
+</footer>
+
+</body>
+</html>
