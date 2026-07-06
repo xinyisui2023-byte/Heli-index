@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合力指数（Heli-Index）| 新质生产力的资本市场共识平台</title>
+<meta name="description" content="合力指数是《香港商报》旗下，连接上市公司、投资者、专业机构与学研界的多方共识平台。">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 导航 -->
+<nav class="nav">
+<div class="nav-inner">
+<div class="nav-logo" onclick="go('home')"><span>⬡</span> 合力指数</div>
+<div class="nav-links">
+<a onclick="go('home')">首页</a>
+<a onclick="go('index')">指数详情</a>
+<a onclick="go('roadshow')">全球路演</a>
+<a onclick="go('awards')">金鲲鹏颁奖</a>
+<a onclick="go('profile')">成就体系</a>
+</div>
+<div class="nav-auth">
+<a onclick="go('login')">登录</a>
+<a onclick="go('register')" class="btn-register">注册</a>
+</div>
+</div>
+</nav>
+
+<!-- ===== 首页 ===== -->
+<div id="page-home" class="page active">
+<section class="hero">
+<div class="particles" id="particles-home"></div>
+<div class="hero-content">
+<h1>合力指数<span class="sub">Heli-Index</span></h1>
+<p>新质生产力的资本市场共识平台</p>
+<p class="subtitle-gold">《香港商报》旗下 · 连接上市公司、投资者、专业机构与学研界</p>
+<div class="hero-buttons">
+<button class="btn-gold" onclick="go('index')">查看指数</button>
+<button class="btn-outline-gold" onclick="go('awards')">金鲲鹏颁奖</button>
+<button class="btn-outline-white" onclick="go('roadshow')">全球路演</button>
+</div>
+</div>
+</section>
+
+<section class="section section-light">
+<div class="container">
+<h2 class="section-title">实时指数概览</h2>
+<div class="grid-3">
+<div class="card">
+<h3 style="font-weight:600;margin-bottom:8px;">合力300指数</h3>
+<div class="index-value">3,842.56</div>
+<div class="up" style="font-size:14px;font-weight:600;">▲ 1.23%</div>
+<p class="text-light" style="font-size:14px;margin-top:12px;">覆盖A股300家新质生产力代表企业</p>
+</div>
+<div class="card">
+<h3 style="font-weight:600;margin-bottom:8px;">合力港股通</h3>
+<div class="index-value">5,126.78</div>
+<div class="down" style="font-size:14px;font-weight:600;">▼ 0.45%</div>
+<p class="text-light" style="font-size:14px;margin-top:12px;">港股通范围内新质生产力企业共识值</p>
+</div>
+<div class="card">
+<h3 style="font-weight:600;margin-bottom:8px;">合力纳斯达克</h3>
+<div class="index-value">2,845.32</div>
+<div class="up" style="font-size:14px;font-weight:600;">▲ 2.10%</div>
+<p class="text-light" style="font-size:14px;margin-top:12px;">中概股及全球新质生产力共识指数</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container text-center">
+<h2 class="section-title">什么是新质生产力？</h2>
+<p class="text-secondary" style="max-width:700px;margin:0 auto 40px;font-size:18px;">
+新质生产力是以科技创新为主导的生产力质态跃迁，涵盖人工智能、生物医药、先进制造、绿色能源、数字经济等前沿领域。合力指数追踪这些领域在资本市场的真实共识。
+</p>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:800px;margin:0 auto;">
+<span class="tag tag-blue">AI与大模型</span>
+<span class="tag tag-blue">生物医药</span>
+<span class="tag tag-blue">先进制造</span>
+<span class="tag tag-blue">绿色能源</span>
+<span class="tag tag-blue">数字经济</span>
+</div>
+</div>
+</section>
+
+<section class="section section-dark">
+<div class="container">
+<div class="grid-2" style="align-items:center;">
+<div>
+<h2 style="font-size:28px;font-weight:700;margin-bottom:16px;">全球巡回路演</h2>
+<p style="color:rgba(255,255,255,0.7);margin-bottom:24px;">为上市公司搭建国际投资者对接舞台，2026-2027年覆盖香港、新加坡、伦敦、纽约、达沃斯五大城市。</p>
+<button class="btn-gold" onclick="go('roadshow')">查看路演日程 →</button>
+</div>
+<div>
+<h2 style="font-size:28px;font-weight:700;margin-bottom:16px;color:var(--consensus-gold);">金鲲鹏颁奖典礼</h2>
+<p style="color:rgba(255,255,255,0.7);margin-bottom:24px;">2027年1月达沃斯，全球直播。致敬新质生产力领域的真实价值创造者。提名征集已开启。</p>
+<button class="btn-outline-gold" onclick="go('awards')">查看奖项及提名 →</button>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section section-gold">
+<div class="container text-center">
+<h2 class="section-title">成就体系</h2>
+<p class="text-secondary" style="max-width:600px;margin:0 auto 32px;">在Web3共识层上铸造的不可转让NFT徽章，见证您在合力生态中的每一份贡献。</p>
+<button class="btn-gold" style="background:var(--deep-blue);color:white;" onclick="go('profile')">查看成就墙示例 →</button>
+</div>
+</section>
+</div>
+
+<!-- ===== 指数详情 ===== -->
+<div id="page-index" class="page">
+<section class="section section-dark text-center" style="padding:64px 16px;">
+<h1 style="font-size:36px;font-weight:700;font-family:'Playfair Display',Georgia,serif;">指数详情</h1>
+<p style="color:rgba(201,168,76,0.8);margin-top:8px;">追踪新质生产力在资本市场的真实共识</p>
+</section>
+
+<section class="section">
+<div class="container">
+<div style="display:flex;flex-direction:column;gap:40px;">
+<div class="card" style="padding:48px;">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
+<div><h2 style="font-size:24px;font-weight:700;">合力300指数</h2><p class="text-light" style="font-size:14px;">Heli 300 Index</p></div>
+<div style="text-align:right;"><div class="index-value">3,842.56</div><div class="up" style="font-size:14px;font-weight:600;">▲ 1.23%</div></div>
+</div>
+<p class="text-secondary" style="margin-bottom:24px;">覆盖A股300家新质生产力代表企业，每季度调整成分股</p>
+<div class="grid-2" style="margin-bottom:24px;">
+<div style="background:var(--bg-light);border-radius:16px;padding:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:8px;">成分股数量</h4><p style="font-size:24px;font-weight:700;">300</p></div>
+<div style="background:var(--bg-light);border-radius:16px;padding:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:8px;">覆盖行业</h4><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;"><span class="tag tag-gold">AI与大模型</span><span class="tag tag-gold">生物医药</span><span class="tag tag-gold">先进制造</span><span class="tag tag-gold">绿色能源</span><span class="tag tag-gold">数字经济</span></div></div>
+</div>
+</div>
+<div class="card" style="padding:48px;">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
+<div><h2 style="font-size:24px;font-weight:700;">合力港股通</h2><p class="text-light" style="font-size:14px;">Heli HK Connect</p></div>
+<div style="text-align:right;"><div class="index-value">5,126.78</div><div class="down" style="font-size:14px;font-weight:600;">▼ 0.45%</div></div>
+</div>
+<p class="text-secondary" style="margin-bottom:24px;">港股通范围内新质生产力企业共识值，反映南向资金偏好</p>
+<div class="grid-2"><div style="background:var(--bg-light);border-radius:16px;padding:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:8px;">成分股数量</h4><p style="font-size:24px;font-weight:700;">120</p></div><div style="background:var(--bg-light);border-radius:16px;padding:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:8px;">覆盖行业</h4><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;"><span class="tag tag-gold">生物医药</span><span class="tag tag-gold">先进制造</span><span class="tag tag-gold">数字经济</span></div></div></div>
+</div>
+<div class="card" style="padding:48px;">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
+<div><h2 style="font-size:24px;font-weight:700;">合力纳斯达克</h2><p class="text-light" style="font-size:14px;">Heli Nasdaq Index</p></div>
+<div style="text-align:right;"><div class="index-value">2,845.32</div><div class="up" style="font-size:14px;font-weight:600;">▲ 2.10%</div></div>
+</div>
+<p class="text-secondary" style="margin-bottom:24px;">中概股及全球新质生产力共识指数，追踪海外上市中国企业</p>
+<div class="grid-2"><div style="background:var(--bg-light);border-radius:16px;padding:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:8px;">成分股数量</h4><p style="font-size:24px;font-weight:700;">85</p></div><div style="background:var(--bg-light);border-radius:16px;padding:16px;"><h4 style="font-size:14px;font-weight:600;margin-bottom:8px;">覆盖行业</h4><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;"><span class="tag tag-gold">AI与大模型</span><span class="tag tag-gold">数字经济</span><span class="tag tag-gold">生物医药</span></div></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section section-light">
+<div class="container text-center">
+<h2 class="section-title">热力值排名（Demo Top 5）</h2>
+<div style="max-width:600px;margin:0 auto;background:white;border-radius:16px;border:1px solid var(--border);overflow:hidden;">
+<div class="rank-item"><span class="rank-num rank-1">1</span><div style="flex:1;text-align:left;"><strong>宁德时代</strong> <span class="text-light" style="font-size:12px;margin-left:8px;">绿色能源</span></div><div style="font-weight:700;color:var(--consensus-gold);">9642</div></div>
+<div class="rank-item"><span class="rank-num rank-2">2</span><div style="flex:1;text-align:left;"><strong>比亚迪</strong> <span class="text-light" style="font-size:12px;margin-left:8px;">先进制造</span></div><div style="font-weight:700;color:var(--consensus-gold);">9520</div></div>
+<div class="rank-item"><span class="rank-num rank-3">3</span><div style="flex:1;text-align:left;"><strong>华为技术</strong> <span class="text-light" style="font-size:12px;margin-left:8px;">AI与大模型</span></div><div style="font-weight:700;color:var(--consensus-gold);">9485</div></div>
+<div class="rank-item"><span class="rank-num rank-other">4</span><div style="flex:1;text-align:left;"><strong>药明康德</strong> <span class="text-light" style="font-size:12px;margin-left:8px;">生物医药</span></div><div style="font-weight:700;color:var(--consensus-gold);">9340</div></div>
+<div class="rank-item"><span class="rank-num rank-other">5</span><div style="flex:1;text-align:left;"><strong>腾讯控股</strong> <span class="text-light" style="font-size:12px;margin-left:8px;">数字经济</span></div><div style="font-weight:700;color:var(--consensus-gold);">9280</div></div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- ===== 全球路演 ===== -->
+<div id="page-roadshow" class="page">
+<section class="section section-dark text-center" style="padding:64px 16px;">
+<h1 style="font-size:36px;font-weight:700;font-family:'Playfair Display',Georgia,serif;">全球巡回路演</h1>
+<p style="color:rgba(201,168,76,0.8);margin-top:8px;">为上市公司搭建国际投资者对接舞台</p>
+</section>
+
+<section class="section">
+<div class="container">
+<h2 class="section-title">2026-2027 路演日程</h2>
+<div class="grid-3">
+<div class="roadshow-card"><div class="roadshow-header" style="background:linear-gradient(135deg,#1a2d4a,#0a1628);"><h3 style="font-size:20px;font-weight:700;">第一站 · 香港</h3><p style="font-size:14px;opacity:0.8;margin-top:4px;">2026年9月15日</p></div><div class="roadshow-body"><p class="text-secondary" style="font-size:14px;margin-bottom:12px;">聚焦大湾区新质生产力企业，对接中环机构投资者</p><span class="tag tag-yellow">🔵 报名中</span></div></div>
+<div class="roadshow-card"><div class="roadshow-header" style="background:linear-gradient(135deg,#2d1a4a,#1a0d2e);"><h3 style="font-size:20px;font-weight:700;">第二站 · 新加坡</h3><p style="font-size:14px;opacity:0.8;margin-top:4px;">2026年10月20日</p></div><div class="roadshow-body"><p class="text-secondary" style="font-size:14px;margin-bottom:12px;">东南亚主权基金与家族办公室专场</p><span class="tag tag-gray">筹备中</span></div></div>
+<div class="roadshow-card"><div class="roadshow-header" style="background:linear-gradient(135deg,#1a3d2e,#0d1f17);"><h3 style="font-size:20px;font-weight:700;">第三站 · 伦敦</h3><p style="font-size:14px;opacity:0.8;margin-top:4px;">2026年11月18日</p></div><div class="roadshow-body"><p class="text-secondary" style="font-size:14px;margin-bottom:12px;">欧洲长线资金对接，ESG主题路演</p><span class="tag tag-gray">筹备中</span></div></div>
+<div class="roadshow-card"><div class="roadshow-header" style="background:linear-gradient(135deg,#3d2a1a,#1f150d);"><h3 style="font-size:20px;font-weight:700;">第四站 · 纽约</h3><p style="font-size:14px;opacity:0.8;margin-top:4px;">2026年12月10日</p></div><div class="roadshow-body"><p class="text-secondary" style="font-size:14px;margin-bottom:12px;">华尔街机构闭门会+纽交所参观</p><span class="tag tag-gray">筹备中</span></div></div>
+<div class="roadshow-card"><div class="roadshow-header" style="background:linear-gradient(135deg,#3d3d1a,#1f1f0d);"><h3 style="font-size:20px;font-weight:700;">第五站 · 达沃斯</h3><p style="font-size:14px;opacity:0.8;margin-top:4px;">2027年1月22日</p></div><div class="roadshow-body"><p class="text-secondary" style="font-size:14px;margin-bottom:12px;">达沃斯论坛边会，金鲲鹏颁奖典礼同期举行</p><span class="tag tag-gold">⭐ 旗舰站</span></div></div>
+</div>
+</div>
+</section>
+
+<section class="section section-dark text-center">
+<div class="container">
+<h2 style="font-size:28px;font-weight:700;margin-bottom:16px;">报名参与路演</h2>
+<p style="color:rgba(255,255,255,0.7);margin-bottom:32px;">上市公司可申请路演席位，专业投资者可申请受邀参会</p>
+<button class="btn-gold" onclick="go('register')">立即申请 →</button>
+</div>
+</section>
+</div>
+
+<!-- ===== 金鲲鹏颁奖 ===== -->
+<div id="page-awards" class="page">
+<section class="hero hero-awards">
+<div class="particles" id="particles-awards"></div>
+<div class="hero-content">
+<div style="font-size:60px;margin-bottom:16px;">🏆</div>
+<h1 style="font-family:'Playfair Display',Georgia,serif;">金鲲鹏奖</h1>
+<p class="text-gold" style="font-size:20px;font-family:'Playfair Display',Georgia,serif;">新质生产力的荣耀时刻</p>
+<p style="color:rgba(255,255,255,0.6);font-size:14px;max-width:600px;margin:16px auto 40px;">《香港商报》与合力指数联合颁发，致敬资本市场的真实价值创造者</p>
+<div class="hero-buttons">
+<button class="btn-gold" onclick="scrollToSection('awards-cta')">提名申报</button>
+<button class="btn-outline-gold" onclick="scrollToSection('awards-cta')">典礼参与申请</button>
+</div>
+</div>
+</section>
+
+<section class="section" style="margin-top:-60px;position:relative;z-index:20;">
+<div class="container">
+<h2 class="section-title text-white" style="color:white;">颁奖系列活动</h2>
+
+<div class="award-main-card">
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+<span class="tag tag-gold" style="font-weight:700;">年度旗舰</span>
+<span class="tag tag-nominating">🟡 提名征集中</span>
+</div>
+<h3 style="font-size:26px;font-weight:700;color:var(--deep-blue);margin-bottom:16px;font-family:'Playfair Display',Georgia,serif;">金鲲鹏·新质生产力年度颁奖典礼</h3>
+<div style="display:flex;flex-wrap:wrap;gap:24px;margin-bottom:24px;color:var(--text-secondary);font-size:14px;">
+<span>📅 2027年1月</span><span>📍 瑞士·达沃斯</span><span>📺 全球直播</span>
+</div>
+<p class="text-secondary" style="margin-bottom:24px;">达沃斯论坛边会同期揭晓，全球同步直播。合力指数生态年度盛事，致敬在新质生产力领域表现卓越的上市公司、专业投资者及产学研机构。</p>
+<div style="margin-bottom:24px;">
+<h4 style="font-weight:600;margin-bottom:12px;">奖项设置</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;">
+<div style="display:flex;align-items:start;gap:8px;font-size:14px;color:var(--text-secondary);"><span class="text-gold">◆</span> 年度新质生产力卓越上市公司（10家）</div>
+<div style="display:flex;align-items:start;gap:8px;font-size:14px;color:var(--text-secondary);"><span class="text-gold">◆</span> 年度最佳IR团队（5家）</div>
+<div style="display:flex;align-items:start;gap:8px;font-size:14px;color:var(--text-secondary);"><span class="text-gold">◆</span> 年度共识领袖（专业投资者，5名）</div>
+<div style="display:flex;align-items:start;gap:8px;font-size:14px;color:var(--text-secondary);"><span class="text-gold">◆</span> 年度创新研究机构（3家）</div>
+<div style="display:flex;align-items:start;gap:8px;font-size:14px;color:var(--text-secondary);"><span class="text-gold">◆</span> 年度热力值金奖（C端投票选出最受认可公司）</div>
+</div>
+</div>
+<div style="background:var(--bg-light);border-radius:16px;padding:16px;margin-bottom:24px;">
+<p style="font-size:14px;color:var(--text-secondary);"><strong>评选依据：</strong>合力指数热力值、诊断季表现、投资者投票、专业评审团综合评定</p>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;">
+<button class="btn-gold" style="background:var(--deep-blue);color:white;padding:10px 24px;font-size:14px;" onclick="scrollToSection('awards-cta')">提名公司/个人</button>
+<button class="btn-outline-gold" style="border-color:var(--deep-blue);color:var(--deep-blue);padding:8px 24px;font-size:14px;" onclick="scrollToSection('awards-cta')">申请参会</button>
+</div>
+</div>
+
+<div class="grid-2">
+<div class="award-special-card">
+<div style="display:flex;gap:12px;margin-bottom:16px;"><span class="tag tag-blue" style="font-weight:700;">专项</span><span class="tag tag-preparing">🟡 筹备中</span></div>
+<h4 style="font-size:20px;font-weight:700;color:var(--deep-blue);margin-bottom:12px;">金鲲鹏·行业新质生产力先锋榜</h4>
+<div style="display:flex;gap:16px;margin-bottom:12px;font-size:14px;color:var(--text-secondary);"><span>📅 2026年10月</span><span>📍 香港</span></div>
+<p class="text-secondary" style="font-size:14px;margin-bottom:16px;">按行业评选先进制造、数字经济、生物医药等领域的先锋企业</p>
+<div><h5 style="font-size:14px;font-weight:600;margin-bottom:8px;">奖项类别</h5><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag tag-gray">先进制造先锋</span><span class="tag tag-gray">数字经济先锋</span><span class="tag tag-gray">生物医药先锋</span><span class="tag tag-gray">绿色能源先锋</span></div></div>
+</div>
+<div class="award-special-card">
+<div style="display:flex;gap:12px;margin-bottom:16px;"><span class="tag tag-blue" style="font-weight:700;">专项</span><span class="tag tag-preparing">🟡 筹备中</span></div>
+<h4 style="font-size:20px;font-weight:700;color:var(--deep-blue);margin-bottom:12px;">金鲲鹏·投资者共识之星</h4>
+<div style="display:flex;gap:16px;margin-bottom:12px;font-size:14px;color:var(--text-secondary);"><span>📅 2026年12月</span><span>📍 线上发布</span></div>
+<p class="text-secondary" style="font-size:14px;margin-bottom:16px;">表彰在平台贡献优质分析、获得高共识度的专业投资者和分析师</p>
+<div><h5 style="font-size:14px;font-weight:600;margin-bottom:8px;">奖项类别</h5><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag tag-gray">年度共识领袖</span><span class="tag tag-gray">最佳深度分析</span><span class="tag tag-gray">跨行业洞察奖</span></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section section-light">
+<div class="container">
+<h2 class="section-title">评选流程</h2>
+<p class="text-center text-secondary" style="margin-bottom:48px;">透明、公正、基于真实数据</p>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">提名征集</h4><p style="font-size:14px;color:var(--text-secondary);">公开提名，公司/个人自荐或推荐</p></div>
+<div class="step"><div class="step-num">2</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">数据筛选</h4><p style="font-size:14px;color:var(--text-secondary);">合力指数热力值+诊断季数据</p></div>
+<div class="step"><div class="step-num">3</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">专业评审</h4><p style="font-size:14px;color:var(--text-secondary);">评审团综合评定</p></div>
+<div class="step"><div class="step-num">4</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">公布入围</h4><p style="font-size:14px;color:var(--text-secondary);">入围名单公示</p></div>
+<div class="step"><div class="step-num">5</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">颁奖典礼</h4><p style="font-size:14px;color:var(--text-secondary);">现场颁奖+全球直播</p></div>
+</div>
+<div style="margin-top:40px;background:rgba(201,168,76,0.1);border-radius:16px;padding:24px;text-align:center;">
+<p style="font-size:14px;color:var(--text-secondary);">⚡ <strong>共识机制：</strong>部分奖项由C端投资者投票直接产生，评选标准完全公开。</p>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<h2 class="section-title">获奖权益</h2>
+<div class="grid-5">
+<div class="card text-center"><div style="font-size:30px;margin-bottom:12px;">📰</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">品牌曝光</h4><p style="font-size:14px;color:var(--text-secondary);">香港商报及合作媒体全渠道报道</p></div>
+<div class="card text-center"><div style="font-size:30px;margin-bottom:12px;">🌍</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">路演优先权</h4><p style="font-size:14px;color:var(--text-secondary);">全球路演优先受邀资格</p></div>
+<div class="card text-center"><div style="font-size:30px;margin-bottom:12px;">✅</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">平台认证</h4><p style="font-size:14px;color:var(--text-secondary);">专属认证标识展示</p></div>
+<div class="card text-center"><div style="font-size:30px;margin-bottom:12px;">🏆</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">奖杯证书</h4><p style="font-size:14px;color:var(--text-secondary);">金鲲鹏定制奖杯及证书</p></div>
+<div class="card text-center"><div style="font-size:30px;margin-bottom:12px;">🎤</div><h4 style="font-weight:700;color:var(--deep-blue);margin-bottom:8px;">媒体专访</h4><p style="font-size:14px;color:var(--text-secondary);">财经媒体独家专访机会</p></div>
+</div>
+</div>
+</section>
+
+<section class="section" style="background:rgba(10,22,40,0.03);">
+<div class="container text-center" style="max-width:700px;margin:0 auto;">
+<h3 style="font-size:20px;font-weight:700;margin-bottom:16px;">与成就体系的联动</h3>
+<p class="text-secondary" style="margin-bottom:16px;">在成就体系中获得特定勋章的用户或机构，将在金鲲鹏评选中获得加分或优先提名。例如，"共识领袖"成就持有者自动进入专业投资者奖项候选池。</p>
+<a onclick="go('profile')" class="text-gold" style="font-weight:600;cursor:pointer;">查看成就体系说明 →</a>
+</div>
+</section>
+
+<section class="section">
+<div class="container text-center">
+<h3 style="font-size:20px;font-weight:700;margin-bottom:32px;">媒体与合作伙伴</h3>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:32px;align-items:center;">
+<span class="text-light" style="font-weight:600;font-size:18px;">香港商报</span>
+<span class="text-light" style="font-weight:600;font-size:18px;">香港经济日报</span>
+<span class="text-light" style="font-weight:600;font-size:18px;">信报财经新闻</span>
+<span class="text-light" style="font-weight:600;font-size:18px;">Bloomberg</span>
+<span class="text-light" style="font-weight:600;font-size:18px;">Reuters</span>
+</div>
+</div>
+</section>
+
+<section id="awards-cta" class="section section-dark text-center">
+<div class="container" style="max-width:700px;margin:0 auto;">
+<h2 style="font-size:28px;font-weight:700;margin-bottom:16px;">加入金鲲鹏</h2>
+<p style="color:rgba(255,255,255,0.7);margin-bottom:40px;">提名卓越企业/个人，或申请参加2027年达沃斯年度颁奖典礼</p>
+<div class="hero-buttons">
+<button class="btn-gold">立即提名申报</button>
+<button class="btn-outline-gold">申请参会席位</button>
+</div>
+</div>
+</section>
+</div>
+
+<!-- ===== 成就墙 ===== -->
+<div id="page-profile" class="page">
+<section class="section section-dark" style="padding:48px 16px;">
+<div class="container">
+<h1 style="font-size:28px;font-weight:700;margin-bottom:8px;">用户成就墙 Demo</h1>
+<p style="color:rgba(201,168,76,0.8);">展示C端、B端、专业投资者三类成就勋章</p>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<h2 style="font-size:24px;font-weight:700;color:var(--deep-blue);margin-bottom:8px;">C端投资者 · 共识参与者</h2>
+<p class="text-secondary" style="margin-bottom:32px;">投票、提问、签到、质押——记录每一位共识参与者的贡献</p>
+<div class="achievement-grid" id="ach-c"></div>
+</div>
+</section>
+
+<section class="section section-light">
+<div class="container">
+<h2 style="font-size:24px;font-weight:700;color:var(--deep-blue);margin-bottom:8px;">B端上市公司 · 价值披露先锋</h2>
+<p class="text-secondary" style="margin-bottom:32px;">认领公司、回复提问、参与诊断——彰显企业透明度与共识度</p>
+<div class="achievement-grid" id="ach-b"></div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<h2 style="font-size:24px;font-weight:700;color:var(--deep-blue);margin-bottom:8px;">专业投资者 · 洞察领航者</h2>
+<p class="text-secondary" style="margin-bottom:32px;">深度分析、共识捕手、跨行业视野——表彰专业投资者的洞察力</p>
+<div class="achievement-grid" id="ach-p"></div>
+</div>
+</section>
+
+<section class="section section-light">
+<div class="container text-center" style="max-width:700px;margin:0 auto;">
+<h2 style="font-size:24px;font-weight:700;margin-bottom:16px;">Web3 共识层</h2>
+<p class="text-secondary">所有成就勋章均在 Web3 共识层上铸造为不可转让的 NFT 徽章，永久记录在链上，不可篡改，真实可验证。每个勋章包含获得日期与链上哈希。</p>
+</div>
+</section>
+</div>
+
+<!-- ===== 注册 ===== -->
+<div id="page-register" class="page">
+<section class="section section-dark text-center" style="padding:64px 16px;">
+<h1 style="font-size:36px;font-weight:700;">注册合力指数</h1>
+<p style="color:rgba(201,168,76,0.8);margin-top:8px;">加入新质生产力共识生态</p>
+</section>
+<section class="section">
+<div class="container" style="max-width:500px;">
+<div class="form-card">
+<h2 style="font-size:20px;font-weight:700;text-align:center;margin-bottom:24px;">选择角色</h2>
+<div class="role-grid" id="role-grid">
+<div class="role-card" onclick="selectRole(this)"><div class="role-icon">👤</div><h4 style="font-weight:600;">C端投资者</h4><p style="font-size:12px;color:var(--text-light);margin-top:4px;">投票、提问、签到</p></div>
+<div class="role-card" onclick="selectRole(this)"><div class="role-icon">📊</div><h4 style="font-weight:600;">专业投资者</h4><p style="font-size:12px;color:var(--text-light);margin-top:4px;">深度分析、加权投票</p></div>
+<div class="role-card" onclick="selectRole(this)"><div class="role-icon">🎓</div><h4 style="font-weight:600;">产学研机构</h4><p style="font-size:12px;color:var(--text-light);margin-top:4px;">发布研究、产业对接</p></div>
+<div class="role-card" onclick="selectRole(this)"><div class="role-icon">🏢</div><h4 style="font-weight:600;">上市公司</h4><p style="font-size:12px;color:var(--text-light);margin-top:4px;">认领公司、IR管理</p></div>
+</div>
+<div class="form-group"><label class="form-label">手机号</label><input class="form-input" type="tel" placeholder="请输入手机号"></div>
+<div class="form-group"><label class="form-label">邮箱</label><input class="form-input" type="email" placeholder="请输入邮箱"></div>
+<div class="form-group"><label class="form-label">密码</label><input class="form-input" type="password" placeholder="请设置密码"></div>
+<div class="form-group"><label class="form-label">确认密码</label><input class="form-input" type="password" placeholder="请再次输入密码"></div>
+<button class="btn-submit" onclick="alert('Demo：注册功能将在Phase 2接入Supabase后端')">注册</button>
+<p style="text-align:center;font-size:14px;color:var(--text-secondary);margin-top:24px;">已有账号？<a onclick="go('login')" class="text-gold" style="font-weight:600;cursor:pointer;">立即登录 →</a></p>
+</div>
+</div>
+</section>
+</div>
+
+<!-- ===== 登录 ===== -->
+<div id="page-login" class="page">
+<section class="section section-dark text-center" style="padding:64px 16px;">
+<h1 style="font-size:36px;font-weight:700;">登录合力指数</h1>
+<p style="color:rgba(201,168,76,0.8);margin-top:8px;">欢迎回来，共识参与者</p>
+</section>
+<section class="section">
+<div class="container" style="max-width:440px;">
+<div class="form-card">
+<h2 style="font-size:20px;font-weight:700;text-align:center;margin-bottom:24px;">账号登录</h2>
+<div class="form-group"><label class="form-label">手机号 / 邮箱</label><input class="form-input" type="text" placeholder="请输入手机号或邮箱"></div>
+<div class="form-group"><label class="form-label">密码</label><input class="form-input" type="password" placeholder="请输入密码"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:16px;"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox"> 记住我</label><a class="text-gold" style="cursor:pointer;">忘记密码？</a></div>
+<button class="btn-submit" onclick="alert('Demo：登录功能将在Phase 2接入Supabase后端')">登录</button>
+<p style="text-align:center;font-size:14px;color:var(--text-secondary);margin-top:24px;">还没有账号？<a onclick="go('register')" class="text-gold" style="font-weight:600;cursor:pointer;">立即注册 →</a></p>
+<div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">
+<p style="font-size:12px;color:var(--text-light);text-align:center;margin-bottom:16px;">其他登录方式（Demo）</p>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+<button style="border:1px solid var(--border);border-radius:12px;padding:8px;font-size:14px;cursor:pointer;background:white;">📱 微信</button>
+<button style="border:1px solid var(--border);border-radius:12px;padding:8px;font-size:14px;cursor:pointer;background:white;">📧 验证码</button>
+<button style="border:1px solid var(--border);border-radius:12px;padding:8px;font-size:14px;cursor:pointer;background:white;">🔐 机构SSO</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- AI Agent -->
+<button class="ai-fab" onclick="alert('AI Agent 助手（Demo）\n\n可尝试问我：\n• 合力300指数今天涨了多少？\n• 金鲲鹏颁奖典礼什么时候举行？\n• 如何获得「共识领袖」勋章？\n• 下一站路演在哪里？')">AI</button>
+
+<!-- 页脚 -->
+<footer class="footer">
+<div class="footer-grid">
+<div>
+<div style="display:flex;align-items:center;gap:8px;font-weight:700;color:white;margin-bottom:12px;"><span class="text-gold">⬡</span> 合力指数</div>
+<p style="font-size:14px;">新质生产力的资本市场共识平台</p>
+<p style="font-size:12px;margin-top:8px;">《香港商报》旗下</p>
+</div>
+<div>
+<h4>平台</h4>
+<ul style="list-style:none;font-size:14px;line-height:2;">
+<li><a onclick="go('index')" style="cursor:pointer;">指数详情</a></li>
+<li><a onclick="go('roadshow')" style="cursor:pointer;">全球路演</a></li>
+<li><a onclick="go('awards')" style="cursor:pointer;">金鲲鹏颁奖</a></li>
+</ul>
+</div>
+<div>
+<h4>社区</h4>
+<ul style="list-style:none;font-size:14px;line-height:2;">
+<li><a onclick="go('register')" style="cursor:pointer;">注册加入</a></li>
+<li><a onclick="go('profile')" style="cursor:pointer;">成就体系</a></li>
+</ul>
+</div>
+<div>
+<h4>联系</h4>
+<p style="font-size:14px;">contact@heli-index.com</p>
+</div>
+</div>
+<div class="footer-bottom">© 2026 合力指数 Heli-Index. All rights reserved.</div>
+</footer>
+
+<script>
+// 页面切换
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) { el.classList.add('active'); window.scrollTo(0, 0); }
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// 角色选择
+function selectRole(el) {
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// 粒子效果
+function createParticles(containerId, count) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.width = p.style.height = (3 + Math.random() * 4) + 'px';
+    p.style.animationDelay = Math.random() * 8 + 's';
+    p.style.animationDuration = (6 + Math.random() * 6) + 's';
+    c.appendChild(p);
+  }
+}
+createParticles('particles-home', 30);
+createParticles('particles-awards', 25);
+
+// 成就数据
+const achievements = {
+  c: [
+    {name:'初识共识',icon:'🧭',desc:'完成首次投票',tier:'common',unlocked:true,date:'2026-03-15'},
+    {name:'持之以恒',icon:'📅',desc:'连续签到7天',tier:'common',unlocked:true,date:'2026-04-02'},
+    {name:'投票达人',icon:'🗳️',desc:'累计完成50次投票',tier:'uncommon',unlocked:true,date:'2026-05-20'},
+    {name:'尖锐提问者',icon:'❓',desc:'提问累计10次被推至Top5',tier:'uncommon',unlocked:false},
+    {name:'诊断季常客',icon:'🩺',desc:'参与5期诊断季活动',tier:'uncommon',unlocked:false},
+    {name:'质押信仰者',icon:'🔒',desc:'累计质押HP超1000且超30天',tier:'uncommon',unlocked:false},
+    {name:'生态建设者',icon:'📨',desc:'邀请3位认证专业投资者',tier:'rare',unlocked:false},
+    {name:'共识领袖',icon:'🪄',desc:'三枚进阶勋章合成',tier:'epic',unlocked:false},
+  ],
+  b: [
+    {name:'新质入场',icon:'🚩',desc:'完成公司认领并完善AI+战略',tier:'common',unlocked:true,date:'2026-02-10'},
+    {name:'坦诚对话',icon:'💬',desc:'回复投资者提问超20条',tier:'common',unlocked:true,date:'2026-03-28'},
+    {name:'诊断勇气',icon:'🔬',desc:'参与1期诊断季活动',tier:'uncommon',unlocked:true,date:'2026-05-10'},
+    {name:'共识之选',icon:'⭐',desc:'热力值连续4周行业前10%',tier:'uncommon',unlocked:false},
+    {name:'路演先锋',icon:'🌍',desc:'参与至少1站全球巡回路演',tier:'uncommon',unlocked:false},
+    {name:'金鲲鹏提名',icon:'🏆',desc:'获得金鲲鹏奖项提名',tier:'rare',unlocked:false},
+    {name:'金鲲鹏得主',icon:'🏅',desc:'获得金鲲鹏年度奖项',tier:'epic',unlocked:false},
+    {name:'新质生产力标杆',icon:'💎',desc:'年度热力值总排名第一',tier:'legendary',unlocked:false},
+  ],
+  p: [
+    {name:'认证分析师',icon:'📜',desc:'完成专业投资者认证',tier:'common',unlocked:true,date:'2026-01-15'},
+    {name:'深度洞察',icon:'🔍',desc:'发布3篇以上深度分析',tier:'common',unlocked:true,date:'2026-03-05'},
+    {name:'影响力声音',icon:'📢',desc:'分析获赞超过100次',tier:'uncommon',unlocked:true,date:'2026-04-18'},
+    {name:'共识捕手',icon:'🎯',desc:'诊断季投票偏差小于10%',tier:'uncommon',unlocked:false},
+    {name:'跨行业视野',icon:'🔮',desc:'对3+行业公司发表分析',tier:'uncommon',unlocked:false},
+    {name:'路演智识',icon:'💼',desc:'参与路演闭门会并发言',tier:'rare',unlocked:false},
+    {name:'年度共识之星',icon:'✨',desc:'获得金鲲鹏年度共识领袖奖',tier:'epic',unlocked:false},
+  ]
+};
+
+const tierLabels = {common:'基础', uncommon:'进阶', rare:'稀有', epic:'史诗', legendary:'传说'};
+
+function renderAch(id, list) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = list.map(a => `
+    <div class="achievement ${a.unlocked ? 'unlocked' : 'locked'}" title="${a.name}: ${a.desc}">
+      <div class="badge-icon ${a.unlocked ? 'badge-' + a.tier : 'badge-locked'}">${a.unlocked ? a.icon : '?'}</div>
+      <span style="font-size:12px;font-weight:600;text-align:center;color:${a.unlocked ? 'var(--deep-blue)' : '#9ca3af'};">${a.name}</span>
+      <span class="tag tag-gray" style="font-size:11px;padding:2px 8px;">${tierLabels[a.tier]}</span>
+      ${a.unlocked && a.date ? `<span style="font-size:11px;color:var(--text-light);">${a.date}</span>` : '<span style="font-size:11px;color:#9ca3af;">未解锁</span>'}
+    </div>
+  `).join('');
+}
+renderAch('ach-c', achievements.c);
+renderAch('ach-b', achievements.b);
+renderAch('ach-p', achievements.p);
+</script>
+
+</body>
+</html>
