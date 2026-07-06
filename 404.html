@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合力指数 - 重定向中...</title>
+  <script>
+    // 将路径转为 hash 路由：/Heli-index/awards → index.html#awards
+    (function() {
+      var path = window.location.pathname;
+      // 去掉末尾的 /
+      path = path.replace(/\/$/, '');
+      // 取最后一段作为 hash
+      var parts = path.split('/');
+      var hash = parts[parts.length - 1];
+      // 如果是空或 index.html，则跳首页
+      if (!hash || hash === '' || hash === 'index.html' || hash === 'Heli-index') {
+        hash = 'home';
+      }
+      // 跳转到 index.html#hash
+      window.location.href = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'index.html#' + hash;
+    })();
+  </script>
+  <style>
+    body { font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; background: #0a1628; color: #c9a84c; }
+  </style>
+</head>
+<body>页面重定向中，请稍候...</body>
+</html>
