@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="heli-logo">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2c97e"/>
+      <stop offset="50%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#a68a2e"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- {9/4} 九芒星 -->
+  <polygon
+    points="50,8 53,34 77,18 64,42 91,43 66,53 86,71 60,62 64,90 50,66 36,90 40,62 14,71 34,53 9,43 36,42 23,18 47,34"
+    fill="url(#goldGrad)" opacity="0.13" stroke="url(#goldGrad)" stroke-width="1.2"/>
+  <polygon
+    points="50,13 55,36 79,21 66,43 89,45 67,54 84,69 61,61 66,87 50,65 34,87 39,61 16,69 33,54 11,45 48,43 21,21 45,36"
+    fill="url(#goldGrad)" filter="url(#glow)"/>
+  <!-- 中心 -->
+  <circle cx="50" cy="50" r="5.5" fill="#0a1628" stroke="#c9a84c" stroke-width="1.5"/>
+  <circle cx="50" cy="50" r="2.8" fill="#e2c97e"/>
+  <!-- 九角 -->
+  <circle cx="50" cy="8" r="2.2" fill="#e2c97e" opacity="0.9"/>
+  <circle cx="91" cy="43" r="2.2" fill="#e2c97e" opacity="0.9"/>
+  <circle cx="66" cy="90" r="2.2" fill="#e2c97e" opacity="0.9"/>
+  <circle cx="34" cy="90" r="2.2" fill="#e2c97e" opacity="0.9"/>
+  <circle cx="9" cy="43" r="2.2" fill="#e2c97e" opacity="0.9"/>
+  <circle cx="77" cy="18" r="2" fill="#e2c97e" opacity="0.65"/>
+  <circle cx="86" cy="71" r="2" fill="#e2c97e" opacity="0.65"/>
+  <circle cx="14" cy="71" r="2" fill="#e2c97e" opacity="0.65"/>
+  <circle cx="21" cy="21" r="2" fill="#e2c97e" opacity="0.65"/>
+</svg>
