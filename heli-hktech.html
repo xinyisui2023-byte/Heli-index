@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合力港股通科技指数 | 合力指数 Heli-Index</title>
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--deep-blue:#0a1628;--gold:#c9a84c;--gold-light:#e0c66a;--gold-dark:#9a7b2f;--white:#f8f9fb;--text-primary:#1a1f36;--text-secondary:#5a6070;--bg-card:#fff;--bg-section:#f1f5f9;--red-up:#e63946;--green-down:#2ecc71}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Inter","Noto Sans SC",system-ui,sans-serif;color:var(--text-primary);background:var(--white);line-height:1.6}
+.nav{position:sticky;top:0;z-index:100;background:var(--deep-blue);color:var(--white);padding:0 24px}
+.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none;color:white}
+.nav-logo img{height:32px}
+.nav-links{display:flex;gap:24px;font-size:14px;flex-wrap:wrap}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;transition:color .2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.btn-gold{background:var(--gold);color:var(--deep-blue);padding:8px 20px;border-radius:20px;font-weight:600;font-size:14px;border:none;cursor:pointer;text-decoration:none;display:inline-block}
+.btn-outline{border:1.5px solid var(--gold);color:var(--gold);padding:8px 20px;border-radius:20px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;background:transparent}
+.hero{background:linear-gradient(135deg,#0a1628 0%,#122a4a 50%,#1a3a5c 100%);color:white;padding:60px 24px 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,rgba(201,168,76,.1) 0%,transparent 60%)}
+.hero>*{position:relative}
+.hero-badge{display:inline-block;background:rgba(201,168,76,.2);color:var(--gold);border:1px solid var(--gold);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:16px}
+.hero h1{font-size:38px;font-weight:800;margin-bottom:12px}
+.hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:700px;margin:0 auto 24px}
+.price-bar{display:flex;justify-content:center;align-items:baseline;gap:20px;flex-wrap:wrap}
+.price-val{font-size:48px;font-weight:800;color:var(--gold)}
+.price-date{font-size:13px;color:rgba(255,255,255,.5)}
+.container{max-width:1280px;margin:0 auto;padding:48px 24px}
+h2{font-size:26px;font-weight:800;margin-bottom:20px;color:var(--deep-blue)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:768px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{background:var(--bg-card);border-radius:14px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid #eef1f5}
+.methodology-step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start}
+.step-num{background:var(--gold);color:var(--deep-blue);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
+.const-table{width:100%;border-collapse:collapse;font-size:13px}
+.const-table th{background:var(--deep-blue);color:white;padding:12px 14px;text-align:left;font-weight:600}
+.const-table td{padding:12px 14px;border-bottom:1px solid #eef1f5}
+.const-table .up{color:var(--red-up);font-weight:600}
+.const-table .down{color:var(--green-down);font-weight:600}
+.factor-visual{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.factor-name{width:100px;font-size:13px;font-weight:600;text-align:right}
+.factor-bar{flex:1;height:20px;background:#eef1f5;border-radius:10px;overflow:hidden}
+.factor-fill{height:100%;background:linear-gradient(90deg,#457b9d,#1d3557);border-radius:10px}
+.factor-pct{width:50px;font-size:12px;font-weight:700;color:var(--deep-blue)}
+.breadcrumb{font-size:13px;color:var(--text-secondary);margin-bottom:24px}
+.breadcrumb a{color:var(--deep-blue);text-decoration:none}
+footer{background:var(--deep-blue);color:rgba(255,255,255,.6);padding:48px 24px;text-align:center;font-size:13px}
+footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.svg" alt="合力指数">合力指数</a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="indices.html" class="active">指数中心</a>
+      <a href="diagnosis.html">诊断季</a>
+      <a href="roadshow.html">全球路演</a>
+      <a href="awards.html">金鲲鹏</a>
+      <a href="achievements.html">成就</a>
+      <a href="agent.html">AI助手</a>
+      <a href="workspace.html">B端工作台</a>
+    </div>
+    <div style="display:flex;gap:12px">
+      <a href="login.html" style="color:white;font-size:14px;text-decoration:none">登录</a>
+      <a href="register.html" class="btn-gold">注册</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="hero-badge">合力系列 · 港股通聚焦</span>
+  <h1>合力港股通科技指数</h1>
+  <p>Heli-HSTech —— 在港商科指基础上扩展覆盖，纳入金融科技、智慧城市、云服务等新赛道，设ESG负面筛选，追踪港股通50家科技龙头。</p>
+  <div class="price-bar">
+    <span style="font-size:13px;color:rgba(255,255,255,.5)">实时</span>
+    <span class="price-val">8,934.15</span>
+    <span style="font-size:20px;font-weight:600;color:var(--green-down)">▼ -46.89 (-0.52%)</span>
+    <span class="price-date">2026-07-06 15:08 HKT</span>
+  </div>
+</section>
+
+<div class="container">
+  <div class="breadcrumb"><a href="indices.html">← 指数中心</a> / 合力港股通科技指数 (Heli-HSTech)</div>
+
+  <div class="grid2" style="margin-bottom:40px">
+    <div class="card">
+      <h3>📋 指数概要</h3>
+      <table style="width:100%;font-size:13px">
+        <tr><td style="color:var(--text-secondary);padding:6px 0">指数名称</td><td style="font-weight:600">合力港股通科技指数</td></tr>
+        <tr><td style="color:var(--text-secondary);padding:6px 0">指数代码</td><td style="font-weight:600;color:var(--gold)">Heli-HSTech</td></tr>
+        <tr><td style="color:var(--text-secondary);padding:6px 0">成分股数</td><td>50只</td></tr>
+        <tr><td style="color:var(--text-secondary);padding:6px 0">基日/基点</td><td>2023-12-31 / 8000</td></tr>
+        <tr><td style="color:var(--text-secondary);padding:6px 0">调仓频率</td><td>季度（3/6/9/12月）</td></tr>
+        <tr><td style="color:var(--text-secondary);padding:6px 0">单股权重上限</td><td>12%</td></tr>
+        <tr><td style="color:var(--text-secondary);padding:6px 0">ESG要求</td><td style="color:#2e7d32">负面筛选，排除高碳排放</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>🔬 因子体系</h3>
+      <div class="factor-visual"><span class="factor-name">市值加权</span><div class="factor-bar"><div class="factor-fill" style="width:40%"></div></div><span class="factor-pct">40%</span></div>
+      <div class="factor-visual"><span class="factor-name">流动性</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
+      <div class="factor-visual"><span class="factor-name">ESG评级</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
+      <div class="factor-visual"><span class="factor-name">共识投票</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
+      <div class="factor-visual"><span class="factor-name">行业上限</span><div class="factor-bar"><div class="factor-fill" style="width:10%"></div></div><span class="factor-pct">10%</span></div>
+    </div>
+  </div>
+
+  <h2>📊 成分股TOP10</h2>
+  <div style="overflow-x:auto;margin-bottom:40px">
+    <table class="const-table">
+      <thead><tr><th>代码</th><th>名称</th><th>行业</th><th>市值(亿)</th><th>权重</th><th>ESG评级</th><th>涨跌</th></tr></thead>
+      <tbody>
+        <tr><td>0700.HK</td><td>腾讯控股</td><td>互联网/AI</td><td>38,200</td><td>11.2%</td><td>AA</td><td class="up">+3.2%</td></tr>
+        <tr><td>9988.HK</td><td>阿里巴巴</td><td>云计算</td><td>19,500</td><td>9.8%</td><td>A</td><td class="up">+1.8%</td></tr>
+        <tr><td>1810.HK</td><td>小米集团</td><td>智能制造</td><td>6,200</td><td>8.5%</td><td>A</td><td class="up">+4.1%</td></tr>
+        <tr><td>0981.HK</td><td>中芯国际</td><td>半导体</td><td>5,800</td><td>7.2%</td><td>BBB</td><td class="up">+5.4%</td></tr>
+        <tr><td>3690.HK</td><td>美团</td><td>数字服务</td><td>11,200</td><td>6.8%</td><td>A</td><td class="down">-1.2%</td></tr>
+        <tr><td>9618.HK</td><td>京东集团</td><td>电商/物流科技</td><td>8,400</td><td>5.5%</td><td>A</td><td class="up">+0.9%</td></tr>
+        <tr><td>9999.HK</td><td>网易</td><td>互联网</td><td>5,600</td><td>4.8%</td><td>A</td><td class="up">+2.3%</td></tr>
+        <tr><td>2015.HK</td><td>理想汽车</td><td>新能源</td><td>3,400</td><td>4.2%</td><td>BBB</td><td class="down">-1.5%</td></tr>
+        <tr><td>1024.HK</td><td>快手科技</td><td>AI/内容</td><td>2,800</td><td>3.5%</td><td>BBB</td><td class="up">+1.1%</td></tr>
+        <tr><td>9868.HK</td><td>小鹏汽车</td><td>新能源+AI</td><td>1,500</td><td>3.0%</td><td>BB</td><td class="up">+8.7%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>👥 用户交互</h2>
+  <div class="grid3" style="margin-bottom:40px">
+    <div class="card"><h3>👤 C端投资者</h3><p style="font-size:13px;color:var(--text-secondary)">查看行情、参与共识投票、订阅异动提醒</p></div>
+    <div class="card"><h3>🎓 专业投资者</h3><p style="font-size:13px;color:var(--text-secondary)">API数据接入、ESG评分查询、因子归因分析</p></div>
+    <div class="card"><h3>🏢 B端公司</h3><p style="font-size:13px;color:var(--text-secondary)">查看ESG评分、申请纳入候选、回复提问</p></div>
+  </div>
+</div>
+
+<footer>
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:left;padding-bottom:32px">
+    <div><h4 style="color:white;margin-bottom:12px">指数产品</h4><a href="hkcd-tech.html">港商科指</a><br><a href="heli-300.html">合力300</a><br><a href="heli-hktech.html" style="color:var(--gold)">合力港股通科技</a><br><a href="heli-nasdaq.html">合力纳斯达克中概</a></div>
+    <div><h4 style="color:white;margin-bottom:12px">工具</h4><a href="agent.html">AI助手</a><br><a href="api.html">开放API</a><br><a href="web3.html">Web3共识层</a></div>
+    <div><h4 style="color:white;margin-bottom:12px">平台</h4><a href="indices.html">指数中心</a><br><a href="diagnosis.html">诊断季</a><br><a href="awards.html">金鲲鹏</a></div>
+    <div><h4 style="color:white;margin-bottom:12px">关于</h4><p style="font-size:13px">合力港股通科技指数，港股通科技投资基准。nebula@heli-ai.com</p></div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:24px">© 2026 合力指数 Heli-Index</div>
+</footer>
+
+<script src="ai-widget.js"></script>
+</body>
+</html>
