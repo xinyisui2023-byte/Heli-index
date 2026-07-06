@@ -2,297 +2,175 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>合力指数（Heli-Index）| 新质生产力的资本市场共识平台</title>
-<meta name="description" content="合力指数是《香港商报》旗下，连接上市公司、投资者、专业机构与学研界的多方共识平台。">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>合力指数 | 新质生产力的资本市场共识平台</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628;
-  --blue-900: #0f2044;
-  --blue-800: #1a3260;
-  --blue-700: #1e4090;
-  --consensus-gold: #c9a84c;
-  --gold-light: #e8d48b;
-  --white: #ffffff;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --red: #ef4444;
-  --green: #22c55e;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--white); line-height: 1.6; }
-
-/* 导航 */
-.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); backdrop-filter: blur(8px); }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
-.nav-logo svg { width: 28px; height: 28px; flex-shrink: 0; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-.nav-links { display: flex; gap: 20px; }
-.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; }
-.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
-.nav-cta { display: flex; gap: 10px; }
-.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; transition: all 0.2s; white-space: nowrap; }
-.btn-login { color: rgba(255,255,255,0.8); }
-.btn-login:hover { color: var(--white); }
-.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; }
-.btn-register:hover { background: var(--gold-light); }
-
-/* Hero */
-.hero { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--blue-900) 50%, var(--blue-800) 100%); color: var(--white); padding: 80px 20px 60px; text-align: center; position: relative; overflow: hidden; }
-.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(201,168,76,0.08) 0%, transparent 60%), radial-gradient(circle at 70% 30%, rgba(201,168,76,0.04) 0%, transparent 50%); }
-.hero-badge { display: inline-block; background: rgba(201,168,76,0.15); color: var(--consensus-gold); border: 1px solid rgba(201,168,76,0.3); padding: 4px 14px; border-radius: 20px; font-size: 12px; margin-bottom: 20px; position: relative; }
-.hero h1 { font-size: clamp(28px, 6vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 16px; position: relative; }
-.hero h1 span { background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.hero p { font-size: clamp(14px, 2vw, 17px); color: rgba(255,255,255,0.7); max-width: 640px; margin: 0 auto 28px; position: relative; }
-.hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
-.btn-primary { display: inline-block; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); padding: 12px 28px; border-radius: 8px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
-.btn-secondary { display: inline-block; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 12px 28px; border-radius: 8px; font-size: 15px; text-decoration: none; transition: all 0.2s; }
-.btn-secondary:hover { border-color: var(--consensus-gold); color: var(--consensus-gold); }
-
-/* 特色入口 */
-.features { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.feature-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; transition: all 0.2s; text-decoration: none; color: inherit; display: block; }
-.feature-card:hover { border-color: var(--consensus-gold); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-.feature-icon { font-size: 32px; margin-bottom: 12px; }
-.feature-title { font-size: 17px; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
-.feature-desc { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
-
-/* 指数概览 */
-.indices { background: var(--gray-50); }
-.indices-inner { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
-.section-header { text-align: center; margin-bottom: 30px; }
-.section-header h2 { font-size: 26px; font-weight: 800; color: var(--deep-blue); margin-bottom: 8px; }
-.section-header p { color: var(--gray-500); font-size: 14px; }
-.index-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.index-card { background: var(--white); border-radius: 12px; padding: 20px; border: 1px solid var(--gray-200); }
-.index-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.index-name { font-size: 15px; font-weight: 700; color: var(--gray-800); }
-.index-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(201,168,76,0.12); color: var(--consensus-gold); }
-.index-value { font-size: 24px; font-weight: 800; color: var(--deep-blue); }
-.index-change { font-size: 13px; font-weight: 600; margin-top: 4px; }
-.up { color: var(--red); }
-.down { color: var(--green); }
-
-/* Footer */
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 20px 20px; font-size: 13px; }
-.footer-inner { max-width: 1100px; margin: 0 auto; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 30px; }
-@media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
-.footer-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.footer-brand svg { width: 24px; height: 24px; }
-.footer-brand span { color: var(--white); font-weight: 700; font-size: 15px; }
-.footer p { font-size: 12px; line-height: 1.7; }
-.footer h4 { color: var(--white); font-size: 13px; font-weight: 700; margin-bottom: 12px; }
-.footer a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px; display: block; margin-bottom: 6px; transition: color 0.2s; }
-.footer a:hover { color: var(--consensus-gold); }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; display: flex; justify-content: space-between; font-size: 11px; flex-wrap: wrap; gap: 8px; }
+.home-hero{background:linear-gradient(135deg,var(--deep-blue) 0%,var(--deep-blue-mid) 100%);color:white;padding:48px 16px 36px;text-align:center;position:relative;overflow:hidden}
+.home-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 25% 40%,rgba(201,168,76,.1) 0%,transparent 55%),radial-gradient(circle at 75% 60%,rgba(201,168,76,.06) 0%,transparent 50%)}
+.home-hero>*{position:relative}
+.home-hero h1{font-size:clamp(22px,5vw,36px);font-weight:800;margin-bottom:8px;line-height:1.3}
+.home-hero h1 .gold{color:var(--gold)}
+.home-hero p{font-size:13px;color:rgba(255,255,255,.7);max-width:460px;margin:0 auto 20px;line-height:1.7}
+.home-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.index-quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0}
+.index-quick-card{background:var(--bg-card);border-radius:var(--radius-md);padding:14px;border:1px solid var(--border);box-shadow:var(--shadow-sm);cursor:pointer;transition:all .2s}
+.index-quick-card:hover{border-color:var(--gold-border)}
+.index-quick-card .iq-name{font-size:13px;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.index-quick-card .iq-badge{font-size:10px;background:var(--gold-bg);color:var(--gold);padding:2px 8px;border-radius:8px;font-weight:700}
+.index-quick-card .iq-val{font-size:20px;font-weight:800;color:var(--deep-blue)}
+.index-quick-card .iq-change{font-size:11px;font-weight:600;margin-top:2px}
+.feature-grid-main{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.feature-entry{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-card);border-radius:var(--radius-md);padding:14px 8px;border:1px solid var(--border);cursor:pointer;transition:all .2s;text-align:center}
+.feature-entry:hover{border-color:var(--gold-border);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.feature-entry .fe-icon{font-size:26px;margin-bottom:4px}
+.feature-entry .fe-label{font-size:13px;font-weight:700;color:var(--text-primary)}
+.feature-entry .fe-desc{font-size:10px;color:var(--text-light);margin-top:2px}
+.news-quick{margin-top:24px}
+.news-item{display:flex;gap:8px;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.news-item:last-child{border-bottom:none}
+.news-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
+.news-text{flex:1}
+.news-text .nt-date{font-size:11px;color:var(--gold);font-weight:700}
+.news-text .nt-title{font-size:13px;font-weight:600;margin-top:2px}
 </style>
 </head>
 <body>
 
-<!-- 导航 -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html" class="active">首页</a>
-      <a href="indices.html">指数中心</a>
-      <a href="roadshow.html">全球路演</a>
-      <a href="awards.html">金鲲鹏颁奖</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="achievements.html">成就体系</a>
-      <a href="agent.html">AI助手</a>
-      <a href="api.html">开放API</a>
-      <a href="workspace.html">B端工作台</a>
-      <a href="admin.html">管理后台</a>
-    </div>
-    <div class="nav-cta">
-      <a href="login.html" class="btn-login">登录</a>
-      <a href="register.html" class="btn-register">注册</a>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">合力指数</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
+  </div>
+</div>
 
 <!-- Hero -->
-<section class="hero">
-  <div class="hero-badge">🚀 2026 Q3 诊断季进行中</div>
-  <h1>新质生产力的<br><span>资本市场共识平台</span></h1>
+<section class="home-hero">
+  <span class="hero-badge">🚀 2026 Q3 诊断季进行中</span>
+  <h1>新质生产力的<br><span class="gold">资本市场共识平台</span></h1>
   <p>合力指数是《香港商报》旗下，连接上市公司、投资者、专业机构与学研界的多方共识平台。追踪新质生产力在资本市场的真实共识。</p>
-  <div class="hero-cta">
-    <a href="indices.html" class="btn-primary">查看指数</a>
-    <a href="awards.html" class="btn-secondary">金鲲鹏颁奖</a>
+  <div class="home-cta">
+    <a href="indices.html" class="btn-primary">📊 查看指数</a>
+    <a href="awards.html" class="btn-white">🏆 金鲲鹏颁奖</a>
   </div>
 </section>
 
-<!-- 核心功能入口 -->
-<section class="features">
-  <div class="section-header">
-    <h2>核心功能</h2>
-    <p>探索合力指数平台的四大核心模块</p>
-  </div>
-  <div class="features-grid">
-    <a href="indices.html" class="feature-card">
-      <div class="feature-icon">📊</div>
-      <div class="feature-title">指数中心</div>
-      <div class="feature-desc">港商科指 HKCD-Tech + 合力300 + 合力港股通科技 + 纳斯达克中概。四大旗舰指数，全方位覆盖。</div>
+<!-- 指数速览 -->
+<div class="page-content">
+  <div class="section-title">📈 指数速览</div>
+  <div class="index-quick">
+    <a href="hkcd-tech.html" class="index-quick-card">
+      <div class="iq-name">港商科指 HKCD-Tech <span class="iq-badge">官方</span></div>
+      <div class="iq-val">3,847.62</div>
+      <div class="iq-change up">▲ +88.14 (+2.34%)</div>
     </a>
-    <a href="roadshow.html" class="feature-card">
-      <div class="feature-icon">🌍</div>
-      <div class="feature-title">全球路演</div>
-      <div class="feature-desc">香港→新加坡→伦敦→纽约→达沃斯，5站巡回，连接中国企业与全球投资者。</div>
+    <a href="heli-300.html" class="index-quick-card">
+      <div class="iq-name">合力300 Heli-300 <span class="iq-badge">旗舰</span></div>
+      <div class="iq-val">5,213.88</div>
+      <div class="iq-change up">▲ +95.62 (+1.87%)</div>
     </a>
-    <a href="awards.html" class="feature-card">
-      <div class="feature-icon">🏆</div>
-      <div class="feature-title">金鲲鹏颁奖</div>
-      <div class="feature-desc">年度颁奖典礼，表彰在新质生产力领域表现卓越的上市公司与投资者。</div>
+    <a href="heli-hktech.html" class="index-quick-card">
+      <div class="iq-name">合力港股通科技 <span class="iq-badge">港股</span></div>
+      <div class="iq-val">3,942.58</div>
+      <div class="iq-change up">▲ +38.42 (+0.98%)</div>
     </a>
-    <a href="diagnosis.html" class="feature-card">
-      <div class="feature-icon">🔬</div>
-      <div class="feature-title">诊断季</div>
-      <div class="feature-desc">每季度一次的深度价值诊断，投资者投票+提问+分析，共建共识。</div>
-    </a>
-    <a href="achievements.html" class="feature-card">
-      <div class="feature-icon">🏅</div>
-      <div class="feature-title">成就体系</div>
-      <div class="feature-desc">28枚成就勋章，三类成就系列，Web3共识层NFT铸造，永久记录您的贡献。</div>
-    </a>
-    <a href="profile.html" class="feature-card">
-      <div class="feature-icon">👤</div>
-      <div class="feature-title">个人主页</div>
-      <div class="feature-desc">查看个人成就墙、投票记录、提问历史，管理您的共识参与档案。</div>
-    </a>
-    <a href="agent.html" class="feature-card">
-      <div class="feature-icon">🤖</div>
-      <div class="feature-title">AI 智能助手</div>
-      <div class="feature-desc">Heli-Agent 全站智能助手，支持指数查询、诊断分析、路演咨询，7×24在线。</div>
-    </a>
-    <a href="api.html" class="feature-card">
-      <div class="feature-icon">🔌</div>
-      <div class="feature-title">开放 API</div>
-      <div class="feature-desc">为开发者与专业投资者提供标准化数据接口，8+ RESTful API，三级套餐。</div>
-    </a>
-    <a href="diagnosis-report.html" class="feature-card">
-      <div class="feature-icon">📋</div>
-      <div class="feature-title">诊断报告</div>
-      <div class="feature-desc">多维度的公司新质生产力诊断报告，含评分、共识度、风险提示。</div>
-    </a>
-    <a href="web3.html" class="feature-card">
-      <div class="feature-icon">⛓️</div>
-      <div class="feature-title">Web3 共识层</div>
-      <div class="feature-desc">投票存证、成就 NFT 铸造、积分上链——不可篡改的共识记录引擎。</div>
-    </a>
-    <a href="apply.html" class="feature-card">
-      <div class="feature-icon">📝</div>
-      <div class="feature-title">活动报名</div>
-      <div class="feature-desc">全球路演参会申请、金鲲鹏颁奖提名申报、典礼参与申请——一站式报名。</div>
-    </a>
-    <a href="workspace.html" class="feature-card" style="border-color:var(--consensus-gold);">
-      <div class="feature-icon">🏢</div>
-      <div class="feature-title">B端工作台</div>
-      <div class="feature-desc">上市公司专属后台：热力值监控、投资者提问管理、诊断报告、API接入、活动报名。</div>
-    </a>
-    <a href="admin.html" class="feature-card" style="border-color:var(--indigo);">
-      <div class="feature-icon">⚙️</div>
-      <div class="feature-title">管理后台</div>
-      <div class="feature-desc">平台管理：用户认证审核、路演/颁奖报名审核、报告发布、数据统计与系统设置。</div>
+    <a href="heli-nasdaq.html" class="index-quick-card">
+      <div class="iq-name">合力纳斯达克中概 <span class="iq-badge">美股</span></div>
+      <div class="iq-val">1,856.24</div>
+      <div class="iq-change down">▼ -12.35 (-0.66%)</div>
     </a>
   </div>
-</section>
 
-<!-- 指数概览 -->
-<section class="indices">
-  <div class="indices-inner">
-    <div class="section-header">
-      <h2>指数概览</h2>
-      <p>三大指数实时行情（Mock数据 · 2026）</p>
-    </div>
-    <div class="index-cards">
-      <div class="index-card">
-        <div class="index-card-header">
-          <div class="index-name">合力300</div>
-          <div class="index-badge">核心</div>
-        </div>
-        <div class="index-value">4,821.37</div>
-        <div class="index-change up">↑ +52.18 (+1.09%)</div>
-      </div>
-      <div class="index-card">
-        <div class="index-card-header">
-          <div class="index-name">港股通新质</div>
-          <div class="index-badge">港股</div>
-        </div>
-        <div class="index-value">3,942.58</div>
-        <div class="index-change up">↑ +38.42 (+0.98%)</div>
-      </div>
-      <div class="index-card">
-        <div class="index-card-header">
-          <div class="index-name">纳斯达克中国新质</div>
-          <div class="index-badge">美股</div>
-        </div>
-        <div class="index-value">1,856.24</div>
-        <div class="index-change down">↓ -12.35 (-0.66%)</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:24px;">
-      <a href="indices.html" class="btn-primary" style="font-size:14px;padding:10px 24px;">查看完整指数详情</a>
+  <!-- 核心功能入口 -->
+  <div class="section-title">🧭 核心功能</div>
+  <div class="feature-grid-main">
+    <a href="indices.html" class="feature-entry"><div class="fe-icon">📊</div><div class="fe-label">指数中心</div><div class="fe-desc">四大旗舰指数详情</div></a>
+    <a href="roadshow.html" class="feature-entry"><div class="fe-icon">🌍</div><div class="fe-label">全球路演</div><div class="fe-desc">5站巡回·连接全球</div></a>
+    <a href="awards.html" class="feature-entry"><div class="fe-icon">🏆</div><div class="fe-label">金鲲鹏颁奖</div><div class="fe-desc">年度颁奖典礼</div></a>
+    <a href="diagnosis.html" class="feature-entry"><div class="fe-icon">🔬</div><div class="fe-label">诊断季</div><div class="fe-desc">深度价值诊断</div></a>
+    <a href="diagnosis-report.html" class="feature-entry"><div class="fe-icon">📋</div><div class="fe-label">诊断报告</div><div class="fe-desc">多维度评分报告</div></a>
+    <a href="achievements.html" class="feature-entry"><div class="fe-icon">🏅</div><div class="fe-label">成就体系</div><div class="fe-desc">28枚勋章·NFT铸造</div></a>
+    <a href="apply.html" class="feature-entry"><div class="fe-icon">📝</div><div class="fe-label">活动报名</div><div class="fe-desc">路演·颁奖·提名</div></a>
+    <a href="web3.html" class="feature-entry"><div class="fe-icon">⛓️</div><div class="fe-label">Web3共识层</div><div class="fe-desc">投票存证·上链</div></a>
+    <a href="api.html" class="feature-entry"><div class="fe-icon">🔌</div><div class="fe-label">开放API</div><div class="fe-desc">8+数据接口</div></a>
+    <a href="workspace.html" class="feature-entry"><div class="fe-icon">🏢</div><div class="fe-label">B端工作台</div><div class="fe-desc">上市公司专属</div></a>
+    <a href="profile.html" class="feature-entry"><div class="fe-icon">👤</div><div class="fe-label">个人主页</div><div class="fe-desc">成就墙·投票记录</div></a>
+    <a href="admin.html" class="feature-entry"><div class="fe-icon">⚙️</div><div class="fe-label">管理后台</div><div class="fe-desc">审核·统计·设置</div></a>
+  </div>
+
+  <!-- 最新动态 -->
+  <div class="section-title" style="margin-top:24px">📰 最新动态</div>
+  <div class="news-quick">
+    <a href="hkcd-tech.html" class="news-item">
+      <div class="news-dot"></div>
+      <div class="news-text"><div class="nt-date">2026-05-26</div><div class="nt-title">全球商报经济论坛隆重发布港商科指</div></div>
+    </a>
+    <a href="hkcd-tech.html" class="news-item">
+      <div class="news-dot"></div>
+      <div class="news-text"><div class="nt-date">2026-06-30</div><div class="nt-title">首次季度调仓：新增5只硬科技标的</div></div>
+    </a>
+    <a href="diagnosis.html" class="news-item">
+      <div class="news-dot"></div>
+      <div class="news-text"><div class="nt-date">2026-07-01</div><div class="nt-title">Q3诊断季正式启动·投票已开启</div></div>
+    </a>
+    <a href="awards.html" class="news-item">
+      <div class="news-dot"></div>
+      <div class="news-text"><div class="nt-date">2026-07-05</div><div class="nt-title">金鲲鹏颁奖提名开放申报</div></div>
+    </a>
+  </div>
+
+  <!-- 推荐链接 -->
+  <div class="recommend-section" style="margin-top:24px">
+    <h4>🔗 深度探索</h4>
+    <div class="recommend-links">
+      <a href="hkcd-tech.html" class="recommend-link"><span class="rl-icon">🏛️</span> 港商科指详情</a>
+      <a href="heli-300.html" class="recommend-link"><span class="rl-icon">⭐</span> 合力300详情</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI智能助手</a>
+      <a href="diagnosis.html" class="recommend-link"><span class="rl-icon">🔬</span> 诊断季投票</a>
     </div>
   </div>
-</section>
+</div>
 
-<!-- Footer -->
+<!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">
-          <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-          <span>合力指数</span>
-        </div>
-        <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界的多方共识平台。</p>
-      </div>
-      <div>
-        <h4>产品</h4>
-        <a href="indices.html">指数中心</a>
-        <a href="roadshow.html">全球路演</a>
-        <a href="awards.html">金鲲鹏颁奖</a>
-        <a href="diagnosis.html">诊断季</a>
-        <a href="achievements.html">成就体系</a>
-        <a href="agent.html">AI 助手</a>
-        <a href="api.html">开放 API</a>
-        <a href="web3.html">Web3 共识层</a>
-        <a href="workspace.html">B端工作台</a>
-      </div>
-      <div>
-        <h4>关于</h4>
-        <a href="#">团队介绍</a>
-        <a href="#">方法论</a>
-        <a href="#">合作伙伴</a>
-      </div>
-      <div>
-        <h4>联系我们</h4>
-        <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a>
-        <a href="#">香港中环皇后大道中 88 号</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 合力指数 Heli-Index. All rights reserved.</span>
-      <span>新质生产力的资本市场共识平台</span>
-    </div>
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a><a href="agent.html">AI助手</a></div>
+    <div><h4>关于</h4><a href="#">团队介绍</a><a href="#">方法论</a><a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></div>
   </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index. All rights reserved.</div>
 </footer>
+
+<!-- 底部Tab Bar -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item active">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+    <span class="tab-badge">新</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
 
 <script src="ai-widget.js"></script>
 </body>

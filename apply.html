@@ -2,108 +2,157 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>活动报名 · 合力指数</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628; --blue-900: #0f2044; --blue-800: #1a3260; --blue-700: #1e4090;
-  --consensus-gold: #c9a84c; --gold-light: #e8d48b; --white: #ffffff;
-  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
-  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937;
-  --red: #ef4444; --green: #22c55e;
+/* Hero */
+.apply-hero {
+  background: linear-gradient(135deg, var(--deep-blue) 0%, var(--deep-blue-mid) 100%);
+  color: var(--white);
+  padding: 48px 16px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
-.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
-.nav-logo svg { width: 28px; height: 28px; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-.nav-links { display: flex; gap: 20px; }
-.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; }
-.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
-.nav-cta { display: flex; gap: 10px; }
-.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; }
-.btn-login { color: rgba(255,255,255,0.8); } .btn-login:hover { color: var(--white); }
-.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; } .btn-register:hover { background: var(--gold-light); }
-
-.hero { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--blue-900) 50%, var(--blue-800) 100%); color: var(--white); padding: 50px 20px 40px; text-align: center; }
-.hero h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 800; margin-bottom: 8px; }
-.hero h1 span { color: var(--consensus-gold); }
-.hero p { font-size: 14px; color: rgba(255,255,255,0.7); }
-
-.container { max-width: 800px; margin: 0 auto; padding: 30px 20px 60px; }
+.apply-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(201,168,76,.08) 0%, transparent 60%);
+}
+.apply-hero > * { position: relative; }
+.apply-hero h1 { font-size: clamp(22px, 5vw, 36px); font-weight: 800; margin-bottom: 8px; }
+.apply-hero h1 span { color: var(--gold); }
+.apply-hero p { font-size: 14px; color: rgba(255,255,255,.7); max-width: 480px; margin: 0 auto; line-height: 1.7; }
 
 /* 类型选择 */
-.type-select { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 30px; }
-.type-card { background: var(--white); border: 2px solid var(--gray-200); border-radius: 14px; padding: 20px; cursor: pointer; transition: all 0.2s; text-align: center; }
-.type-card:hover { border-color: var(--consensus-gold); }
-.type-card.active { border-color: var(--consensus-gold); background: rgba(201,168,76,0.04); }
-.type-card .icon { font-size: 36px; margin-bottom: 8px; }
-.type-card .title { font-size: 15px; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
-.type-card .desc { font-size: 12px; color: var(--gray-500); }
+.type-select {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.type-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 14px;
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+}
+.type-card:hover { border-color: var(--gold); }
+.type-card.active { border-color: var(--gold); background: var(--gold-bg); }
+.type-card .icon { font-size: 32px; margin-bottom: 6px; }
+.type-card .title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.type-card .desc { font-size: 12px; color: var(--text-light); }
 
-/* 表单 */
-.form-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 28px; }
-.form-section h3 { font-size: 17px; font-weight: 700; color: var(--gray-800); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-100); }
-.form-group { margin-bottom: 18px; }
-.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+/* 表单区域 */
+.form-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 16px;
+  margin-bottom: 20px;
+}
+.form-section h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
 .form-group label .req { color: var(--red); }
-.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--consensus-gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
-.form-group textarea { resize: vertical; min-height: 100px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+  background: var(--bg-main);
+  color: var(--text-primary);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,.1); }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
 
-.submit-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
-.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep-blue);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  margin-top: 8px;
+  font-family: inherit;
+}
+.submit-btn:hover { box-shadow: 0 8px 24px rgba(201,168,76,.3); }
 
-.form-note { margin-top: 14px; font-size: 12px; color: var(--gray-400); text-align: center; }
-.form-note a { color: var(--consensus-gold); }
+.form-note { margin-top: 12px; font-size: 12px; color: var(--text-light); text-align: center; }
+.form-note a { color: var(--gold); font-weight: 600; }
 
-.success-msg { display: none; text-align: center; padding: 40px 20px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; }
+/* 成功消息 */
+.success-msg {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
 .success-msg .check { font-size: 48px; margin-bottom: 12px; }
-.success-msg h3 { font-size: 22px; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
-.success-msg p { font-size: 14px; color: var(--gray-500); }
-
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 30px 20px 20px; font-size: 13px; }
-.footer-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+.success-msg h3 { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.success-msg p { font-size: 14px; color: var(--text-light); }
+.success-msg a { display: inline-block; margin-top: 16px; color: var(--gold); text-decoration: none; font-weight: 700; }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="roadshow.html">全球路演</a>
-      <a href="awards.html">金鲲鹏颁奖</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="achievements.html">成就体系</a>
-      <a href="agent.html">AI助手</a>
-      <a href="api.html">开放API</a>
-      <a href="apply.html" class="active">活动报名</a>
-      <a href="workspace.html">B端工作台</a>
-      <a href="admin.html">管理后台</a>
-    </div>
-    <div class="nav-cta">
-      <a href="login.html" class="btn-login">登录</a>
-      <a href="register.html" class="btn-register">注册</a>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">合力指数</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
+  </div>
+</div>
 
-<section class="hero">
+<!-- Hero -->
+<section class="apply-hero">
   <h1>活动<span>报名</span></h1>
   <p>全球路演参会申请 · 金鲲鹏颁奖提名申报 · 典礼参与申请</p>
 </section>
 
-<div class="container">
+<!-- 页面内容 -->
+<div class="page-content">
+
   <!-- 类型选择 -->
+  <div class="section-title">📝 选择报名类型</div>
   <div class="type-select">
     <div class="type-card active" id="type-roadshow" onclick="selectType('roadshow')">
       <div class="icon">🌍</div>
@@ -274,15 +323,46 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
     <div class="check">✅</div>
     <h3>申请已提交！</h3>
     <p>我们将在3个工作日内通过邮件与您确认。如有疑问请联系 nebula@heli-ai.com</p>
-    <a href="index.html" style="display:inline-block;margin-top:16px;color:var(--consensus-gold);text-decoration:none;font-weight:600;">返回首页</a>
+    <a href="index.html">返回首页</a>
   </div>
+
 </div>
 
+<!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-inner">
-    <p>© 2026 合力指数 Heli-Index · 活动报名</p>
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a><a href="agent.html">AI助手</a></div>
+    <div><h4>关于</h4><a href="#">团队介绍</a><a href="#">方法论</a><a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></div>
   </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index. All rights reserved.</div>
 </footer>
+
+<!-- 底部Tab Bar（活动 tab active） -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item active">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+    <span class="tab-badge">新</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
 
 <script>
 function selectType(type) {
@@ -290,15 +370,16 @@ function selectType(type) {
   document.getElementById('type-'+type).classList.add('active');
   document.querySelectorAll('.form-section').forEach(f => f.style.display = 'none');
   document.getElementById('form-'+type).style.display = 'block';
+  document.getElementById('success-msg').style.display = 'none';
 }
 
 function handleSubmit() {
   document.querySelectorAll('.form-section').forEach(f => f.style.display = 'none');
   document.querySelectorAll('.type-select')[0].style.display = 'none';
   document.getElementById('success-msg').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
-
 <script src="ai-widget.js"></script>
 </body>
 </html>

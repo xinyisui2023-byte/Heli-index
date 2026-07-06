@@ -2,167 +2,99 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>金鲲鹏颁奖典礼 · 合力指数</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628;
-  --blue-900: #0f2044;
-  --consensus-gold: #c9a84c;
-  --gold-light: #e8d48b;
-  --white: #ffffff;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
-.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.nav-logo svg { width: 28px; height: 28px; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-.nav-links { display: flex; gap: 20px; }
-.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; }
-.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
-.nav-cta { display: flex; gap: 10px; }
-.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; }
-.btn-login { color: rgba(255,255,255,0.8); }
-.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; }
-
-/* Hero */
-.hero { background: linear-gradient(135deg, #0a1628 0%, #1a1a3e 40%, #0f2044 100%); color: var(--white); padding: 60px 20px; text-align: center; position: relative; overflow: hidden; }
-.hero::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 50% 50%, rgba(201,168,76,0.12) 0%, transparent 60%); }
-.hero-badge { display: inline-block; border: 1px solid var(--consensus-gold); color: var(--consensus-gold); padding: 4px 16px; border-radius: 20px; font-size: 12px; margin-bottom: 16px; position: relative; }
-.hero h1 { font-size: clamp(26px,5vw,38px); font-weight: 800; margin-bottom: 12px; position: relative; }
-.hero h1 span { background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.hero p { color: rgba(255,255,255,0.7); font-size: 14px; max-width: 600px; margin: 0 auto; position: relative; }
-.hero-cta { margin-top: 24px; display: flex; gap: 12px; justify-content: center; position: relative; }
-.btn-gold { background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
-.btn-outline { border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 10px 24px; border-radius: 8px; font-size: 14px; text-decoration: none; transition: all 0.2s; }
-.btn-outline:hover { border-color: var(--consensus-gold); color: var(--consensus-gold); }
-
-/* 奖项卡片 */
-.section { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
-.section-header { text-align: center; margin-bottom: 30px; }
-.section-header h2 { font-size: 24px; font-weight: 700; color: var(--deep-blue); margin-bottom: 8px; }
-
-.award-card { background: var(--white); border-radius: 16px; padding: 28px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 1px solid var(--gray-200); }
-.award-card.featured { border: 2px solid var(--consensus-gold); position: relative; }
-.award-card.featured::before { content: '★ 年度旗舰'; position: absolute; top: -12px; left: 24px; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 700; }
-.award-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
-.award-title { font-size: 20px; font-weight: 700; color: var(--deep-blue); }
-.award-status { font-size: 12px; padding: 4px 12px; border-radius: 12px; background: #fef3c7; color: #92400e; font-weight: 600; }
-.award-body { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 600px) { .award-body { grid-template-columns: 1fr; } }
-.award-meta { font-size: 13px; color: var(--gray-600); line-height: 1.8; }
-.award-meta strong { color: var(--gray-800); }
-.award-categories { background: var(--gray-50); border-radius: 10px; padding: 16px; }
-.award-categories h4 { font-size: 13px; font-weight: 700; color: var(--gray-700); margin-bottom: 10px; }
-.award-categories ul { list-style: none; font-size: 13px; color: var(--gray-600); }
-.award-categories li { padding: 4px 0; padding-left: 16px; position: relative; }
-.award-categories li::before { content: '🏆'; position: absolute; left: 0; font-size: 10px; }
-
-/* 评选流程 */
-.process { display: flex; gap: 0; margin: 30px 0; overflow-x: auto; }
-.process-step { flex: 1; min-width: 140px; text-align: center; position: relative; padding: 20px 12px; }
-.process-step:not(:last-child)::after { content: '→'; position: absolute; right: -8px; top: 50%; transform: translateY(-50%); color: var(--consensus-gold); font-size: 18px; font-weight: 700; z-index: 2; }
-.process-num { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; margin: 0 auto 10px; }
-.process-step-title { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
-.process-step-desc { font-size: 11px; color: var(--gray-500); }
-
-/* 权益 */
-.benefits { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-top: 20px; }
-.benefit-item { background: var(--gray-50); border-radius: 10px; padding: 16px; text-align: center; }
-.benefit-icon { font-size: 24px; margin-bottom: 8px; }
-.benefit-title { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
-.benefit-desc { font-size: 11px; color: var(--gray-500); }
-
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 20px 20px; font-size: 13px; }
-.footer-inner { max-width: 1100px; margin: 0 auto; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; font-size: 11px; }
+.award-card{background:var(--bg-card);border-radius:var(--radius-md);padding:20px;margin-bottom:14px;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.award-card.featured{border:2px solid var(--gold-border);position:relative}
+.award-card.featured::before{content:'★ 年度旗舰';position:absolute;top:-12px;left:20px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--deep-blue);padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700}
+.award-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.award-title{font-size:18px;font-weight:700;color:var(--text-primary)}
+.award-status{font-size:11px;padding:3px 10px;border-radius:10px;background:#fef3c7;color:#92400e;font-weight:600}
+.award-meta{font-size:13px;color:var(--text-secondary);line-height:1.8}
+.award-meta strong{color:var(--text-primary)}
+.award-categories{background:var(--bg);border-radius:10px;padding:14px;margin-top:10px}
+.award-categories h4{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+.award-categories ul{list-style:none;font-size:13px;color:var(--text-secondary)}
+.award-categories li{padding:3px 0;padding-left:16px;position:relative}
+.award-categories li::before{content:'🏆';position:absolute;left:0;font-size:10px}
+.process{display:flex;gap:0;overflow-x:auto;padding:10px 0}
+.process-step{flex:1;min-width:100px;text-align:center;position:relative;padding:14px 8px}
+.process-step:not(:last-child)::after{content:'→';position:absolute;right:-6px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:16px;font-weight:700}
+.process-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--deep-blue);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin:0 auto 8px}
+.process-step-title{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.process-step-desc{font-size:10px;color:var(--text-light)}
+.benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.benefit-item{background:var(--bg);border-radius:10px;padding:14px;text-align:center}
+.benefit-icon{font-size:22px;margin-bottom:6px}
+.benefit-title{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.benefit-desc{font-size:11px;color:var(--text-light)}
+@media(min-width:768px){.benefits{grid-template-columns:repeat(5,1fr)}}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-logo" onclick="location.href='index.html'">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </div>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="index-detail.html">指数详情</a>
-      <a href="roadshow.html">全球路演</a>
-      <a href="awards.html" class="active">金鲲鹏颁奖</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="achievements.html">成就体系</a>
-      <a href="agent.html">AI助手</a>
-      <a href="workspace.html">B端工作台</a>
-      <a href="admin.html">管理后台</a>
-    </div>
-    <div class="nav-cta">
-      <a href="login.html" class="btn-login">登录</a>
-      <a href="register.html" class="btn-register">注册</a>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">金鲲鹏颁奖</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
+  </div>
+</div>
 
 <!-- Hero -->
-<section class="hero">
-  <div class="hero-badge">🏆 金鲲鹏奖 · 2026-2027</div>
-  <h1>金鲲鹏颁奖典礼 <span>Golden Roc Awards</span></h1>
+<section class="page-hero">
+  <span class="hero-badge">🏆 金鲲鹏奖 · 2026-2027</span>
+  <h1>金鲲鹏颁奖典礼 <span class="gold">Golden Roc Awards</span></h1>
   <p>《香港商报》与合力指数联合颁发，致敬资本市场的真实价值创造者</p>
   <div class="hero-cta">
-    <a href="#main-award" class="btn-gold">查看主颁奖礼</a>
-    <a href="apply.html" class="btn-outline">提名申报</a>
+    <a href="#main-award" class="btn-primary">查看主颁奖礼</a>
+    <a href="apply.html" class="btn-secondary">提名申报</a>
   </div>
 </section>
 
-<!-- 主颁奖礼 -->
-<section class="section" id="main-award">
-  <div class="section-header">
-    <h2>年度旗舰颁奖礼</h2>
-  </div>
+<div class="page-content">
+  <div class="breadcrumb"><a href="index.html">首页</a> <span class="sep">›</span> 金鲲鹏颁奖</div>
+
+  <!-- 年度旗舰颁奖礼 -->
+  <div class="section-title" id="main-award">年度旗舰颁奖礼</div>
   <div class="award-card featured">
     <div class="award-header">
       <div>
         <div class="award-title">🏆 金鲲鹏·新质生产力年度颁奖典礼</div>
-        <div style="font-size:13px;color:var(--gray-500);margin-top:6px;">与达沃斯论坛边会同期举行 · 全球直播</div>
+        <div style="font-size:12px;color:var(--text-light);margin-top:4px;">与达沃斯论坛边会同期举行 · 全球直播</div>
       </div>
       <div class="award-status">🟡 提名征集中</div>
     </div>
-    <div class="award-body">
-      <div class="award-meta">
-        <p><strong>📅 时间：</strong>2027年1月20-22日</p>
-        <p><strong>📍 地点：</strong>瑞士·达沃斯（同步线上全球直播）</p>
-        <p><strong>📝 评选依据：</strong>合力指数热力值、诊断季表现、投资者投票、专业评审团综合评定</p>
-      </div>
-      <div class="award-categories">
-        <h4>奖项设置</h4>
-        <ul>
-          <li>年度新质生产力卓越上市公司（10家）</li>
-          <li>年度最佳IR团队（5家）</li>
-          <li>年度共识领袖（专业投资者，5名）</li>
-          <li>年度创新研究机构（3家）</li>
-          <li>年度热力值金奖（C端投资者投票选出）</li>
-        </ul>
-      </div>
+    <div class="award-meta">
+      <p><strong>📅 时间：</strong>2027年1月20-22日</p>
+      <p><strong>📍 地点：</strong>瑞士·达沃斯（同步线上全球直播）</p>
+      <p><strong>📝 评选依据：</strong>合力指数热力值、诊断季表现、投资者投票、专业评审团综合评定</p>
+    </div>
+    <div class="award-categories">
+      <h4>奖项设置</h4>
+      <ul>
+        <li>年度新质生产力卓越上市公司（10家）</li>
+        <li>年度最佳IR团队（5家）</li>
+        <li>年度共识领袖（专业投资者，5名）</li>
+        <li>年度创新研究机构（3家）</li>
+        <li>年度热力值金奖（C端投资者投票选出）</li>
+      </ul>
+    </div>
+    <div class="card-actions" style="margin-top:14px">
+      <button class="action-btn" onclick="this.classList.toggle('liked');this.querySelector('span').textContent=this.classList.contains('liked')?'377':'376'">❤️ <span>376</span></button>
+      <button class="action-btn" onclick="this.querySelector('span').textContent=parseInt(this.querySelector('span').textContent)+1">⭐ <span>189</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
     </div>
   </div>
-</section>
 
-<!-- 专项颁奖 -->
-<section class="section" style="background:var(--white);">
-  <div class="section-header">
-    <h2>专项颁奖活动</h2>
-  </div>
+  <!-- 专项颁奖活动 -->
+  <div class="section-title">专项颁奖活动</div>
   <div class="award-card">
     <div class="award-header">
       <div class="award-title">🏅 金鲲鹏·行业新质生产力先锋榜</div>
@@ -185,48 +117,42 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
       <p><strong>内容：</strong>表彰在平台贡献优质分析、获得高共识度的专业投资者和分析师</p>
     </div>
   </div>
-</section>
 
-<!-- 评选流程 -->
-<section class="section">
-  <div class="section-header">
-    <h2>评选流程</h2>
-    <p>透明、公正、基于共识机制的评选流程</p>
+  <!-- 评选流程 -->
+  <div class="section-title">评选流程</div>
+  <p class="section-subtitle">透明、公正、基于共识机制的评选流程</p>
+  <div class="card" style="margin-bottom:16px">
+    <div class="process">
+      <div class="process-step">
+        <div class="process-num">1</div>
+        <div class="process-step-title">提名征集</div>
+        <div class="process-step-desc">企业/个人自荐或他人提名</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">2</div>
+        <div class="process-step-title">数据筛选</div>
+        <div class="process-step-desc">合力指数热力值+诊断季数据</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3</div>
+        <div class="process-step-title">专业评审</div>
+        <div class="process-step-desc">评审团综合评定</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">4</div>
+        <div class="process-step-title">公布入围</div>
+        <div class="process-step-desc">公示入围名单</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">5</div>
+        <div class="process-step-title">颁奖典礼</div>
+        <div class="process-step-desc">达沃斯现场+全球直播</div>
+      </div>
+    </div>
   </div>
-  <div class="process">
-    <div class="process-step">
-      <div class="process-num">1</div>
-      <div class="process-step-title">提名征集</div>
-      <div class="process-step-desc">企业/个人自荐或他人提名</div>
-    </div>
-    <div class="process-step">
-      <div class="process-num">2</div>
-      <div class="process-step-title">数据筛选</div>
-      <div class="process-step-desc">合力指数热力值+诊断季数据</div>
-    </div>
-    <div class="process-step">
-      <div class="process-num">3</div>
-      <div class="process-step-title">专业评审</div>
-      <div class="process-step-desc">评审团综合评定</div>
-    </div>
-    <div class="process-step">
-      <div class="process-num">4</div>
-      <div class="process-step-title">公布入围</div>
-      <div class="process-step-desc">公示入围名单</div>
-    </div>
-    <div class="process-step">
-      <div class="process-num">5</div>
-      <div class="process-step-title">颁奖典礼</div>
-      <div class="process-step-desc">达沃斯现场+全球直播</div>
-    </div>
-  </div>
-</section>
 
-<!-- 获奖权益 -->
-<section class="section" style="background:var(--white);">
-  <div class="section-header">
-    <h2>获奖权益</h2>
-  </div>
+  <!-- 获奖权益 -->
+  <div class="section-title">获奖权益</div>
   <div class="benefits">
     <div class="benefit-item">
       <div class="benefit-icon">📰</div>
@@ -254,27 +180,69 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
       <div class="benefit-desc">获奖者专属媒体专访机会</div>
     </div>
   </div>
-</section>
 
-<!-- CTA -->
-<section class="section" style="text-align:center;">
-  <h2 style="font-size:24px;font-weight:700;color:var(--deep-blue);margin-bottom:12px;">参与金鲲鹏颁奖典礼</h2>
-  <p style="color:var(--gray-500);margin-bottom:20px;">提名申报或申请参会，与全球投资者共聚达沃斯</p>
-  <div style="display:flex;gap:12px;justify-content:center;">
-    <a href="apply.html" class="btn-gold">提名申报</a>
-    <a href="apply.html" class="btn-outline" style="color:var(--deep-blue);border-color:var(--deep-blue);">参会申请</a>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-      <svg viewBox="0 0 100 100" style="width:24px;height:24px;"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span style="color:var(--white);font-weight:700;font-size:15px;">合力指数</span>
+  <!-- CTA -->
+  <div class="card card-gold" style="text-align:center;margin-top:24px">
+    <h3 style="font-size:18px;font-weight:700;color:var(--deep-blue);margin-bottom:8px;">参与金鲲鹏颁奖典礼</h3>
+    <p style="color:var(--text-secondary);font-size:13px;margin-bottom:16px;">提名申报或申请参会，与全球投资者共聚达沃斯</p>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <a href="apply.html" class="btn-primary">提名申报</a>
+      <a href="apply.html" class="btn-secondary">参会申请</a>
     </div>
-    <div class="footer-bottom">© 2026 合力指数 Heli-Index · <a href="mailto:nebula@heli-ai.com" style="color:rgba(255,255,255,0.5);">nebula@heli-ai.com</a></div>
+    <div class="card-actions" style="justify-content:center;margin-top:16px">
+      <button class="action-btn" onclick="this.classList.toggle('liked');this.querySelector('span').textContent=this.classList.contains('liked')?'245':'244'">❤️ <span>244</span></button>
+      <button class="action-btn">⭐ <span>112</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+    </div>
   </div>
+
+  <!-- 推荐链接 -->
+  <div class="recommend-section">
+    <h4>🔗 深度探索</h4>
+    <div class="recommend-links">
+      <a href="roadshow.html" class="recommend-link"><span class="rl-icon">🌍</span> 全球路演</a>
+      <a href="diagnosis.html" class="recommend-link"><span class="rl-icon">🔬</span> 诊断季</a>
+      <a href="achievements.html" class="recommend-link"><span class="rl-icon">🏅</span> 成就体系</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI助手</a>
+    </div>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>金鲲鹏颁奖典礼由《香港商报》与合力指数联合举办，致敬资本市场的真实价值创造者。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html">全球路演</a><a href="awards.html" style="color:var(--gold)">金鲲鹏</a><a href="diagnosis.html">诊断季</a></div>
+    <div><h4>联系</h4><a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></div>
+  </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index. All rights reserved.</div>
 </footer>
+
+<!-- 底部Tab Bar -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item active">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
+
 <script src="ai-widget.js"></script>
 </body>
 </html>

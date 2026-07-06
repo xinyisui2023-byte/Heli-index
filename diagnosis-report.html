@@ -2,246 +2,150 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>诊断报告 · 合力指数</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628; --blue-900: #0f2044; --blue-800: #1a3260; --blue-700: #1e4090;
-  --consensus-gold: #c9a84c; --gold-light: #e8d48b; --white: #ffffff;
-  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
-  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937;
-  --red: #ef4444; --green: #22c55e;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
-.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
-.nav-logo svg { width: 28px; height: 28px; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-.nav-links { display: flex; gap: 20px; }
-.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; }
-.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
-.nav-cta { display: flex; gap: 10px; }
-.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; }
-.btn-login { color: rgba(255,255,255,0.8); } .btn-login:hover { color: var(--white); }
-.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; } .btn-register:hover { background: var(--gold-light); }
-
-.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--gray-500); text-decoration: none; font-size: 13px; margin-bottom: 24px; }
-.back-link:hover { color: var(--consensus-gold); }
-
-/* 报告头部 */
-.report-header { background: linear-gradient(135deg, var(--deep-blue), var(--blue-900)); color: var(--white); border-radius: 14px; padding: 32px; margin-bottom: 24px; }
-.report-header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
-.report-company { font-size: 24px; font-weight: 800; }
-.report-company small { display: block; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.6); margin-top: 4px; }
-.report-date { font-size: 12px; color: rgba(255,255,255,0.5); text-align: right; }
-.score-circle { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--consensus-gold); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.score-circle .score-num { font-size: 32px; font-weight: 800; color: var(--consensus-gold); }
-.score-circle .score-label { font-size: 11px; color: rgba(255,255,255,0.6); }
-.report-meta { display: flex; gap: 24px; flex-wrap: wrap; }
-.report-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.7); }
-.report-meta-item strong { color: var(--white); }
-
-/* 得分卡片 */
-.score-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px; }
-.score-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; text-align: center; }
-.score-card-label { font-size: 13px; color: var(--gray-500); margin-bottom: 8px; }
-.score-card-value { font-size: 28px; font-weight: 800; }
-.score-excellent { color: var(--consensus-gold); }
-.score-good { color: var(--green); }
-.score-warning { color: #f59e0b; }
-.score-danger { color: var(--red); }
-.score-card-bar { height: 6px; border-radius: 3px; margin-top: 8px; background: var(--gray-100); overflow: hidden; }
-.score-card-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
-
-/* 雷达图区域 */
-.radar-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
-.radar-section h3 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin-bottom: 16px; }
-.radar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
-.radar-item { text-align: center; }
-.radar-item .radar-label { font-size: 12px; color: var(--gray-500); margin-bottom: 6px; }
-.radar-item .radar-value { font-size: 20px; font-weight: 700; color: var(--gray-800); }
-.radar-item .radar-bar { height: 8px; border-radius: 4px; background: var(--gray-100); margin-top: 6px; overflow: hidden; }
-.radar-item .radar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue-700), var(--consensus-gold)); }
-
-/* 共识度 */
-.consensus-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
-.consensus-bar { height: 24px; border-radius: 12px; background: var(--gray-100); display: flex; overflow: hidden; margin-bottom: 12px; }
-.consensus-bar .bull { background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--white); font-weight: 700; }
-.consensus-bar .neutral { background: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--white); font-weight: 700; }
-.consensus-bar .bear { background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--white); font-weight: 700; }
-.consensus-legend { display: flex; gap: 20px; font-size: 12px; color: var(--gray-500); }
-
-/* 风险提示 */
-.risk-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
-.risk-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
-.risk-item:last-child { border-bottom: none; }
-.risk-level { padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-.risk-high { background: #fef2f2; color: var(--red); }
-.risk-medium { background: #fffbeb; color: #d97706; }
-.risk-low { background: #f0fdf4; color: var(--green); }
-.risk-text { font-size: 13px; color: var(--gray-700); }
-
-/* Q&A */
-.qa-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
-.qa-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
-.qa-item:last-child { border-bottom: none; }
-.qa-q { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; }
-.qa-q::before { content: "Q: "; color: var(--consensus-gold); }
-.qa-a { font-size: 13px; color: var(--gray-600); padding-left: 16px; border-left: 3px solid var(--consensus-gold); }
-.qa-a::before { content: "A: "; color: var(--blue-700); font-weight: 600; }
-
-/* 相关链接 */
-.related { display: flex; gap: 14px; flex-wrap: wrap; }
-.related-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px 20px; text-decoration: none; color: inherit; flex: 1; min-width: 200px; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
-.related-card:hover { border-color: var(--consensus-gold); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-.related-icon { font-size: 28px; }
-.related-title { font-size: 14px; font-weight: 700; color: var(--gray-800); }
-.related-desc { font-size: 12px; color: var(--gray-400); }
-
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 30px 20px 20px; font-size: 13px; margin-top: 40px; }
-.footer-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
-.footer a { color: var(--consensus-gold); text-decoration: none; }
+.score-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.score-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:center}
+.score-card-label{font-size:13px;color:var(--text-secondary);margin-bottom:6px}
+.score-card-value{font-size:24px;font-weight:800}
+.score-excellent{color:var(--gold-dark)}
+.score-good{color:var(--green-down)}
+.score-card-bar{height:6px;border-radius:3px;margin-top:8px;background:var(--bg);overflow:hidden}
+.score-card-fill{height:100%;border-radius:3px;transition:width .8s ease}
+.consensus-bar{height:20px;border-radius:10px;background:var(--bg);display:flex;overflow:hidden;margin-bottom:10px}
+.consensus-bar .bull{background:var(--red-up);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:700}
+.consensus-bar .neutral{background:#f59e0b;display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:700}
+.consensus-bar .bear{background:var(--green-down);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:700}
+.risk-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.risk-item:last-child{border-bottom:none}
+.risk-level{padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;flex-shrink:0;white-space:nowrap}
+.risk-high{background:#fef2f2;color:var(--red-up)}
+.risk-medium{background:#fffbeb;color:#d97706}
+.risk-low{background:#f0fdf4;color:var(--green-down)}
+.risk-text{font-size:13px;color:var(--text-secondary)}
+.qa-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.qa-item:last-child{border-bottom:none}
+.qa-q{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:6px}
+.qa-q::before{content:"Q: ";color:var(--gold)}
+.qa-a{font-size:13px;color:var(--text-secondary);padding-left:16px;border-left:3px solid var(--gold)}
+.qa-a::before{content:"A: ";color:var(--deep-blue);font-weight:600}
+@media(min-width:768px){.score-grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="index-detail.html">指数详情</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="diagnosis-report.html" class="active">诊断报告</a>
-      <a href="agent.html">AI助手</a>
-      <a href="workspace.html">B端工作台</a>
-      <a href="admin.html">管理后台</a>
-    </div>
-    <div class="nav-cta">
-      <a href="login.html" class="btn-login">登录</a>
-      <a href="register.html" class="btn-register">注册</a>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">诊断报告</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
+  </div>
+</div>
 
-<div class="container">
-  <a href="diagnosis.html" class="back-link">← 返回诊断季</a>
+<!-- 报告头部 -->
+<section class="page-hero">
+  <span class="hero-badge">📋 诊断报告 · 2026 Q3</span>
+  <h1>宁德时代 CATL</h1>
+  <p>300750 · 先进制造 · 动力电池</p>
+  <div class="hero-price">
+    <span class="val">92.4</span>
+    <span style="font-size:14px;color:rgba(255,255,255,0.6);margin-left:4px;">/100 新质生产力评分</span>
+  </div>
+  <div class="hero-cta">
+    <a href="diagnosis.html" class="btn-primary btn-sm">返回诊断季</a>
+    <a href="agent.html" class="btn-secondary btn-sm">AI深度分析</a>
+  </div>
+</section>
 
-  <div class="report-header">
-    <div class="report-header-top">
-      <div>
-        <div class="report-company">宁德时代 CATL<small>300750 · 先进制造 · 动力电池</small></div>
-      </div>
-      <div class="score-circle">
-        <div class="score-num">92.4</div>
-        <div class="score-label">新质生产力评分</div>
-      </div>
-    </div>
-    <div class="report-meta">
-      <div class="report-meta-item">📅 诊断期：<strong>2026 Q3（7月15日-7月31日）</strong></div>
-      <div class="report-meta-item">👥 参与投资者：<strong>985人</strong></div>
-      <div class="report-meta-item">📊 行业排名：<strong>先进制造 #1</strong></div>
-      <div class="report-meta-item">🤖 报告生成：<strong>Heli-Agent</strong></div>
+<div class="page-content">
+  <div class="breadcrumb"><a href="diagnosis.html">诊断季</a> <span class="sep">›</span> 诊断报告</div>
+
+  <!-- 诊断元数据 -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked');this.querySelector('span').textContent=this.classList.contains('liked')?'287':'286'">❤️ <span>286</span></button>
+      <button class="action-btn" onclick="this.querySelector('span').textContent=parseInt(this.querySelector('span').textContent)+1">⭐ <span>134</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <span style="font-size:11px;color:var(--text-light);margin-left:auto">📅 2026 Q3 · 👥 985人参与 · 📊 先进制造 #1</span>
     </div>
   </div>
 
-  <!-- 得分卡 -->
-  <h2 style="font-size:20px;font-weight:700;color:var(--gray-800);margin-bottom:16px;">诊断维度评分</h2>
+  <!-- 诊断维度评分 -->
+  <div class="section-title">诊断维度评分</div>
   <div class="score-grid">
     <div class="score-card">
       <div class="score-card-label">技术创新力</div>
       <div class="score-card-value score-excellent">95</div>
-      <div class="score-card-bar"><div class="score-card-fill" style="width:95%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:95%;background:linear-gradient(90deg,var(--gold-dark),var(--gold))"></div></div>
     </div>
     <div class="score-card">
       <div class="score-card-label">AI+战略深度</div>
       <div class="score-card-value score-excellent">91</div>
-      <div class="score-card-bar"><div class="score-card-fill" style="width:91%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:91%;background:linear-gradient(90deg,var(--gold-dark),var(--gold))"></div></div>
     </div>
     <div class="score-card">
       <div class="score-card-label">绿色转型进度</div>
       <div class="score-card-value score-excellent">88</div>
-      <div class="score-card-bar"><div class="score-card-fill" style="width:88%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:88%;background:linear-gradient(90deg,var(--gold-dark),var(--gold))"></div></div>
     </div>
     <div class="score-card">
       <div class="score-card-label">财务健康度</div>
       <div class="score-card-value score-good">85</div>
-      <div class="score-card-bar"><div class="score-card-fill" style="width:85%;background:var(--green);"></div></div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:85%;background:var(--green-down)"></div></div>
     </div>
     <div class="score-card">
       <div class="score-card-label">IR透明度</div>
       <div class="score-card-value score-good">82</div>
-      <div class="score-card-bar"><div class="score-card-fill" style="width:82%;background:var(--green);"></div></div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:82%;background:var(--green-down)"></div></div>
     </div>
     <div class="score-card">
       <div class="score-card-label">产业链话语权</div>
       <div class="score-card-value score-excellent">93</div>
-      <div class="score-card-bar"><div class="score-card-fill" style="width:93%;background:linear-gradient(90deg,var(--consensus-gold),var(--gold-light));"></div></div>
+      <div class="score-card-bar"><div class="score-card-fill" style="width:93%;background:linear-gradient(90deg,var(--gold-dark),var(--gold))"></div></div>
     </div>
   </div>
 
   <!-- 多维度指标 -->
-  <div class="radar-section">
-    <h3>📊 新质生产力多维度指标</h3>
-    <div class="radar-grid">
-      <div class="radar-item">
-        <div class="radar-label">研发投入强度</div>
-        <div class="radar-value">6.8%</div>
-        <div class="radar-bar"><div class="radar-fill" style="width:85%;"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-label">专利技术密度</div>
-        <div class="radar-value">12,400+</div>
-        <div class="radar-bar"><div class="radar-fill" style="width:95%;"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-label">AI技术应用率</div>
-        <div class="radar-value">高</div>
-        <div class="radar-bar"><div class="radar-fill" style="width:90%;"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-label">碳减排进度</div>
-        <div class="radar-value">领先</div>
-        <div class="radar-bar"><div class="radar-fill" style="width:78%;"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-label">人才储备</div>
-        <div class="radar-value">16,000+</div>
-        <div class="radar-bar"><div class="radar-fill" style="width:88%;"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-label">全球市占率</div>
-        <div class="radar-value">37.5%</div>
-        <div class="radar-bar"><div class="radar-fill" style="width:92%;"></div></div>
-      </div>
-    </div>
+  <div class="section-title">📊 新质生产力多维度指标</div>
+  <div class="card" style="margin-bottom:20px">
+    <div class="factor-row"><span class="factor-name">研发投入强度</span><div class="factor-bar"><div class="factor-fill" style="width:85%"></div></div><span class="factor-pct">6.8%</span></div>
+    <div class="factor-row"><span class="factor-name">专利技术密度</span><div class="factor-bar"><div class="factor-fill" style="width:95%"></div></div><span class="factor-pct">12,400+</span></div>
+    <div class="factor-row"><span class="factor-name">AI技术应用率</span><div class="factor-bar"><div class="factor-fill" style="width:90%"></div></div><span class="factor-pct">高</span></div>
+    <div class="factor-row"><span class="factor-name">碳减排进度</span><div class="factor-bar"><div class="factor-fill" style="width:78%"></div></div><span class="factor-pct">领先</span></div>
+    <div class="factor-row"><span class="factor-name">人才储备</span><div class="factor-bar"><div class="factor-fill" style="width:88%"></div></div><span class="factor-pct">16,000+</span></div>
+    <div class="factor-row"><span class="factor-name">全球市占率</span><div class="factor-bar"><div class="factor-fill" style="width:92%"></div></div><span class="factor-pct">37.5%</span></div>
   </div>
 
-  <!-- 共识度 -->
-  <div class="consensus-section">
-    <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:8px;">🎯 投资者共识度</h3>
-    <p style="font-size:12px;color:var(--gray-500);margin-bottom:16px;">基于985名投资者投票，共识度：<b style="color:var(--consensus-gold);">87%</b>（高共识）</p>
+  <!-- 投资者共识度 -->
+  <div class="section-title">🎯 投资者共识度</div>
+  <div class="card" style="margin-bottom:20px">
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:12px">基于985名投资者投票，共识度：<b style="color:var(--gold-dark);">87%</b>（高共识）</p>
     <div class="consensus-bar">
-      <div class="bull" style="width:79.5%;">看好 79.5% (783票)</div>
-      <div class="neutral" style="width:15.8%;">中性 15.8%</div>
-      <div class="bear" style="width:4.7%;">看空 4.7%</div>
+      <div class="bull" style="width:79.5%">看好 79.5%</div>
+      <div class="neutral" style="width:15.8%">中性</div>
+      <div class="bear" style="width:4.7%">看空</div>
     </div>
-    <div class="consensus-legend">
+    <div style="display:flex;gap:16px;font-size:12px;color:var(--text-light);flex-wrap:wrap">
       <span>🟢 分歧度：0.12（低分歧）</span>
       <span>📈 情绪指数：+74.8</span>
       <span>🔄 投票变化：↑ 12% vs Q2</span>
     </div>
+    <div class="card-actions" style="margin-top:12px">
+      <button class="action-btn liked">❤️ <span>783</span></button>
+      <button class="action-btn">⭐ <span>56</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+    </div>
   </div>
 
   <!-- 风险提示 -->
-  <div class="risk-section">
-    <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:12px;">⚠️ 风险提示与改进建议</h3>
+  <div class="section-title">⚠️ 风险提示与改进建议</div>
+  <div class="card" style="margin-bottom:20px">
     <div class="risk-item">
       <span class="risk-level risk-high">高风险</span>
       <div class="risk-text"><b>原材料价格波动：</b>锂、钴等关键原材料价格波动可能影响毛利率。建议加强上游资源布局与长协锁定。</div>
@@ -258,11 +162,16 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
       <span class="risk-level risk-low">低风险</span>
       <div class="risk-text"><b>产能过剩：</b>行业扩产激进，需关注产能消化节奏。当前产能利用率维持85%+，风险可控。</div>
     </div>
+    <div class="card-actions" style="margin-top:12px">
+      <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ <span>95</span></button>
+      <button class="action-btn" onclick="this.querySelector('span').textContent=parseInt(this.querySelector('span').textContent)+1">⭐ <span>31</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+    </div>
   </div>
 
   <!-- 投资者核心提问 -->
-  <div class="qa-section">
-    <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:12px;">💬 投资者核心提问与回复</h3>
+  <div class="section-title">💬 投资者核心提问与回复</div>
+  <div class="card" style="margin-bottom:20px">
     <div class="qa-item">
       <div class="qa-q">固态电池研发进展如何？预计何时量产？</div>
       <div class="qa-a">公司固态电池研发已进入B样阶段，能量密度达到400Wh/kg，预计2027年实现小批量量产。</div>
@@ -275,31 +184,59 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
       <div class="qa-q">海外产能布局进展如何？</div>
       <div class="qa-a">匈牙利工厂已投产，德国工厂建设中，印尼项目预计2027年投产。海外产能占比目标30%。</div>
     </div>
+    <div class="card-actions" style="margin-top:12px">
+      <button class="action-btn" onclick="this.classList.toggle('liked');this.querySelector('span').textContent=this.classList.contains('liked')?'77':'76'">❤️ <span>76</span></button>
+      <button class="action-btn">⭐ <span>23</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+    </div>
   </div>
 
-  <!-- 相关链接 -->
-  <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:14px;">相关功能</h3>
-  <div class="related">
-    <a href="diagnosis.html" class="related-card">
-      <span class="related-icon">🔬</span>
-      <div><div class="related-title">诊断季活动</div><div class="related-desc">参与本期投票与提问</div></div>
-    </a>
-    <a href="agent.html" class="related-card">
-      <span class="related-icon">🤖</span>
-      <div><div class="related-title">AI 深度分析</div><div class="related-desc">更多公司诊断查询</div></div>
-    </a>
-    <a href="index-detail.html" class="related-card">
-      <span class="related-icon">📊</span>
-      <div><div class="related-title">指数详情</div><div class="related-desc">查看热力值排名</div></div>
-    </a>
+  <!-- 推荐链接 -->
+  <div class="recommend-section">
+    <h4>🔗 深度探索</h4>
+    <div class="recommend-links">
+      <a href="diagnosis.html" class="recommend-link"><span class="rl-icon">🔬</span> 诊断季投票</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI深度分析</a>
+      <a href="indices.html" class="recommend-link"><span class="rl-icon">📊</span> 指数中心</a>
+      <a href="awards.html" class="recommend-link"><span class="rl-icon">🏆</span> 金鲲鹏颁奖</a>
+    </div>
   </div>
 </div>
 
+<!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-inner">
-    <p>© 2026 合力指数 Heli-Index · 诊断报告由 Heli-Agent AI 辅助生成 · <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></p>
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>诊断报告由 Heli-Agent AI 辅助生成，数据基于公开信息与投资者共识投票。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>功能</h4><a href="diagnosis.html">诊断季</a><a href="diagnosis-report.html" style="color:var(--gold)">诊断报告</a><a href="achievements.html">成就体系</a></div>
+    <div><h4>联系</h4><a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></div>
   </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index. All rights reserved.</div>
 </footer>
+
+<!-- 底部Tab Bar -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item active">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
 
 <script src="ai-widget.js"></script>
 </body>

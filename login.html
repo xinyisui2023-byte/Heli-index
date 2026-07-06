@@ -2,69 +2,160 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>登录 · 合力指数</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628;
-  --consensus-gold: #c9a84c;
-  --gold-light: #e8d48b;
-  --white: #ffffff;
-  --gray-200: #e5e7eb;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
+.login-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--deep-blue) 0%, var(--deep-blue-mid) 100%);
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-.nav { background: var(--deep-blue); }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; gap: 20px; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.nav-logo svg { width: 28px; height: 28px; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-
-.main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; background: linear-gradient(135deg, rgba(201,168,76,0.04), rgba(10,22,40,0.02)); }
-.login-card { background: var(--white); border-radius: 16px; padding: 36px; max-width: 420px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid var(--gray-200); }
-.login-card h1 { font-size: 24px; font-weight: 800; color: var(--deep-blue); margin-bottom: 6px; }
-.login-card > p { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
-
+.login-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(201,168,76,.08) 0%, transparent 60%);
+}
+.login-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.login-card h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin-bottom: 4px;
+  text-align: center;
+}
+.login-card > p {
+  font-size: 13px;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 24px;
+}
 .form-group { margin-bottom: 16px; }
-.form-label { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; display: block; }
-.form-input { width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; font-family: inherit; }
-.form-input:focus { border-color: var(--consensus-gold); }
-.form-options { display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 20px; }
-.form-options a { color: var(--consensus-gold); text-decoration: none; }
-.btn-login { width: 100%; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-.btn-login:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(201,168,76,0.3); }
-
-.divider { text-align: center; font-size: 12px; color: var(--gray-400); margin: 20px 0; position: relative; }
-.divider::before { content: ''; position: absolute; left: 0; top: 50%; width: 45%; height: 1px; background: var(--gray-200); }
-.divider::after { content: ''; position: absolute; right: 0; top: 50%; width: 45%; height: 1px; background: var(--gray-200); }
-
-.btn-social { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); font-size: 14px; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; font-family: inherit; }
-.btn-social:hover { border-color: var(--consensus-gold); }
-
-.form-footer { text-align: center; font-size: 13px; color: var(--gray-500); margin-top: 16px; }
-.form-footer a { color: var(--consensus-gold); text-decoration: none; font-weight: 600; }
-
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.5); padding: 20px; text-align: center; font-size: 12px; }
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: block;
+}
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+  font-family: inherit;
+  background: var(--bg-main);
+}
+.form-input:focus { border-color: var(--gold); }
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+.form-options a { color: var(--gold); text-decoration: none; font-weight: 600; }
+.form-options label { color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
+.btn-login {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep-blue);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+}
+.btn-login:hover { box-shadow: 0 4px 16px rgba(201,168,76,.35); }
+.divider {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-light);
+  margin: 20px 0;
+  position: relative;
+}
+.divider::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  width: 42%; height: 1px;
+  background: var(--border);
+}
+.divider::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 50%;
+  width: 42%; height: 1px;
+  background: var(--border);
+}
+.btn-social {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all .2s;
+  font-family: inherit;
+}
+.btn-social:hover { border-color: var(--gold); }
+.form-footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 16px;
+}
+.form-footer a { color: var(--gold); text-decoration: none; font-weight: 700; }
+.login-logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-logo" onclick="location.href='index.html'">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">合力指数</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
+  </div>
+</div>
 
-<main class="main">
+<!-- 登录表单 -->
+<section class="login-hero">
   <div class="login-card">
-    <h1>登录合力指数</h1>
+    <div class="login-logo">
+      <img src="logo.svg" alt="合力指数" style="width:48px;height:48px;">
+      <div style="font-size:18px;font-weight:800;color:var(--deep-blue);margin-top:8px;">合力指数</div>
+    </div>
+    <h1>登录您的账号</h1>
     <p>欢迎回来，继续参与共识构建</p>
 
     <form onsubmit="event.preventDefault(); alert('登录功能Demo，实际部署需接入后端')">
@@ -77,7 +168,7 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
         <input type="password" class="form-input" placeholder="请输入密码">
       </div>
       <div class="form-options">
-        <label style="font-size:12px;color:var(--gray-600);display:flex;align-items:center;gap:4px;">
+        <label style="display:flex;align-items:center;gap:4px;">
           <input type="checkbox"> 记住我
         </label>
         <a href="#">忘记密码？</a>
@@ -94,9 +185,8 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
       还没有账号？<a href="register.html">立即注册</a>
     </div>
   </div>
-</main>
+</section>
 
-<footer class="footer">© 2026 合力指数 Heli-Index</footer>
 <script src="ai-widget.js"></script>
 </body>
 </html>

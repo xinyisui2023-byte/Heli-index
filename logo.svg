@@ -1,33 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="heli-logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <defs>
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e2c97e"/>
-      <stop offset="50%" stop-color="#c9a84c"/>
+    <linearGradient id="starGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0d78c"/>
+      <stop offset="30%" stop-color="#c9a84c"/>
+      <stop offset="70%" stop-color="#d4a843"/>
       <stop offset="100%" stop-color="#a68a2e"/>
     </linearGradient>
-    <filter id="glow">
+    <linearGradient id="starGold2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e2c97e"/>
+      <stop offset="50%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#9a7b2f"/>
+    </linearGradient>
+    <filter id="starGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="innerGlow">
       <feGaussianBlur stdDeviation="1" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
   </defs>
-  <!-- {9/4} 九芒星 -->
+
+  <!-- 外层九芒星轮廓（{9/2}星形） - 透明填充，金色描边 -->
   <polygon
-    points="50,8 53,34 77,18 64,42 91,43 66,53 86,71 60,62 64,90 50,66 36,90 40,62 14,71 34,53 9,43 36,42 23,18 47,34"
-    fill="url(#goldGrad)" opacity="0.13" stroke="url(#goldGrad)" stroke-width="1.2"/>
+    points="100,10 122.7,69.1 185.6,69.1 135.3,107.6 154.5,170.6 100,138.2 45.5,170.6 64.7,107.6 14.4,69.1 77.3,69.1"
+    fill="none" stroke="url(#starGold)" stroke-width="2" opacity="0.35"/>
+
+  <!-- 内层九芒星实心（{9/4}星形） - 金色填充 -->
   <polygon
-    points="50,13 55,36 79,21 66,43 89,45 67,54 84,69 61,61 66,87 50,65 34,87 39,61 16,69 33,54 11,45 48,43 21,21 45,36"
-    fill="url(#goldGrad)" filter="url(#glow)"/>
-  <!-- 中心 -->
-  <circle cx="50" cy="50" r="5.5" fill="#0a1628" stroke="#c9a84c" stroke-width="1.5"/>
-  <circle cx="50" cy="50" r="2.8" fill="#e2c97e"/>
-  <!-- 九角 -->
-  <circle cx="50" cy="8" r="2.2" fill="#e2c97e" opacity="0.9"/>
-  <circle cx="91" cy="43" r="2.2" fill="#e2c97e" opacity="0.9"/>
-  <circle cx="66" cy="90" r="2.2" fill="#e2c97e" opacity="0.9"/>
-  <circle cx="34" cy="90" r="2.2" fill="#e2c97e" opacity="0.9"/>
-  <circle cx="9" cy="43" r="2.2" fill="#e2c97e" opacity="0.9"/>
-  <circle cx="77" cy="18" r="2" fill="#e2c97e" opacity="0.65"/>
-  <circle cx="86" cy="71" r="2" fill="#e2c97e" opacity="0.65"/>
-  <circle cx="14" cy="71" r="2" fill="#e2c97e" opacity="0.65"/>
-  <circle cx="21" cy="21" r="2" fill="#e2c97e" opacity="0.65"/>
+    points="100,18 116,66 177,62 133,103 150,162 100,132 50,162 67,103 23,62 84,66"
+    fill="url(#starGold)" filter="url(#starGlow)"/>
+
+  <!-- 第二层光晕星（稍微偏移增加层次感） -->
+  <polygon
+    points="100,28 111,64 170,60 132,98 145,155 100,128 55,155 68,98 30,60 89,64"
+    fill="url(#starGold2)" opacity="0.25" filter="url(#innerGlow)"/>
+
+  <!-- 中心圆环 -->
+  <circle cx="100" cy="100" r="18" fill="#0a1628" stroke="url(#starGold)" stroke-width="3"/>
+  <circle cx="100" cy="100" r="12" fill="url(#starGold)"/>
+  <circle cx="100" cy="100" r="5" fill="#f0d78c" filter="url(#innerGlow)"/>
+
+  <!-- 9个顶点光芒点 -->
+  <circle cx="100" cy="10" r="4" fill="#f0d78c" opacity="0.95"/>
+  <circle cx="185.6" cy="69.1" r="4" fill="#f0d78c" opacity="0.95"/>
+  <circle cx="154.5" cy="170.6" r="4" fill="#f0d78c" opacity="0.95"/>
+  <circle cx="45.5" cy="170.6" r="4" fill="#f0d78c" opacity="0.95"/>
+  <circle cx="14.4" cy="69.1" r="4" fill="#f0d78c" opacity="0.95"/>
+  <circle cx="122.7" cy="69.1" r="3" fill="#e2c97e" opacity="0.7"/>
+  <circle cx="135.3" cy="107.6" r="3" fill="#e2c97e" opacity="0.7"/>
+  <circle cx="64.7" cy="107.6" r="3" fill="#e2c97e" opacity="0.7"/>
+  <circle cx="77.3" cy="69.1" r="3" fill="#e2c97e" opacity="0.7"/>
 </svg>

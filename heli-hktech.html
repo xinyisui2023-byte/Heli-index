@@ -1,151 +1,361 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>合力港股通科技指数 | 合力指数 Heli-Index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>合力港股通科技指数 Heli-HKTech | 合力指数</title>
 <link rel="stylesheet" href="style.css">
 <style>
-:root{--deep-blue:#0a1628;--gold:#c9a84c;--gold-light:#e0c66a;--gold-dark:#9a7b2f;--white:#f8f9fb;--text-primary:#1a1f36;--text-secondary:#5a6070;--bg-card:#fff;--bg-section:#f1f5f9;--red-up:#e63946;--green-down:#2ecc71}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"Inter","Noto Sans SC",system-ui,sans-serif;color:var(--text-primary);background:var(--white);line-height:1.6}
-.nav{position:sticky;top:0;z-index:100;background:var(--deep-blue);color:var(--white);padding:0 24px}
-.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
-.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none;color:white}
-.nav-logo img{height:32px}
-.nav-links{display:flex;gap:24px;font-size:14px;flex-wrap:wrap}
-.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;transition:color .2s;white-space:nowrap}
-.nav-links a:hover,.nav-links a.active{color:var(--gold)}
-.btn-gold{background:var(--gold);color:var(--deep-blue);padding:8px 20px;border-radius:20px;font-weight:600;font-size:14px;border:none;cursor:pointer;text-decoration:none;display:inline-block}
-.btn-outline{border:1.5px solid var(--gold);color:var(--gold);padding:8px 20px;border-radius:20px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;background:transparent}
-.hero{background:linear-gradient(135deg,#0a1628 0%,#122a4a 50%,#1a3a5c 100%);color:white;padding:60px 24px 80px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,rgba(201,168,76,.1) 0%,transparent 60%)}
-.hero>*{position:relative}
-.hero-badge{display:inline-block;background:rgba(201,168,76,.2);color:var(--gold);border:1px solid var(--gold);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:16px}
-.hero h1{font-size:38px;font-weight:800;margin-bottom:12px}
-.hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:700px;margin:0 auto 24px}
-.price-bar{display:flex;justify-content:center;align-items:baseline;gap:20px;flex-wrap:wrap}
-.price-val{font-size:48px;font-weight:800;color:var(--gold)}
-.price-date{font-size:13px;color:rgba(255,255,255,.5)}
-.container{max-width:1280px;margin:0 auto;padding:48px 24px}
-h2{font-size:26px;font-weight:800;margin-bottom:20px;color:var(--deep-blue)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-@media(max-width:768px){.grid2,.grid3{grid-template-columns:1fr}}
-.card{background:var(--bg-card);border-radius:14px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid #eef1f5}
-.methodology-step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start}
-.step-num{background:var(--gold);color:var(--deep-blue);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
-.const-table{width:100%;border-collapse:collapse;font-size:13px}
-.const-table th{background:var(--deep-blue);color:white;padding:12px 14px;text-align:left;font-weight:600}
-.const-table td{padding:12px 14px;border-bottom:1px solid #eef1f5}
-.const-table .up{color:var(--red-up);font-weight:600}
-.const-table .down{color:var(--green-down);font-weight:600}
-.factor-visual{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.factor-name{width:100px;font-size:13px;font-weight:600;text-align:right}
-.factor-bar{flex:1;height:20px;background:#eef1f5;border-radius:10px;overflow:hidden}
-.factor-fill{height:100%;background:linear-gradient(90deg,#457b9d,#1d3557);border-radius:10px}
-.factor-pct{width:50px;font-size:12px;font-weight:700;color:var(--deep-blue)}
-.breadcrumb{font-size:13px;color:var(--text-secondary);margin-bottom:24px}
-.breadcrumb a{color:var(--deep-blue);text-decoration:none}
-footer{background:var(--deep-blue);color:rgba(255,255,255,.6);padding:48px 24px;text-align:center;font-size:13px}
-footer a{color:var(--gold);text-decoration:none}
+.factor-expand{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:10px;font-size:11px;color:var(--text-secondary);line-height:1.7;display:none}
+.factor-expand.open{display:block}
+.factor-toggle{font-size:11px;color:var(--gold);cursor:pointer;font-weight:700;margin-top:4px;display:inline-block}
+.formula-box{background:var(--deep-blue);color:var(--gold);padding:8px 12px;border-radius:8px;font-size:11px;font-family:"SF Mono",monospace;margin:8px 0;line-height:1.6}
+.risk-box{background:#fff3cd;border:1px solid #ffc107;border-radius:10px;padding:14px;font-size:12px;color:#856404;margin-top:24px}
+.factor-matrix{width:100%;border-collapse:collapse;font-size:11px;margin-top:16px}
+.factor-matrix th{background:var(--deep-blue);color:white;padding:8px;text-align:center;font-weight:600}
+.factor-matrix td{padding:8px;text-align:center;border:1px solid var(--border)}
+.factor-matrix .high{color:var(--gold);font-weight:700}
+.factor-matrix .med{color:var(--text-secondary)}
+.factor-matrix .low{color:var(--text-light)}
+.perf-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.perf-label{font-size:12px;font-weight:600;width:70px;flex-shrink:0}
+.perf-bar{flex:1;height:16px;background:var(--bg);border-radius:8px;overflow:hidden}
+.perf-fill{height:100%;border-radius:8px}
+.perf-val{font-size:12px;font-weight:700;width:60px;flex-shrink:0;text-align:right}
 </style>
 </head>
 <body>
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="logo.svg" alt="合力指数">合力指数</a>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="indices.html" class="active">指数中心</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="roadshow.html">全球路演</a>
-      <a href="awards.html">金鲲鹏</a>
-      <a href="achievements.html">成就</a>
-      <a href="agent.html">AI助手</a>
-      <a href="workspace.html">B端工作台</a>
-    </div>
-    <div style="display:flex;gap:12px">
-      <a href="login.html" style="color:white;font-size:14px;text-decoration:none">登录</a>
-      <a href="register.html" class="btn-gold">注册</a>
-    </div>
+
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">合力港股通科技 Heli-HKTech</span>
   </div>
-</nav>
-
-<section class="hero">
-  <span class="hero-badge">合力系列 · 港股通聚焦</span>
-  <h1>合力港股通科技指数</h1>
-  <p>Heli-HSTech —— 在港商科指基础上扩展覆盖，纳入金融科技、智慧城市、云服务等新赛道，设ESG负面筛选，追踪港股通50家科技龙头。</p>
-  <div class="price-bar">
-    <span style="font-size:13px;color:rgba(255,255,255,.5)">实时</span>
-    <span class="price-val">8,934.15</span>
-    <span style="font-size:20px;font-weight:600;color:var(--green-down)">▼ -46.89 (-0.52%)</span>
-    <span class="price-date">2026-07-06 15:08 HKT</span>
-  </div>
-</section>
-
-<div class="container">
-  <div class="breadcrumb"><a href="indices.html">← 指数中心</a> / 合力港股通科技指数 (Heli-HSTech)</div>
-
-  <div class="grid2" style="margin-bottom:40px">
-    <div class="card">
-      <h3>📋 指数概要</h3>
-      <table style="width:100%;font-size:13px">
-        <tr><td style="color:var(--text-secondary);padding:6px 0">指数名称</td><td style="font-weight:600">合力港股通科技指数</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">指数代码</td><td style="font-weight:600;color:var(--gold)">Heli-HSTech</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">成分股数</td><td>50只</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">基日/基点</td><td>2023-12-31 / 8000</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">调仓频率</td><td>季度（3/6/9/12月）</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">单股权重上限</td><td>12%</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">ESG要求</td><td style="color:#2e7d32">负面筛选，排除高碳排放</td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <h3>🔬 因子体系</h3>
-      <div class="factor-visual"><span class="factor-name">市值加权</span><div class="factor-bar"><div class="factor-fill" style="width:40%"></div></div><span class="factor-pct">40%</span></div>
-      <div class="factor-visual"><span class="factor-name">流动性</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
-      <div class="factor-visual"><span class="factor-name">ESG评级</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
-      <div class="factor-visual"><span class="factor-name">共识投票</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
-      <div class="factor-visual"><span class="factor-name">行业上限</span><div class="factor-bar"><div class="factor-fill" style="width:10%"></div></div><span class="factor-pct">10%</span></div>
-    </div>
-  </div>
-
-  <h2>📊 成分股TOP10</h2>
-  <div style="overflow-x:auto;margin-bottom:40px">
-    <table class="const-table">
-      <thead><tr><th>代码</th><th>名称</th><th>行业</th><th>市值(亿)</th><th>权重</th><th>ESG评级</th><th>涨跌</th></tr></thead>
-      <tbody>
-        <tr><td>0700.HK</td><td>腾讯控股</td><td>互联网/AI</td><td>38,200</td><td>11.2%</td><td>AA</td><td class="up">+3.2%</td></tr>
-        <tr><td>9988.HK</td><td>阿里巴巴</td><td>云计算</td><td>19,500</td><td>9.8%</td><td>A</td><td class="up">+1.8%</td></tr>
-        <tr><td>1810.HK</td><td>小米集团</td><td>智能制造</td><td>6,200</td><td>8.5%</td><td>A</td><td class="up">+4.1%</td></tr>
-        <tr><td>0981.HK</td><td>中芯国际</td><td>半导体</td><td>5,800</td><td>7.2%</td><td>BBB</td><td class="up">+5.4%</td></tr>
-        <tr><td>3690.HK</td><td>美团</td><td>数字服务</td><td>11,200</td><td>6.8%</td><td>A</td><td class="down">-1.2%</td></tr>
-        <tr><td>9618.HK</td><td>京东集团</td><td>电商/物流科技</td><td>8,400</td><td>5.5%</td><td>A</td><td class="up">+0.9%</td></tr>
-        <tr><td>9999.HK</td><td>网易</td><td>互联网</td><td>5,600</td><td>4.8%</td><td>A</td><td class="up">+2.3%</td></tr>
-        <tr><td>2015.HK</td><td>理想汽车</td><td>新能源</td><td>3,400</td><td>4.2%</td><td>BBB</td><td class="down">-1.5%</td></tr>
-        <tr><td>1024.HK</td><td>快手科技</td><td>AI/内容</td><td>2,800</td><td>3.5%</td><td>BBB</td><td class="up">+1.1%</td></tr>
-        <tr><td>9868.HK</td><td>小鹏汽车</td><td>新能源+AI</td><td>1,500</td><td>3.0%</td><td>BB</td><td class="up">+8.7%</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2>👥 用户交互</h2>
-  <div class="grid3" style="margin-bottom:40px">
-    <div class="card"><h3>👤 C端投资者</h3><p style="font-size:13px;color:var(--text-secondary)">查看行情、参与共识投票、订阅异动提醒</p></div>
-    <div class="card"><h3>🎓 专业投资者</h3><p style="font-size:13px;color:var(--text-secondary)">API数据接入、ESG评分查询、因子归因分析</p></div>
-    <div class="card"><h3>🏢 B端公司</h3><p style="font-size:13px;color:var(--text-secondary)">查看ESG评分、申请纳入候选、回复提问</p></div>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
   </div>
 </div>
 
-<footer>
-  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:left;padding-bottom:32px">
-    <div><h4 style="color:white;margin-bottom:12px">指数产品</h4><a href="hkcd-tech.html">港商科指</a><br><a href="heli-300.html">合力300</a><br><a href="heli-hktech.html" style="color:var(--gold)">合力港股通科技</a><br><a href="heli-nasdaq.html">合力纳斯达克中概</a></div>
-    <div><h4 style="color:white;margin-bottom:12px">工具</h4><a href="agent.html">AI助手</a><br><a href="api.html">开放API</a><br><a href="web3.html">Web3共识层</a></div>
-    <div><h4 style="color:white;margin-bottom:12px">平台</h4><a href="indices.html">指数中心</a><br><a href="diagnosis.html">诊断季</a><br><a href="awards.html">金鲲鹏</a></div>
-    <div><h4 style="color:white;margin-bottom:12px">关于</h4><p style="font-size:13px">合力港股通科技指数，港股通科技投资基准。nebula@heli-ai.com</p></div>
+<!-- Hero -->
+<section class="page-hero">
+  <span class="hero-badge">🌊 合力系列 · 港股通聚焦</span>
+  <h1>合力港股通科技指数<br><span class="gold">Heli-HKTech</span></h1>
+  <p>50只港股通科技股，ESG负面筛选机制，六因子多维度衡量港股通科技龙头</p>
+  <div class="hero-price">
+    <span class="val">3,942.58</span>
+    <span class="change up">▲ +38.42 (+0.98%)</span>
+    <span style="font-size:11px;color:rgba(255,255,255,.4)">2026-07-06 15:08 HKT</span>
   </div>
-  <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:24px">© 2026 合力指数 Heli-Index</div>
+  <div class="hero-cta">
+    <a href="apply.html" class="btn-primary">提名成分股</a>
+    <a href="agent.html" class="btn-secondary">向AI助手提问</a>
+  </div>
+</section>
+
+<div class="page-content">
+  <div class="breadcrumb"><a href="indices.html">指数中心</a> <span class="sep">›</span> 港股通科技 Heli-HKTech</div>
+
+  <!-- 指数概要 -->
+  <div class="section-title">📋 指数概要</div>
+  <div class="card" style="margin-bottom:16px">
+    <table style="width:100%;font-size:12px">
+      <tr><td style="color:var(--text-secondary);padding:5px 0;width:40%">指数名称</td><td style="font-weight:600">合力港股通科技指数</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">英文名称</td><td style="font-weight:600">Heli Hong Kong Connect Tech Index</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">指数代码</td><td style="font-weight:700;color:var(--gold)">Heli-HKTech</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">编制机构</td><td>合力指数编制委员会</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">样本空间</td><td>港股通标的 + 科技行业</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">成分股数量</td><td style="font-weight:600">50只</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">基日/基点</td><td>2023-12-31 / 3000</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">调仓频率</td><td>季度（3/6/9/12月）</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">ESG筛选</td><td style="font-weight:700;color:#2e7d32">负面筛选：MSCI ESG&lt;BBB淘汰</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">加权方式</td><td>自由流通市值加权 + 因子调整</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">权重上限</td><td>单股≤12%，行业≤30%</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold" style="margin-bottom:24px">
+    <h3 style="font-size:14px;font-weight:700;margin-bottom:6px">🎯 核心定位</h3>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+      区别于传统港股科技指数，合力港股通科技指数聚焦<strong style="color:var(--gold-dark)">港股通标的+ESG负面筛选</strong>，纳入金融科技、智慧城市、云服务等新赛道，通过六因子体系筛选50家港股通科技龙头，为内地投资者提供可投资的港股科技基准。
+    </p>
+  </div>
+
+  <!-- 编制方法论 -->
+  <div class="section-title">📐 编制方法论</div>
+  <div class="step-flow" style="margin-bottom:24px">
+    <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>样本空间确定</h4><p>港股通标的中的大中华地区科技公司，日均成交额≥3000万港元，排除ST股及停牌超30日个股。自由流通市值≥10亿港元。</p></div></div>
+    <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>行业与主题筛选</h4><p>主营业务须属科技领域：AI/大数据、半导体/集成电路、金融科技/数字支付、云计算/SaaS、智能制造/机器人、新能源/新能源汽车、生物科技/创新药。</p></div></div>
+    <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>ESG负面筛选 ⭐</h4><p>MSCI ESG评级≥BBB为门槛，低于BBB直接淘汰。高碳排放、重大环境违规、治理缺陷公司一律排除。</p></div></div>
+    <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>六因子综合评分</h4><p>硬科技纯度(25%)+港股通流动性(20%)+共识度(20%)+ESG合规(15%)+成长质量(10%)+南向资金偏好(10%)加权评分，取前50名纳入。</p></div></div>
+    <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>权重限制与调整</h4><p>自由流通市值加权，单股≤12%，行业≤30%。季度调仓设10%缓冲区减少换手率。</p></div></div>
+  </div>
+
+  <!-- 六因子体系 -->
+  <div class="section-title">🔬 六因子体系与权重</div>
+  <p class="section-subtitle">参照MSCI因子框架，合力港股通科技指数采用6因子模型，每因子包含2-3个子指标</p>
+
+  <!-- 因子权重总览 -->
+  <div class="card" style="margin-bottom:16px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--deep-blue)">📊 因子权重总览</div>
+    <div class="factor-row"><span class="factor-name">硬科技纯度</span><div class="factor-bar"><div class="factor-fill" style="width:25%"></div></div><span class="factor-pct">25%</span></div>
+    <div class="factor-row"><span class="factor-name">港股通流动性</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
+    <div class="factor-row"><span class="factor-name">共识度</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
+    <div class="factor-row"><span class="factor-name">ESG合规</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
+    <div class="factor-row"><span class="factor-name">成长质量</span><div class="factor-bar"><div class="factor-fill" style="width:10%"></div></div><span class="factor-pct">10%</span></div>
+    <div class="factor-row"><span class="factor-name">南向资金偏好</span><div class="factor-bar"><div class="factor-fill" style="width:10%"></div></div><span class="factor-pct">10%</span></div>
+  </div>
+
+  <!-- 因子详细拆解 -->
+  <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px">
+
+    <div class="card factor-detail-card">
+      <div class="fd-icon">💎</div>
+      <h3>因子1：硬科技纯度因子 — 权重25%</h3>
+      <div class="fd-desc">衡量公司核心业务的"硬科技纯度"。硬科技业务指直接基于前沿科学技术研发和生产的产品/服务收入，排除纯互联网平台、纯渠道分销、纯金融投资收益。门槛值：硬科技收入占比≥40%。</div>
+      <div class="formula-box">F₁ = w₁₁ × (硬科技收入/总收入) + w₁₂ × 硬科技收入增速 + w₁₃ × 技术壁垒评分<br>w₁₁=0.60, w₁₂=0.20, w₁₃=0.20<br>门槛值：硬科技收入占比 ≥ 40%</div>
+      <div class="fd-data">数据来源：公司年报分部收入披露 + 合力指数AI行业分类引擎验证<br>评分细则：≥80% → 10分 | 60%-80% → 8分 | 40%-60% → 6分 | &lt;40% → 淘汰</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：硬科技收入占比 (60%)</strong> — 公司年报中"研发/制造/技术服务"收入占总营收比例。需经AI引擎二次校验，排除将平台佣金伪装为技术服务收入的情况。<br><br>
+        <strong>子指标2：硬科技收入增速 (20%)</strong> — 近3年硬科技业务收入CAGR，>20%加分，<5%扣分。<br><br>
+        <strong>子指标3：技术壁垒评分 (20%)</strong> — 专利数、核心技术团队占比、国产替代率综合评分。港股通科技标的需额外评估内地技术依赖度。
+      </div>
+    </div>
+
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🌊</div>
+      <h3>因子2：港股通流动性因子 — 权重20%</h3>
+      <div class="fd-desc">衡量成分股在港股通机制下的可投资性和流动性水平。确保内地投资者可通过港股通渠道高效交易。</div>
+      <div class="formula-box">F₂ = w₂₁ × 日均成交额 + w₂₂ × 换手率 + w₂₃ × 南向资金占比<br>w₂₁=0.40, w₂₂=0.30, w₂₃=0.30<br>门槛值：日均成交额≥3000万港元</div>
+      <div class="fd-data">数据来源：港交所实时交易数据 + 港股通持股披露<br>评分细则：日均≥1亿 → 10分 | 5000万-1亿 → 8分 | 3000万-5000万 → 5分 | &lt;3000万 → 淘汰</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：日均成交额 (40%)</strong> — 近60个交易日日均成交金额(港元)。港股通标的需满足日均≥3000万港元门槛，低于此值淘汰。<br><br>
+        <strong>子指标2：换手率 (30%)</strong> — 近30个交易日日均换手率。换手率≥2%为高流动性，<0.5%为低流动性扣分。<br><br>
+        <strong>子指标3：南向资金占比 (30%)</strong> — 南向资金持股量/自由流通股本比例。反映内地投资者对标的的实际持仓偏好，≥15%优秀。
+      </div>
+    </div>
+
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🤝</div>
+      <h3>因子3：共识度因子 — 权重20%</h3>
+      <div class="fd-desc">合力指数的核心创新因子，将投资者共识量化纳入指数编制。通过投票一致性、热力值排名和共识偏差度三个维度衡量市场共识强度。</div>
+      <div class="formula-box">F₃ = w₃₁ × 投票一致性 + w₃₂ × 热力值排名 + w₃₃ × 共识偏差度<br>w₃₁=0.35, w₃₂=0.35, w₃₃=0.30<br>无门槛值（所有通过前期筛选的公司均参与评分）</div>
+      <div class="fd-data">评分细则：投票一致性≥80% → 10分 | 60%-80% → 7分 | &lt;60% → 4分<br>数据来源：诊断季投票数据 + 合力指数热力值引擎 + 分析师评级</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：投票一致性 (35%)</strong> — 投资者投票中，看好/中立/看空三选项的一致程度。高度一致=共识强。港股通标的需结合南向投资者投票权重加权计算。<br><br>
+        <strong>子指标2：热力值排名 (35%)</strong> — 合力指数平台热力值排名百分位。TOP10%=10分，TOP50%=5分。热力值由投票热度、提问质量、共识偏差度三项合成。<br><br>
+        <strong>子指标3：共识偏差度 (30%)</strong> — 分析师评级(买入/持有/卖出)与投资者投票结果之间的偏差程度。偏差大=市场尚未形成共识，扣分。
+      </div>
+    </div>
+
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🌱</div>
+      <h3>因子4：ESG合规因子 — 权重15%</h3>
+      <div class="fd-desc">衡量企业可持续发展与合规水平。参照MSCI ESG评级框架，合力港股通科技指数设ESG负面筛选机制：MSCI ESG评级&lt;BBB直接淘汰，不进入后续评分流程。</div>
+      <div class="formula-box">F₄ = w₄₁ × MSCI ESG评级 + w₄₂ × 碳排放强度 + w₄₃ × 绿色专利数<br>w₄₁=0.50, w₄₂=0.30, w₄₃=0.20<br>淘汰值：MSCI ESG &lt; BBB（ESG负面筛选）</div>
+      <div class="fd-data">评分细则：ESG AAA → 10分 | AA → 8分 | A → 6分 | BBB → 4分 | &lt;BBB → 淘汰<br>数据来源：MSCI ESG评级 + 公司ESG报告 + 碳披露数据</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：MSCI ESG评级 (50%)</strong> — MSCI全球ESG评级，从AAA到CCC七个等级。合力港股通科技指数设BBB为底线门槛，低于BBB直接淘汰（ESG负面筛选机制）。这是本指数区别于其他港股科技指数的核心特征。<br><br>
+        <strong>子指标2：碳排放强度 (30%)</strong> — 单位营收碳排放量(吨CO₂/百万港元)。碳排放强度持续下降加分，行业排名后20%扣分。<br><br>
+        <strong>子指标3：绿色专利数 (20%)</strong> — 近3年绿色技术相关发明专利授权数量。反映企业在清洁技术领域的创新投入。
+      </div>
+    </div>
+
+    <div class="card factor-detail-card">
+      <div class="fd-icon">📈</div>
+      <h3>因子5：成长质量因子 — 权重10%</h3>
+      <div class="fd-desc">衡量公司成长的真实性和可持续性。不仅看增速，更看利润质量和盈利能力支撑。</div>
+      <div class="formula-box">F₅ = w₅₁ × 营收CAGR + w₅₂ × ROE + w₅₃ × 毛利率趋势<br>w₅₁=0.40, w₅₂=0.35, w₅₃=0.25<br>门槛值：近两年营收CAGR≥10%, ROE≥8%</div>
+      <div class="fd-data">评分细则：CAGR≥30% → 10分 | 20%-30% → 8分 | 10%-20% → 6分<br>数据来源：公司年报 + Wind/Bloomberg财务数据</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：营收复合增长率 (40%)</strong> — 近2年营收CAGR。亏损公司需额外审核营收真实性（排除关联交易占比>30%的情况）。港股科技公司需关注汇率波动对港元计价营收的影响。<br><br>
+        <strong>子指标2：ROE (35%)</strong> — 近3年加权平均ROE。ROE≥20%优秀，≥12%合格，<8%扣分。<br><br>
+        <strong>子指标3：毛利率趋势 (25%)</strong> — 近3年毛利率走势。持续上升加分，持续下降扣分。毛利率≥50%优秀。
+      </div>
+    </div>
+
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🧭</div>
+      <h3>因子6：南向资金偏好因子 — 权重10%</h3>
+      <div class="fd-desc">衡量内地投资者通过港股通对标的的实际偏好程度。反映"内资共识"与外资认知的差异，是合力港股通科技指数的独特因子。</div>
+      <div class="formula-box">F₆ = w₆₁ × 南向持股比例变化 + w₆₂ × 内资偏好度 + w₆₃ × 南向成交占比<br>w₆₁=0.45, w₆₂=0.35, w₆₃=0.20<br>无门槛值（港股通标的天然参与评分）</div>
+      <div class="fd-data">评分细则：南向持股≥20% → 10分 | 10%-20% → 7分 | 5%-10% → 4分<br>数据来源：港交所港股通持股披露 + CCASS数据</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：南向持股比例变化 (45%)</strong> — 近3个月南向持股比例变化趋势。持续上升=内资看好加分，持续下降=内资撤退扣分。<br><br>
+        <strong>子指标2：内资偏好度 (35%)</strong> — 南向资金在该标的持仓/南向资金总持仓的比例。偏好度越高，说明内地投资者越集中看好该标的。<br><br>
+        <strong>子指标3：南向成交占比 (20%)</strong> — 南向交易量/总成交量的比例。≥15%为高南向参与度，反映标的在港股通渠道的活跃程度。
+      </div>
+    </div>
+  </div>
+
+  <!-- 因子相关性矩阵 -->
+  <div class="section-title">🔗 因子相关性矩阵</div>
+  <div class="card" style="margin-bottom:24px">
+    <p class="section-subtitle">6因子Pearson相关系数，经正交化处理降低重叠影响</p>
+    <div style="overflow-x:auto">
+      <table class="factor-matrix">
+        <tr><th></th><th>硬科技</th><th>港股通流动性</th><th>共识度</th><th>ESG</th><th>成长</th><th>南向偏好</th></tr>
+        <tr><th>硬科技</th><td class="high">1.00</td><td class="med">0.38</td><td class="med">0.42</td><td class="low">0.18</td><td class="med">0.45</td><td class="low">0.15</td></tr>
+        <tr><th>港股通流动性</th><td class="med">0.38</td><td class="high">1.00</td><td class="low">0.22</td><td class="low">0.08</td><td class="low">0.12</td><td class="high">0.72</td></tr>
+        <tr><th>共识度</th><td class="med">0.42</td><td class="low">0.22</td><td class="high">1.00</td><td class="low">0.15</td><td class="med">0.30</td><td class="med">0.35</td></tr>
+        <tr><th>ESG</th><td class="low">0.18</td><td class="low">0.08</td><td class="low">0.15</td><td class="high">1.00</td><td class="med">0.25</td><td class="low">-0.05</td></tr>
+        <tr><th>成长</th><td class="med">0.45</td><td class="low">0.12</td><td class="med">0.30</td><td class="med">0.25</td><td class="high">1.00</td><td class="low">0.18</td></tr>
+        <tr><th>南向偏好</th><td class="low">0.15</td><td class="high">0.72</td><td class="med">0.35</td><td class="low">-0.05</td><td class="low">0.18</td><td class="high">1.00</td></tr>
+      </table>
+    </div>
+    <p style="font-size:11px;color:var(--text-light);margin-top:8px">* 港股通流动性与南向偏好相关度较高(0.72)，编制时已通过正交化处理降低至0.35</p>
+  </div>
+
+  <!-- 历史表现 -->
+  <div class="section-title">📊 历史表现回测</div>
+  <div class="card" style="margin-bottom:24px">
+    <div style="font-size:12px;font-weight:700;margin-bottom:12px;color:var(--deep-blue)">基准日(2023-12-31)以来表现 vs 恒生科技指数、恒指</div>
+    <div class="perf-row"><span class="perf-label">HKTech</span><div class="perf-bar"><div class="perf-fill" style="width:31.4%;background:var(--gold)"></div></div><span class="perf-val" style="color:var(--red-up)">+31.4%</span></div>
+    <div class="perf-row"><span class="perf-label">恒生科技</span><div class="perf-bar"><div class="perf-fill" style="width:18.2%;background:#457b9d"></div></div><span class="perf-val" style="color:var(--red-up)">+18.2%</span></div>
+    <div class="perf-row"><span class="perf-label">恒指</span><div class="perf-bar"><div class="perf-fill" style="width:12.6%;background:var(--text-light)"></div></div><span class="perf-val" style="color:var(--red-up)">+12.6%</span></div>
+    <div style="font-size:11px;color:var(--text-light);margin-top:8px">回测期间：2024-01-01 至 2026-06-30 | 年化波动率 HKTech 24.2% vs 恒生科技 26.8% vs 恒指 18.5%</div>
+  </div>
+
+  <!-- 成分股 -->
+  <div class="section-title">📊 成分股（代表性展示）</div>
+  <div style="overflow-x:auto;margin-bottom:24px">
+    <table class="data-table">
+      <thead><tr><th>代码</th><th>名称</th><th>行业</th><th>市值(亿HKD)</th><th>权重</th><th>ESG</th><th>南向占比</th><th>涨跌</th></tr></thead>
+      <tbody>
+        <tr><td>0700.HK</td><td>腾讯控股</td><td>AI/云计算</td><td>38,200</td><td>11.2%</td><td>AA</td><td>18.5%</td><td class="up">+3.2%</td></tr>
+        <tr><td>9988.HK</td><td>阿里巴巴</td><td>云计算</td><td>19,500</td><td>9.8%</td><td>A</td><td>12.3%</td><td class="up">+1.8%</td></tr>
+        <tr><td>1810.HK</td><td>小米集团</td><td>智能制造</td><td>6,200</td><td>8.5%</td><td>A</td><td>15.2%</td><td class="up">+4.1%</td></tr>
+        <tr><td>0981.HK</td><td>中芯国际</td><td>半导体</td><td>5,800</td><td>7.2%</td><td>BBB</td><td>22.8%</td><td class="up">+5.4%</td></tr>
+        <tr><td>3690.HK</td><td>美团</td><td>数字服务</td><td>11,200</td><td>6.8%</td><td>A</td><td>10.5%</td><td class="down">-1.2%</td></tr>
+        <tr><td>2015.HK</td><td>理想汽车</td><td>新能源</td><td>3,400</td><td>4.2%</td><td>BBB</td><td>8.7%</td><td class="down">-1.5%</td></tr>
+        <tr><td>2269.HK</td><td>药明生物</td><td>生物科技</td><td>2,800</td><td>4.0%</td><td>A</td><td>6.5%</td><td class="up">+2.9%</td></tr>
+        <tr><td>1024.HK</td><td>快手科技</td><td>AI/内容</td><td>2,800</td><td>3.5%</td><td>BBB</td><td>5.8%</td><td class="up">+1.1%</td></tr>
+      </tbody>
+    </table>
+    <p style="text-align:center;margin-top:12px;color:var(--text-light);font-size:11px">完整50只名单请下载数据包 · ESG&lt;BBB已被负面筛选淘汰 · 数据基于公开信息模拟</p>
+  </div>
+
+  <!-- 用户交互 -->
+  <div class="section-title">👥 用户交互功能</div>
+  <div class="role-interact-grid" style="margin-bottom:24px">
+    <div class="role-interact-card">
+      <h3>👤 C端投资者</h3>
+      <ul>
+        <li>查看实时指数与成分股行情</li>
+        <li>参与成分股热力值投票 → 影响"共识度因子"</li>
+        <li>订阅港股通异动微信通知</li>
+        <li>讨论区发帖交流观点 → 获积分+成就</li>
+        <li>分享指数卡片到社交平台 → 获"传播者"积分</li>
+        <li>对成分股点评/评价 → 影响"共识偏差度"</li>
+      </ul>
+    </div>
+    <div class="role-interact-card">
+      <h3>🎓 专业投资者</h3>
+      <ul>
+        <li>下载完整成分股数据(CSV/Excel)</li>
+        <li>API接入实时指数推送(专业版)</li>
+        <li>发布深度分析报告 → 影响"共识度因子"权重</li>
+        <li>参与季度指数调整建议投票(×1.5权重)</li>
+        <li>访问港股通持仓变动与南向资金因子归因</li>
+        <li>对因子权重方案提出优化提案</li>
+      </ul>
+    </div>
+    <div class="role-interact-card">
+      <h3>🏢 B端上市公司</h3>
+      <ul>
+        <li>认领公司并完善硬科技档案 → 提升因子评分</li>
+        <li>查看本公司6因子评分明细与行业排名</li>
+        <li>申请纳入指数候选池 → 进入评估流程</li>
+        <li>回复投资者提问 → 提升热力值+共识度</li>
+        <li>发布ESG报告 → 提升ESG合规因子评分</li>
+        <li>参与治理提案投票 → 影响编制规则</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 点赞/收藏/分享 -->
+  <div class="card" style="margin-bottom:24px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px">💬 本页互动</div>
+    <div class="like-section">
+      <button class="like-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>96</span></button>
+      <button class="collect-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>42</span></button>
+      <button class="share-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <span style="font-size:11px;color:var(--text-light);margin-left:auto">96赞 · 42收藏 · 1.8k浏览</span>
+    </div>
+  </div>
+
+  <!-- 治理参与 -->
+  <div class="governance-card" style="margin-bottom:24px">
+    <h3>🤝 参与指数治理</h3>
+    <p>合力港股通科技指数是全球首只ESG负面筛选+共识驱动的港股通科技指数，您的参与直接影响编制规则：</p>
+    <div class="governance-items">
+      <a href="diagnosis.html" class="governance-tag">投票调整因子权重</a>
+      <a href="diagnosis.html" class="governance-tag">提名新成分股</a>
+      <a href="apply.html" class="governance-tag">提交编制规则提案</a>
+      <a href="web3.html" class="governance-tag">查看链上投票存证</a>
+      <a href="agent.html" class="governance-tag">向AI助手咨询</a>
+    </div>
+  </div>
+
+  <!-- 推荐链接 -->
+  <div class="recommend-section">
+    <h4>🔗 深度探索</h4>
+    <div class="recommend-links">
+      <a href="hkcd-tech.html" class="recommend-link"><span class="rl-icon">🏛️</span> 港商科指详情</a>
+      <a href="heli-300.html" class="recommend-link"><span class="rl-icon">⭐</span> 合力300详情</a>
+      <a href="heli-nasdaq.html" class="recommend-link"><span class="rl-icon">🇺🇸</span> 纳斯达克中概详情</a>
+      <a href="diagnosis.html" class="recommend-link"><span class="rl-icon">🔬</span> 诊断季投票</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI助手咨询</a>
+    </div>
+  </div>
+
+  <!-- 风险提示 -->
+  <div class="risk-box">
+    ⚠️ <strong>风险提示</strong>：本页数据基于公开信息模拟，仅供参考，不构成投资建议。港股通投资涉及汇率风险、跨境监管差异等特殊风险。指数历史表现不代表未来收益。ESG评级数据以MSCI最新披露为准，可能存在评级调整滞后。投资者应充分了解指数编制规则、成分股风险特征，并根据自身风险承受能力审慎决策。完整免责声明请参阅合力指数官方公告。
+  </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>合力港股通科技指数(Heli-HKTech)由合力指数编制委员会设计编制，聚焦港股通科技龙头+ESG负面筛选机制。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>指数产品</h4><a href="hkcd-tech.html">港商科指</a><a href="heli-300.html">合力300</a><a href="heli-hktech.html" style="color:var(--gold)">港股通科技</a><a href="heli-nasdaq.html">纳斯达克中概</a></div>
+    <div><h4>功能</h4><a href="indices.html">指数中心</a><a href="diagnosis.html">诊断季</a><a href="awards.html">金鲲鹏</a><a href="agent.html">AI助手</a></div>
+  </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index · nebula@heli-ai.com</div>
 </footer>
+
+<!-- 底部Tab Bar -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item active">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
 
 <script src="ai-widget.js"></script>
 </body>

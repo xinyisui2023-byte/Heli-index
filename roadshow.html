@@ -2,137 +2,70 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>全球路演 · 合力指数</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628;
-  --blue-900: #0f2044;
-  --blue-800: #1a3260;
-  --blue-700: #1e4090;
-  --consensus-gold: #c9a84c;
-  --gold-light: #e8d48b;
-  --white: #ffffff;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; }
-.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.nav-logo svg { width: 28px; height: 28px; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-.nav-links { display: flex; gap: 20px; }
-.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; }
-.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
-.nav-cta { display: flex; gap: 10px; }
-.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; }
-.btn-login { color: rgba(255,255,255,0.8); }
-.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; }
-
-.hero { background: linear-gradient(135deg, var(--deep-blue), var(--blue-900)); color: var(--white); padding: 50px 20px; text-align: center; }
-.hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
-.hero h1 span { color: var(--consensus-gold); }
-.hero p { color: rgba(255,255,255,0.7); font-size: 14px; }
-
-.section { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-.section-header { text-align: center; margin-bottom: 30px; }
-.section-header h2 { font-size: 24px; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
-.section-header p { color: var(--gray-500); font-size: 14px; }
-
-/* 路演卡片 */
-.roadshow-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-.roadshow-card { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 1px solid var(--gray-200); transition: all 0.2s; }
-.roadshow-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); border-color: var(--consensus-gold); }
-.roadshow-card.upcoming { border-top: 3px solid var(--consensus-gold); }
-.roadshow-card-poster { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 48px; color: var(--white); position: relative; }
-.poster-hk { background: linear-gradient(135deg, #1e4090, #0a1628); }
-.poster-sg { background: linear-gradient(135deg, #065f46, #047857); }
-.poster-london { background: linear-gradient(135deg, #7c2d12, #92400e); }
-.poster-ny { background: linear-gradient(135deg, #1e3a5f, #1e4090); }
-.poster-davos { background: linear-gradient(135deg, #78350f, #92400e); }
-.roadshow-status { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); color: var(--white); padding: 3px 10px; border-radius: 12px; font-size: 11px; }
-.roadshow-card-body { padding: 18px; }
-.roadshow-city { font-size: 18px; font-weight: 700; color: var(--gray-800); margin-bottom: 6px; }
-.roadshow-date { font-size: 13px; color: var(--consensus-gold); font-weight: 600; margin-bottom: 8px; }
-.roadshow-desc { font-size: 13px; color: var(--gray-600); line-height: 1.6; margin-bottom: 14px; }
-.roadshow-meta { display: flex; gap: 14px; font-size: 12px; color: var(--gray-400); margin-bottom: 14px; }
-.btn-apply { display: inline-block; background: var(--consensus-gold); color: var(--deep-blue); padding: 7px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
-.btn-apply:hover { background: var(--gold-light); }
-
-/* 往期回顾 */
-.past-section { background: var(--white); border-radius: 14px; padding: 24px; margin-top: 30px; border: 1px solid var(--gray-200); }
-.past-item { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); align-items: center; }
-.past-item:last-child { border-bottom: none; }
-.past-thumb { width: 80px; height: 56px; border-radius: 8px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-.past-info { flex: 1; }
-.past-title { font-size: 14px; font-weight: 600; color: var(--gray-800); }
-.past-date { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
-
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 20px 20px; font-size: 13px; }
-.footer-inner { max-width: 1100px; margin: 0 auto; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 30px; margin-bottom: 30px; }
-.footer-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.footer-brand svg { width: 24px; height: 24px; }
-.footer-brand span { color: var(--white); font-weight: 700; font-size: 15px; }
-.footer h4 { color: var(--white); font-size: 13px; font-weight: 700; margin-bottom: 12px; }
-.footer a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px; display: block; margin-bottom: 6px; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; font-size: 11px; }
+.roadshow-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.roadshow-card{background:var(--bg-card);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--border);transition:all .2s}
+.roadshow-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.roadshow-card-poster{height:100px;display:flex;align-items:center;justify-content:center;font-size:36px;color:white;position:relative}
+.poster-hk{background:linear-gradient(135deg,#1e4090,#0a1628)}
+.poster-sg{background:linear-gradient(135deg,#065f46,#047857)}
+.poster-london{background:linear-gradient(135deg,#7c2d12,#92400e)}
+.poster-ny{background:linear-gradient(135deg,#1e3a5f,#1e4090)}
+.poster-davos{background:linear-gradient(135deg,#78350f,#92400e)}
+.roadshow-status{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.5);color:white;padding:2px 8px;border-radius:10px;font-size:10px}
+.roadshow-card-body{padding:16px}
+.roadshow-city{font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:6px}
+.roadshow-date{font-size:12px;color:var(--gold-dark);font-weight:600;margin-bottom:8px}
+.roadshow-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px}
+.roadshow-meta{display:flex;gap:12px;font-size:11px;color:var(--text-light);margin-bottom:12px}
+.past-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:center}
+.past-item:last-child{border-bottom:none}
+.past-thumb{width:60px;height:42px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.past-info{flex:1}
+.past-title{font-size:14px;font-weight:600;color:var(--text-primary)}
+.past-date{font-size:12px;color:var(--text-light);margin-top:2px}
+@media(min-width:768px){.roadshow-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-logo" onclick="location.href='index.html'">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </div>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="index-detail.html">指数详情</a>
-      <a href="roadshow.html" class="active">全球路演</a>
-      <a href="awards.html">金鲲鹏颁奖</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="achievements.html">成就体系</a>
-      <a href="agent.html">AI助手</a>
-      <a href="workspace.html">B端工作台</a>
-      <a href="admin.html">管理后台</a>
-    </div>
-    <div class="nav-cta">
-      <a href="login.html" class="btn-login">登录</a>
-      <a href="register.html" class="btn-register">注册</a>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">全球路演</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
+  </div>
+</div>
 
-<section class="hero">
-  <h1>全球巡回路演 <span>Roadshow</span></h1>
+<!-- Hero -->
+<section class="page-hero">
+  <span class="hero-badge">🌍 2026 全球巡回路演</span>
+  <h1>全球巡回路演 <span class="gold">Roadshow</span></h1>
   <p>连接中国新质生产力企业与全球投资者，搭建国际资本对接舞台</p>
 </section>
 
-<section class="section">
-  <div class="section-header">
-    <h2>2026 路演日程</h2>
-    <p>5站巡回，连接香港、新加坡、伦敦、纽约、达沃斯</p>
-  </div>
+<div class="page-content">
+  <div class="breadcrumb"><a href="index.html">首页</a> <span class="sep">›</span> 全球路演</div>
+
+  <div class="section-title">2026 路演日程</div>
+  <p class="section-subtitle">5站巡回，连接香港、新加坡、伦敦、纽约、达沃斯</p>
   <div class="roadshow-grid">
     <!-- 香港 -->
-    <div class="roadshow-card upcoming">
+    <div class="roadshow-card">
       <div class="roadshow-card-poster poster-hk">🇭🇰<div class="roadshow-status">即将开始</div></div>
       <div class="roadshow-card-body">
         <div class="roadshow-city">香港站</div>
         <div class="roadshow-date">2026年9月15日 - 9月17日</div>
         <div class="roadshow-desc">聚焦先进制造与数字经济，15家标杆企业参与路演，同步线上直播。</div>
         <div class="roadshow-meta"><span>📍 香港金融中心</span><span>👥 200+ 投资者</span></div>
-        <a href="apply.html" class="btn-apply">预约报名</a>
+        <a href="apply.html" class="btn-primary btn-sm">预约报名</a>
       </div>
     </div>
     <!-- 新加坡 -->
@@ -143,7 +76,7 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
         <div class="roadshow-date">2026年10月20日 - 10月22日</div>
         <div class="roadshow-desc">东南亚资本对接专场，重点关注绿色能源与生物医药企业。</div>
         <div class="roadshow-meta"><span>📍 新加坡滨海湾</span><span>👥 150+ 投资者</span></div>
-        <a href="apply.html" class="btn-apply">预约报名</a>
+        <a href="apply.html" class="btn-primary btn-sm">预约报名</a>
       </div>
     </div>
     <!-- 伦敦 -->
@@ -154,7 +87,7 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
         <div class="roadshow-date">2026年11月18日 - 11月20日</div>
         <div class="roadshow-desc">欧洲资本市场专场，连接中国新质生产力与欧洲长线机构。</div>
         <div class="roadshow-meta"><span>📍 伦敦金融城</span><span>👥 120+ 投资者</span></div>
-        <a href="apply.html" class="btn-apply">预约报名</a>
+        <a href="apply.html" class="btn-primary btn-sm">预约报名</a>
       </div>
     </div>
     <!-- 纽约 -->
@@ -165,25 +98,35 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
         <div class="roadshow-date">2026年12月10日 - 12月12日</div>
         <div class="roadshow-desc">美股资本市场专场，聚焦AI+制造与半导体领域。</div>
         <div class="roadshow-meta"><span>📍 纽约华尔街</span><span>👥 180+ 投资者</span></div>
-        <a href="apply.html" class="btn-apply">预约报名</a>
+        <a href="apply.html" class="btn-primary btn-sm">预约报名</a>
       </div>
     </div>
     <!-- 达沃斯 -->
-    <div class="roadshow-card" style="border-top:3px solid var(--gold-light);">
-      <div class="roadshow-card-poster poster-davos">🇨🇭<div class="roadshow-status" style="background:var(--consensus-gold);color:var(--deep-blue);">旗舰场</div></div>
+    <div class="roadshow-card" style="border-top:3px solid var(--gold)">
+      <div class="roadshow-card-poster poster-davos">🇨🇭<div class="roadshow-status" style="background:var(--gold);color:var(--deep-blue);">旗舰场</div></div>
       <div class="roadshow-card-body">
         <div class="roadshow-city">达沃斯站（旗舰场）</div>
         <div class="roadshow-date">2027年1月20日 - 1月22日</div>
         <div class="roadshow-desc">达沃斯论坛边会，金鲲鹏颁奖典礼同期举行，全球直播。</div>
         <div class="roadshow-meta"><span>📍 瑞士达沃斯</span><span>👥 300+ 全球投资者</span></div>
-        <a href="apply.html" class="btn-apply">申请受邀</a>
+        <a href="apply.html" class="btn-primary btn-sm">申请受邀</a>
       </div>
     </div>
   </div>
 
+  <!-- 卡片交互 -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked');this.querySelector('span').textContent=this.classList.contains('liked')?'268':'267'">❤️ <span>267</span></button>
+      <button class="action-btn" onclick="this.querySelector('span').textContent=parseInt(this.querySelector('span').textContent)+1">⭐ <span>143</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <span style="font-size:11px;color:var(--text-light);margin-left:auto">267赞 · 143收藏 · 5.2k浏览</span>
+    </div>
+  </div>
+
   <!-- 往期回顾 -->
-  <div class="past-section">
-    <h3 style="font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:16px;">往期路演回顾</h3>
+  <div class="section-title" style="margin-top:24px">往期路演回顾</div>
+  <div class="card">
     <div class="past-item">
       <div class="past-thumb">🇭🇰</div>
       <div class="past-info">
@@ -198,27 +141,60 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
         <div class="past-date">2025年12月 · 8家企业参与 · 100+投资者</div>
       </div>
     </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">
-          <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-          <span>合力指数</span>
-        </div>
-        <p>新质生产力的资本市场共识平台。</p>
-      </div>
-      <div>
-        <h4>联系我们</h4>
-        <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a>
-      </div>
+    <div class="card-actions" style="margin-top:12px">
+      <button class="action-btn" onclick="this.classList.toggle('liked');this.querySelector('span').textContent=this.classList.contains('liked')?'94':'93'">❤️ <span>93</span></button>
+      <button class="action-btn">⭐ <span>36</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
     </div>
-    <div class="footer-bottom">© 2026 合力指数 Heli-Index</div>
   </div>
+
+  <!-- 推荐链接 -->
+  <div class="recommend-section">
+    <h4>🔗 深度探索</h4>
+    <div class="recommend-links">
+      <a href="awards.html" class="recommend-link"><span class="rl-icon">🏆</span> 金鲲鹏颁奖</a>
+      <a href="diagnosis.html" class="recommend-link"><span class="rl-icon">🔬</span> 诊断季</a>
+      <a href="indices.html" class="recommend-link"><span class="rl-icon">📊</span> 指数中心</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI助手</a>
+    </div>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>全球路演由合力指数与《香港商报》联合举办，连接中国新质生产力与全球投资者。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html" style="color:var(--gold)">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a></div>
+    <div><h4>联系</h4><a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></div>
+  </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index. All rights reserved.</div>
 </footer>
+
+<!-- 底部Tab Bar -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item active">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
+
 <script src="ai-widget.js"></script>
 </body>
 </html>

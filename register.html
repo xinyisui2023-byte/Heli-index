@@ -2,70 +2,132 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>注册 · 合力指数</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628;
-  --blue-900: #0f2044;
-  --consensus-gold: #c9a84c;
-  --gold-light: #e8d48b;
-  --white: #ffffff;
-  --gray-50: #f9fafb;
-  --gray-200: #e5e7eb;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
+.register-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--deep-blue) 0%, var(--deep-blue-mid) 100%);
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-.nav { background: var(--deep-blue); }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; gap: 20px; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.nav-logo svg { width: 28px; height: 28px; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-
-.main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
-.register-card { background: var(--white); border-radius: 16px; padding: 36px; max-width: 480px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid var(--gray-200); }
-.register-card h1 { font-size: 24px; font-weight: 800; color: var(--deep-blue); margin-bottom: 6px; }
-.register-card > p { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
-
-/* 角色选择 */
-.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-.role-btn { border: 2px solid var(--gray-200); border-radius: 12px; padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); font-family: inherit; font-size: inherit; width: 100%; }
-.role-btn:hover { border-color: var(--consensus-gold); }
-.role-btn.selected { border-color: var(--consensus-gold); background: rgba(201,168,76,0.04); }
-.role-icon { font-size: 24px; margin-bottom: 6px; }
-.role-name { font-size: 13px; font-weight: 700; color: var(--gray-800); }
-.role-desc { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
-
-/* 表单 */
+.register-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(201,168,76,.08) 0%, transparent 60%);
+}
+.register-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.register-card h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin-bottom: 4px;
+  text-align: center;
+}
+.register-card > p {
+  font-size: 13px;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 24px;
+}
+.role-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.role-btn {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  background: var(--bg-card);
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+}
+.role-btn:hover { border-color: var(--gold); }
+.role-btn.selected { border-color: var(--gold); background: var(--gold-bg); }
+.role-icon { font-size: 22px; margin-bottom: 4px; }
+.role-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.role-desc { font-size: 11px; color: var(--text-light); margin-top: 2px; }
 .form-group { margin-bottom: 16px; }
-.form-label { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; display: block; }
-.form-input { width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; font-family: inherit; }
-.form-input:focus { border-color: var(--consensus-gold); }
-.form-hint { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
-.btn-submit { width: 100%; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: inherit; margin-top: 8px; }
-.btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(201,168,76,0.3); }
-.form-footer { text-align: center; font-size: 13px; color: var(--gray-500); margin-top: 16px; }
-.form-footer a { color: var(--consensus-gold); text-decoration: none; font-weight: 600; }
-
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.5); padding: 20px; text-align: center; font-size: 12px; }
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: block;
+}
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+  font-family: inherit;
+  background: var(--bg-main);
+}
+.form-input:focus { border-color: var(--gold); }
+.form-hint { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep-blue);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+  margin-top: 8px;
+}
+.btn-submit:hover { box-shadow: 0 4px 16px rgba(201,168,76,.35); }
+.form-footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 16px;
+}
+.form-footer a { color: var(--gold); text-decoration: none; font-weight: 700; }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-logo" onclick="location.href='index.html'">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">合力指数</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+  </div>
+</div>
 
-<main class="main">
+<!-- 注册表单 -->
+<section class="register-hero">
   <div class="register-card">
     <h1>注册合力指数</h1>
     <p>选择您的角色，加入新质生产力共识平台</p>
@@ -114,9 +176,7 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
       已有账号？<a href="login.html">立即登录</a>
     </div>
   </div>
-</main>
-
-<footer class="footer">© 2026 合力指数 Heli-Index</footer>
+</section>
 
 <script>
 function selectRole(btn) {

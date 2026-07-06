@@ -1,152 +1,351 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>合力纳斯达克中国科技指数 | 合力指数 Heli-Index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>合力纳斯达克中概指数 | 合力指数 Heli-Index</title>
 <link rel="stylesheet" href="style.css">
 <style>
-:root{--deep-blue:#0a1628;--gold:#c9a84c;--gold-light:#e0c66a;--gold-dark:#9a7b2f;--white:#f8f9fb;--text-primary:#1a1f36;--text-secondary:#5a6070;--bg-card:#fff;--bg-section:#f1f5f9;--red-up:#e63946;--green-down:#2ecc71}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"Inter","Noto Sans SC",system-ui,sans-serif;color:var(--text-primary);background:var(--white);line-height:1.6}
-.nav{position:sticky;top:0;z-index:100;background:var(--deep-blue);color:var(--white);padding:0 24px}
-.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
-.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none;color:white}
-.nav-logo img{height:32px}
-.nav-links{display:flex;gap:24px;font-size:14px;flex-wrap:wrap}
-.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;transition:color .2s;white-space:nowrap}
-.nav-links a:hover,.nav-links a.active{color:var(--gold)}
-.btn-gold{background:var(--gold);color:var(--deep-blue);padding:8px 20px;border-radius:20px;font-weight:600;font-size:14px;border:none;cursor:pointer;text-decoration:none;display:inline-block}
-.btn-outline{border:1.5px solid var(--gold);color:var(--gold);padding:8px 20px;border-radius:20px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;background:transparent}
-.hero{background:linear-gradient(135deg,#0a1628 0%,#1a2744 50%,#1e3a5c 100%);color:white;padding:60px 24px 80px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,.1) 0%,transparent 60%)}
-.hero>*{position:relative}
-.hero-badge{display:inline-block;background:rgba(76,175,80,.2);color:#4caf50;border:1px solid #4caf50;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:16px}
-.hero h1{font-size:38px;font-weight:800;margin-bottom:12px}
-.hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:700px;margin:0 auto 24px}
-.price-bar{display:flex;justify-content:center;align-items:baseline;gap:20px;flex-wrap:wrap}
-.price-val{font-size:48px;font-weight:800;color:var(--gold)}
-.price-date{font-size:13px;color:rgba(255,255,255,.5)}
-.container{max-width:1280px;margin:0 auto;padding:48px 24px}
-h2{font-size:26px;font-weight:800;margin-bottom:20px;color:var(--deep-blue)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-@media(max-width:768px){.grid2,.grid3{grid-template-columns:1fr}}
-.card{background:var(--bg-card);border-radius:14px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid #eef1f5}
-.methodology-step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start}
-.step-num{background:var(--gold);color:var(--deep-blue);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
-.const-table{width:100%;border-collapse:collapse;font-size:13px}
-.const-table th{background:var(--deep-blue);color:white;padding:12px 14px;text-align:left;font-weight:600}
-.const-table td{padding:12px 14px;border-bottom:1px solid #eef1f5}
-.const-table .up{color:var(--red-up);font-weight:600}
-.const-table .down{color:var(--green-down);font-weight:600}
-.factor-visual{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.factor-name{width:100px;font-size:13px;font-weight:600;text-align:right}
-.factor-bar{flex:1;height:20px;background:#eef1f5;border-radius:10px;overflow:hidden}
-.factor-fill{height:100%;background:linear-gradient(90deg,#4caf50,#2e7d32);border-radius:10px}
-.factor-pct{width:50px;font-size:12px;font-weight:700;color:var(--deep-blue)}
-.breadcrumb{font-size:13px;color:var(--text-secondary);margin-bottom:24px}
-.breadcrumb a{color:var(--deep-blue);text-decoration:none}
-footer{background:var(--deep-blue);color:rgba(255,255,255,.6);padding:48px 24px;text-align:center;font-size:13px}
-footer a{color:var(--gold);text-decoration:none}
+.factor-expand{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:10px;font-size:11px;color:var(--text-secondary);line-height:1.7;display:none}
+.factor-expand.open{display:block}
+.factor-toggle{font-size:11px;color:var(--gold);cursor:pointer;font-weight:700;margin-top:4px;display:inline-block}
+.formula-box{background:var(--deep-blue);color:var(--gold);padding:8px 12px;border-radius:8px;font-size:11px;font-family:"SF Mono",monospace;margin:8px 0;line-height:1.6}
+.risk-box{background:#fff3cd;border:1px solid #ffc107;border-radius:10px;padding:14px;font-size:12px;color:#856404;margin-top:24px}
+.factor-matrix{width:100%;border-collapse:collapse;font-size:11px;margin-top:16px}
+.factor-matrix th{background:var(--deep-blue);color:white;padding:8px;text-align:center;font-weight:600}
+.factor-matrix td{padding:8px;text-align:center;border:1px solid var(--border)}
+.factor-matrix .high{color:var(--gold);font-weight:700}
+.factor-matrix .med{color:var(--text-secondary)}
+.factor-matrix .low{color:var(--text-light)}
+.perf-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.perf-label{font-size:12px;font-weight:600;width:100px;flex-shrink:0}
+.perf-bar{flex:1;height:16px;background:var(--bg);border-radius:8px;overflow:hidden}
+.perf-fill{height:100%;border-radius:8px}
+.perf-val{font-size:12px;font-weight:700;width:70px;flex-shrink:0;text-align:right}
+.cross-market-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(46,204,113,0.12);color:var(--green-down);border:1px solid var(--green-down);padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="logo.svg" alt="合力指数">合力指数</a>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="indices.html" class="active">指数中心</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="roadshow.html">全球路演</a>
-      <a href="awards.html">金鲲鹏</a>
-      <a href="achievements.html">成就</a>
-      <a href="agent.html">AI助手</a>
-      <a href="workspace.html">B端工作台</a>
-    </div>
-    <div style="display:flex;gap:12px">
-      <a href="login.html" style="color:white;font-size:14px;text-decoration:none">登录</a>
-      <a href="register.html" class="btn-gold">注册</a>
-    </div>
+
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">合力纳斯达克中概指数</span>
   </div>
-</nav>
-
-<section class="hero">
-  <span class="hero-badge">🌍 合力系列 · 跨境科技</span>
-  <h1>合力纳斯达克中国科技指数</h1>
-  <p>Heli-NSDQ —— 追踪在纳斯达克上市的中国科技企业表现。覆盖互联网、AI、电动汽车、云计算等领域，为中国投资者提供跨境科技投资的基准参考。</p>
-  <div class="price-bar">
-    <span style="font-size:13px;color:rgba(255,255,255,.5)">实时 · USD</span>
-    <span class="price-val">2,156.40</span>
-    <span style="font-size:20px;font-weight:600;color:var(--red-up)">▲ +65.28 (+3.12%)</span>
-    <span class="price-date">2026-07-05 16:00 EST</span>
-  </div>
-</section>
-
-<div class="container">
-  <div class="breadcrumb"><a href="indices.html">← 指数中心</a> / 合力纳斯达克中国科技指数 (Heli-NSDQ)</div>
-
-  <div class="grid2" style="margin-bottom:40px">
-    <div class="card">
-      <h3>📋 指数概要</h3>
-      <table style="width:100%;font-size:13px">
-        <tr><td style="color:var(--text-secondary);padding:6px 0">指数名称</td><td style="font-weight:600">合力纳斯达克中国科技指数</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">指数代码</td><td style="font-weight:600;color:#4caf50">Heli-NSDQ</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">计价货币</td><td>美元 (USD)</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">成分股数</td><td>30只</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">基日/基点</td><td>2022-12-31 / 1000</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">市值分层</td><td>大(50%)+中(30%)+小(20%)</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">调仓频率</td><td>半年度（6月/12月）</td></tr>
-        <tr><td style="color:var(--text-secondary);padding:6px 0">单股权重上限</td><td>15%</td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <h3>🔬 因子体系</h3>
-      <div class="factor-visual"><span class="factor-name">跨市场套利</span><div class="factor-bar"><div class="factor-fill" style="width:25%"></div></div><span class="factor-pct">25%</span></div>
-      <div class="factor-visual"><span class="factor-name">市值分层</span><div class="factor-bar"><div class="factor-fill" style="width:25%"></div></div><span class="factor-pct">25%</span></div>
-      <div class="factor-visual"><span class="factor-name">流动性</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
-      <div class="factor-visual"><span class="factor-name">地域分散</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
-      <div class="factor-visual"><span class="factor-name">行业分类</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
-    </div>
-  </div>
-
-  <h2>📊 成分股TOP10</h2>
-  <div style="overflow-x:auto;margin-bottom:40px">
-    <table class="const-table">
-      <thead><tr><th>代码</th><th>名称</th><th>行业</th><th>市值(亿$)</th><th>权重</th><th>涨跌</th></tr></thead>
-      <tbody>
-        <tr><td>BABA</td><td>阿里巴巴</td><td>电商/云计算</td><td>2,450</td><td>13.8%</td><td class="up">+5.2%</td></tr>
-        <tr><td>PDD</td><td>拼多多</td><td>电商/农业科技</td><td>1,890</td><td>11.5%</td><td class="up">+8.1%</td></tr>
-        <tr><td>BIDU</td><td>百度</td><td>AI/自动驾驶</td><td>820</td><td>8.2%</td><td class="up">+2.8%</td></tr>
-        <tr><td>NIO</td><td>蔚来</td><td>新能源汽车</td><td>580</td><td>6.5%</td><td class="up">+12.3%</td></tr>
-        <tr><td>JD</td><td>京东</td><td>电商/物流科技</td><td>1,050</td><td>9.5%</td><td class="down">-0.8%</td></tr>
-        <tr><td>NTES</td><td>网易</td><td>互联网</td><td>720</td><td>7.2%</td><td class="up">+1.5%</td></tr>
-        <tr><td>XPEV</td><td>小鹏汽车</td><td>新能源+AI</td><td>210</td><td>4.5%</td><td class="up">+15.8%</td></tr>
-        <tr><td>LI</td><td>理想汽车</td><td>新能源汽车</td><td>440</td><td>5.8%</td><td class="down">-2.1%</td></tr>
-        <tr><td>TME</td><td>腾讯音乐</td><td>数字内容</td><td>180</td><td>3.5%</td><td class="up">+0.6%</td></tr>
-        <tr><td>BILI</td><td>哔哩哔哩</td><td>内容/社区</td><td>120</td><td>2.8%</td><td class="up">+4.2%</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2>👥 用户交互</h2>
-  <div class="grid3" style="margin-bottom:40px">
-    <div class="card"><h3>👤 C端投资者</h3><p style="font-size:13px;color:var(--text-secondary)">查看实时行情、AH/N股溢价分析、跨境对比</p></div>
-    <div class="card"><h3>🎓 专业投资者</h3><p style="font-size:13px;color:var(--text-secondary)">API接入、跨市场套利分析、机构调研数据</p></div>
-    <div class="card"><h3>🏢 B端公司</h3><p style="font-size:13px;color:var(--text-secondary)">查看跨市场估值对比、申请纳入候选、IR展示</p></div>
+  <div class="topbar-right">
+    <a href="login.html" class="topbar-btn">登录</a>
+    <a href="register.html" class="topbar-btn topbar-btn-gold">注册</a>
   </div>
 </div>
 
-<footer>
-  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:left;padding-bottom:32px">
-    <div><h4 style="color:white;margin-bottom:12px">指数产品</h4><a href="hkcd-tech.html">港商科指</a><br><a href="heli-300.html">合力300</a><br><a href="heli-hktech.html">合力港股通科技</a><br><a href="heli-nasdaq.html" style="color:var(--gold)">合力纳斯达克中概</a></div>
-    <div><h4 style="color:white;margin-bottom:12px">工具</h4><a href="agent.html">AI助手</a><br><a href="api.html">开放API</a><br><a href="web3.html">Web3共识层</a></div>
-    <div><h4 style="color:white;margin-bottom:12px">平台</h4><a href="indices.html">指数中心</a><br><a href="diagnosis.html">诊断季</a><br><a href="awards.html">金鲲鹏</a></div>
-    <div><h4 style="color:white;margin-bottom:12px">关于</h4><p style="font-size:13px">合力纳斯达克中概科技指数，跨境投资中国科技的基准。nebula@heli-ai.com</p></div>
+<!-- Hero -->
+<section class="page-hero">
+  <span class="hero-badge">🌍 合力系列 · 跨境科技</span>
+  <h1>合力纳斯达克中概指数<br><span class="gold">Heli-NasdaqCn</span></h1>
+  <p>精选30只纳斯达克中概科技股，独创跨市场套利因子。覆盖互联网、AI、新能源汽车、云计算、半导体等前沿领域，为全球投资者提供中概科技投资的精准基准。</p>
+  <div class="hero-price">
+    <span style="font-size:11px;color:rgba(255,255,255,.4)">实时 · 美元</span>
+    <span class="val">1,856.24</span>
+    <span class="change down">▼ -12.35 (-0.66%)</span>
+    <span style="font-size:11px;color:rgba(255,255,255,.4)">2026-07-05 16:00 EST</span>
   </div>
-  <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:24px">© 2026 合力指数 Heli-Index</div>
+  <div class="hero-cta">
+    <a href="apply.html" class="btn-primary">提名成分股</a>
+    <a href="agent.html" class="btn-secondary">向AI助手提问</a>
+  </div>
+</section>
+
+<div class="page-content">
+  <div class="breadcrumb"><a href="indices.html">指数中心</a> <span class="sep">›</span> 合力纳斯达克中概指数 Heli-NasdaqCn</div>
+
+  <!-- 指数概要 -->
+  <div class="section-title">📋 指数概要</div>
+  <div class="card" style="margin-bottom:16px">
+    <table style="width:100%;font-size:12px">
+      <tr><td style="color:var(--text-secondary);padding:5px 0;width:40%">指数名称</td><td style="font-weight:600">合力纳斯达克中概指数</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">英文名称</td><td style="font-weight:600">Heli Nasdaq China Concept Tech Index</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">指数代码</td><td style="font-weight:700;color:var(--gold)">Heli-NasdaqCn</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">编制机构</td><td>合力指数编制委员会</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">市场覆盖</td><td>纳斯达克(NASDAQ)上市中概股</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">成分股数量</td><td style="font-weight:600">30只</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">基日/基点</td><td>2022-12-31 / 1000</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">调仓频率</td><td>半年度（6月/12月）</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">计价货币</td><td>美元 (USD)</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">单股权重上限</td><td>15%</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">核心创新</td><td style="color:var(--gold);font-weight:700">跨市场套利因子 + 中概科技纯度</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold" style="margin-bottom:24px">
+    <h3 style="font-size:14px;font-weight:700;margin-bottom:6px">🌐 核心定位</h3>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+      区别于传统中概指数仅按市值选股，Heli-NasdaqCn独创<strong style="color:var(--gold-dark)">中概科技纯度</strong>标准——科技业务占比须≥50%，排除纯消费/纯金融公司。同时引入<strong style="color:var(--gold-dark)">跨市场套利因子</strong>，捕捉A股/H股/美股三地定价偏差，为投资者提供跨市场对冲与套利的基准工具。
+    </p>
+  </div>
+
+  <!-- 编制方法论 -->
+  <div class="section-title">📐 编制方法论</div>
+  <div class="step-flow" style="margin-bottom:24px">
+    <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>样本空间确定</h4><p>纳斯达克交易所上市、总部或主要运营在中国大陆/港澳的公司。日均成交额≥500万美元，总市值≥10亿美元，自由流通比≥15%。</p></div></div>
+    <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>中概科技纯度筛选 ⭐</h4><p>科技业务收入占比≥50%，涵盖互联网平台、AI/大数据、新能源汽车、半导体、云计算、生物科技六大领域。排除纯消费零售、传统金融、纯地产公司。</p></div></div>
+    <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>跨市场识别</h4><p>识别同时在A股/H股/美股多地上市的公司，记录各市场价格、汇率换算、ADR比例，为跨市场套利因子提供基础数据。</p></div></div>
+    <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>五因子综合评分</h4><p>中概科技纯度(25%)+跨市场套利因子(20%)+共识度因子(20%)+研发创新(15%)+流动性与市值(20%)，按得分排序取前30名。</p></div></div>
+    <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>权重优化</h4><p>自由流通市值加权+因子调整。单股≤15%，行业≤35%。半年度调仓设10%缓冲区减少换手。</p></div></div>
+  </div>
+
+  <!-- 因子体系 -->
+  <div class="section-title">🔬 核心因子体系与权重</div>
+  <p class="section-subtitle">参照MSCI因子框架，Heli-NasdaqCn采用5因子模型，每因子含2-3个子指标</p>
+
+  <!-- 因子权重总览 -->
+  <div class="card" style="margin-bottom:16px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--deep-blue)">📊 因子权重总览</div>
+    <div class="factor-row"><span class="factor-name">中概科技纯度</span><div class="factor-bar"><div class="factor-fill" style="width:25%"></div></div><span class="factor-pct">25%</span></div>
+    <div class="factor-row"><span class="factor-name">跨市场套利因子</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
+    <div class="factor-row"><span class="factor-name">共识度因子</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
+    <div class="factor-row"><span class="factor-name">研发创新</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
+    <div class="factor-row"><span class="factor-name">流动性与市值</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
+  </div>
+
+  <!-- 因子详细拆解 -->
+  <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px">
+
+    <!-- 因子1 -->
+    <div class="card factor-detail-card">
+      <div class="fd-icon">💎</div>
+      <h3>因子1：中概科技纯度因子 — 权重25%</h3>
+      <div class="fd-desc">衡量公司核心业务的技术含量与科技属性纯度。通过营收结构拆分，精准识别"真科技"vs"伪科技"公司，排除以科技包装的纯消费/纯金融企业。</div>
+      <div class="formula-box">F₁ = w₁₁ × (科技业务收入/总收入) + w₁₂ × 科技收入CAGR + w₁₃ × 产品技术含量评分<br>w₁₁=0.55, w₁₂=0.25, w₁₃=0.20<br>门槛值：科技业务占比 ≥ 50%</div>
+      <div class="fd-data">数据来源：公司20-F/10-K年报分部收入披露 + 合力指数AI行业分类引擎验证<br>评分细则：≥80% → 10分 | 65%-80% → 8分 | 50%-65% → 6分 | &lt;50% → 淘汰</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：科技业务收入占比 (55%)</strong> — 公司年报分部收入中，属于科技业务（互联网平台技术、AI/大数据、新能源汽车制造、半导体、云计算服务、生物科技研发）的收入占总营收比例。须经合力指数AI引擎二次校验，排除将电商平台佣金伪装为AI服务收入、将传统分销包装为SaaS的情况。<br><br>
+        <strong>子指标2：科技收入复合增速 (25%)</strong> — 近3年科技业务收入CAGR。>25%加分，<8%扣分。反映科技业务的成长性而非存量规模。<br><br>
+        <strong>子指标3：产品技术含量评分 (20%)</strong> — 由合力指数行业分析师团队每半年评审一次。综合考虑专利引用次数、核心技术自研率、产品技术壁垒高度。
+      </div>
+    </div>
+
+    <!-- 因子2 -->
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🔄</div>
+      <h3>因子2：跨市场套利因子 — 权重20%</h3>
+      <div class="fd-desc">Heli-NasdaqCn独创因子。捕捉同一中概公司在A股/H股/美股三地市场的定价偏差、汇率波动影响及跨市场资金流动方向，为跨境投资者提供套利参考和对冲基准。</div>
+      <div class="formula-box">F₂ = w₂₁ × AH/美股溢价率偏差 + w₂₂ × 汇率敏感性 + w₂₃ × 跨市场资金流向<br>w₂₁=0.45, w₂₂=0.30, w₂₃=0.25<br>仅对多地上市公司计算，单一市场上市取行业中位数</div>
+      <div class="fd-data">数据来源：港交所/上交所/纳斯达克实时行情 + 中国人民银行汇率中间价 + EPFR资金流向数据<br>评分细则：溢价率在历史±1σ内→10分 | ±2σ内→7分 | 超出→4分</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：AH/美股溢价率偏差 (45%)</strong> — 计算同一标的在A股(或H股)与美股之间的价格比率，与其历史均值的偏离程度。偏离越小=定价越有效=得分越高。包含ADR与正股的折算差异。<br><br>
+        <strong>子指标2：汇率敏感性 (30%)</strong> — 人民币/港币兑美元汇率波动对公司估值的影响系数。出口导向型(如电商)受益于本币贬值，进口依赖型(部分新能源)受损。汇率敞口越大→得分越低。<br><br>
+        <strong>子指标3：跨市场资金流向 (25%)</strong> — EPFR追踪的全球资金在中概股各市场间的流动方向。资金持续净流入美股中概板块→得分上升，资金撤离→得分下降。
+      </div>
+    </div>
+
+    <!-- 因子3 -->
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🤝</div>
+      <h3>因子3：共识度因子 — 权重20%</h3>
+      <div class="fd-desc">衡量全球投资者对中概科技股的投票一致性。资本市场本质上是共识机器——当大量独立决策的投资者达成一致时，往往预示着正确的定价和趋势。</div>
+      <div class="formula-box">F₃ = w₃₁ × 全球投资者投票一致性 + w₃₂ × 机构持仓一致性 + w₃₃ × 共识偏差度<br>w₃₁=0.35, w₃₂=0.35, w₃₃=0.30<br>无门槛值（所有成分股均参与评分）</div>
+      <div class="fd-data">数据来源：合力指数诊断季投票 + 13-F机构持仓报告 + 分析师评级数据 + Web3共识层<br>评分细则：一致性≥80%→10分 | 60%-80%→7分 | 40%-60%→5分 | &lt;40%→3分</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：全球投资者投票一致性 (35%)</strong> — 合力指数平台季度投票中，对该公司"看好/持有/看空"三选项的投票分布。Kolmogorov-Smirnov一致性检验统计量。高一致性=强共识=高得分。<br><br>
+        <strong>子指标2：机构持仓一致性 (35%)</strong> — 基于13-F季度披露的机构持仓变化。计算机构增持/减持/不变的比例分布，增持机构占比越高且越集中→共识越强。纳入对冲基金与共同基金的行为差异。<br><br>
+        <strong>子指标3：共识偏差度 (30%)</strong> — 投资者投票结果与实际股价走势的偏差。投票一致看好但股价下跌（负偏差）→共识可能存在误判；投票分歧但股价稳定→共识正在形成中。
+      </div>
+    </div>
+
+    <!-- 因子4 -->
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🔬</div>
+      <h3>因子4：研发创新因子 — 权重15%</h3>
+      <div class="fd-desc">衡量公司的持续创新能力和技术壁垒构建。关注研发投入的真实性和产出效率，而非单纯的费用比例。</div>
+      <div class="formula-box">F₄ = w₄₁ × R&D/Sales + w₄₂ × 专利密度 + w₄₃ × 创新收入增速<br>w₄₁=0.45, w₄₂=0.30, w₄₃=0.25<br>门槛值：R&D/Sales ≥ 5%</div>
+      <div class="fd-data">数据来源：公司20-F年报 R&D Expense + USPTO美国专利局 + WIPO国际专利 + 合力指数AI技术追踪<br>评分细则：R&D≥15%→10分 | 10%-15%→8分 | 5%-10%→6分 | &lt;5%→淘汰</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：研发费用率 (45%)</strong> — R&D Expense / Total Revenue。参照同行业可比公司调整。中概互联网公司按GAAP口径，剔除股权激励对研发费用的非现金影响后计算核心研发费率。<br><br>
+        <strong>子指标2：专利密度 (30%)</strong> — 近3年在USPTO授权的发明专利数量/研发投入（亿美元）。衡量研发支出的知识产权转化效率。软件公司纳入开源项目贡献度（GitHub Stars、Commit频率）作为补充。<br><br>
+        <strong>子指标3：创新收入增速 (25%)</strong> — 过去3年由新产品/新服务贡献的增量收入占总收入比例。>20%优秀（持续创新驱动增长），<5%扣分（吃老本）。
+      </div>
+    </div>
+
+    <!-- 因子5 -->
+    <div class="card factor-detail-card">
+      <div class="fd-icon">🌊</div>
+      <h3>因子5：流动性与市值因子 — 权重20%</h3>
+      <div class="fd-desc">确保指数的可投资性和市场代表性。成分股须满足最低流动性要求，市值分层纳入以覆盖大中小盘科技股。</div>
+      <div class="formula-box">F₅ = w₅₁ × 日均成交额 + w₅₂ × 自由流通比 + w₅₃ × 市值规模<br>w₅₁=0.40, w₅₂=0.35, w₅₃=0.25<br>门槛值：日均成交额 ≥ 500万美元，市值 ≥ 10亿美元</div>
+      <div class="fd-data">数据来源：纳斯达克实时交易数据 + Bloomberg市值数据<br>评分细则：日均≥5000万→10分 | 1000万-5000万→7分 | 500万-1000万→4分<br>自由流通比≥50%→10分 | 30%-50%→7分 | 15%-30%→4分</div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：日均成交额 (40%)</strong> — 近3个月纳斯达克市场日均美元成交额。大市值中概股通常流动性充裕(>$1亿/日)，小盘股可能不达标(仅$300-500万/日)。门槛值为排除流动性极差标的。<br><br>
+        <strong>子指标2：自由流通比 (35%)</strong> — 实际可交易股份/总股本。中概股常见的VIE架构可能导致自由流通比被高估，需剔除创始人锁定股份、战略投资者限售股。自由流通比越高→可投资性越强。<br><br>
+        <strong>子指标3：市值规模 (25%)</strong> — 按市值分层评分：大盘(≥500亿$)→10分，中盘(100亿-500亿$)→7分，小盘(10亿-100亿$)→4分。大盘股保证指数稳定性，小盘股提供成长弹性。
+      </div>
+    </div>
+  </div>
+
+  <!-- 因子相关性矩阵 -->
+  <div class="section-title">🔗 因子相关性矩阵</div>
+  <div class="card" style="margin-bottom:24px">
+    <p class="section-subtitle">5因子Pearson相关系数，经正交化处理降低重叠</p>
+    <div style="overflow-x:auto">
+      <table class="factor-matrix">
+        <tr><th></th><th>科技纯度</th><th>套利因子</th><th>共识度</th><th>研发创新</th><th>流动性</th></tr>
+        <tr><th>科技纯度</th><td class="high">1.00</td><td class="low">0.15</td><td class="med">0.32</td><td class="high">0.68</td><td class="low">0.22</td></tr>
+        <tr><th>套利因子</th><td class="low">0.15</td><td class="high">1.00</td><td class="low">0.18</td><td class="low">0.10</td><td class="med">0.35</td></tr>
+        <tr><th>共识度</th><td class="med">0.32</td><td class="low">0.18</td><td class="high">1.00</td><td class="low">0.25</td><td class="med">0.40</td></tr>
+        <tr><th>研发创新</th><td class="high">0.68</td><td class="low">0.10</td><td class="low">0.25</td><td class="high">1.00</td><td class="low">0.15</td></tr>
+        <tr><th>流动性</th><td class="low">0.22</td><td class="med">0.35</td><td class="med">0.40</td><td class="low">0.15</td><td class="high">1.00</td></tr>
+      </table>
+    </div>
+    <p style="font-size:11px;color:var(--text-light);margin-top:8px">* 科技纯度与研发创新相关度较高(0.68)，编制时已通过正交化处理降至0.28<br>* 跨市场套利因子与其他因子相关度均较低（≤0.35），具有显著独立信息来源</p>
+  </div>
+
+  <!-- 历史表现回测 -->
+  <div class="section-title">📊 历史表现回测</div>
+  <div class="card" style="margin-bottom:24px">
+    <div style="font-size:12px;font-weight:700;margin-bottom:12px;color:var(--deep-blue)">基准日(2022-12-31=1000)以来表现 vs 纳斯达克100、纳斯达克中国金龙指数</div>
+    <div class="perf-row"><span class="perf-label">Heli-NasdaqCn</span><div class="perf-bar"><div class="perf-fill" style="width:85.6%;background:var(--gold)"></div></div><span class="perf-val" style="color:var(--red-up)">+85.6%</span></div>
+    <div class="perf-row"><span class="perf-label">纳斯达克100</span><div class="perf-bar"><div class="perf-fill" style="width:72.4%;background:#457b9d"></div></div><span class="perf-val" style="color:var(--red-up)">+72.4%</span></div>
+    <div class="perf-row"><span class="perf-label">中国金龙指数</span><div class="perf-bar"><div class="perf-fill" style="width:58.2%;background:var(--text-light)"></div></div><span class="perf-val" style="color:var(--red-up)">+58.2%</span></div>
+    <div style="font-size:11px;color:var(--text-light);margin-top:8px">回测期间：2023-01-01 至 2026-06-30 | 年化波动率 Heli-NasdaqCn 24.6% vs 纳斯达克100 18.2% vs 金龙 32.8%<br>* 跨市场套利因子贡献约8.2%的超额收益（归因：A/H/美股溢价收敛 + 汇率对冲效应）</div>
+  </div>
+
+  <!-- 成分股 -->
+  <div class="section-title">📊 成分股（代表性展示）</div>
+  <div style="overflow-x:auto;margin-bottom:24px">
+    <table class="data-table">
+      <thead><tr><th>代码</th><th>名称</th><th>行业</th><th>市值(亿$)</th><th>权重</th><th>科技纯度</th><th>跨市溢价</th><th>涨跌</th></tr></thead>
+      <tbody>
+        <tr><td>BABA</td><td>阿里巴巴</td><td>电商/云计算</td><td>2,450</td><td>13.8%</td><td>68%</td><td><span class="cross-market-badge">港股-8.2%</span></td><td class="up">+5.2%</td></tr>
+        <tr><td>PDD</td><td>拼多多</td><td>电商/农业科技</td><td>1,890</td><td>11.5%</td><td>55%</td><td><span class="cross-market-badge">仅美股</span></td><td class="up">+8.1%</td></tr>
+        <tr><td>BIDU</td><td>百度</td><td>AI/自动驾驶</td><td>820</td><td>8.2%</td><td>72%</td><td><span class="cross-market-badge">港股-5.6%</span></td><td class="up">+2.8%</td></tr>
+        <tr><td>JD</td><td>京东</td><td>电商/物流科技</td><td>1,050</td><td>9.5%</td><td>58%</td><td><span class="cross-market-badge">港股-6.1%</span></td><td class="down">-0.8%</td></tr>
+        <tr><td>NTES</td><td>网易</td><td>游戏/互联网</td><td>720</td><td>7.2%</td><td>65%</td><td><span class="cross-market-badge">港股-3.8%</span></td><td class="up">+1.5%</td></tr>
+        <tr><td>NIO</td><td>蔚来</td><td>新能源汽车</td><td>580</td><td>6.5%</td><td>82%</td><td><span class="cross-market-badge">港股-11.2%</span></td><td class="up">+12.3%</td></tr>
+        <tr><td>LI</td><td>理想汽车</td><td>新能源汽车</td><td>440</td><td>5.8%</td><td>78%</td><td><span class="cross-market-badge">港股-7.5%</span></td><td class="down">-2.1%</td></tr>
+        <tr><td>BILI</td><td>哔哩哔哩</td><td>内容/游戏</td><td>120</td><td>2.8%</td><td>61%</td><td><span class="cross-market-badge">港股-9.8%</span></td><td class="up">+4.2%</td></tr>
+      </tbody>
+    </table>
+    <p style="text-align:center;margin-top:12px;color:var(--text-light);font-size:11px">完整30只名单请下载数据包 · 跨市溢价为A股/H股对美股ADR的折溢价率 · 数据基于公开信息，仅供参考</p>
+  </div>
+
+  <!-- 用户交互 -->
+  <div class="section-title">👥 用户交互功能</div>
+  <div class="role-interact-grid" style="margin-bottom:24px">
+    <div class="role-interact-card">
+      <h3>👤 C端投资者</h3>
+      <ul>
+        <li>查看实时指数与30只成分股行情</li>
+        <li>跨市场溢价率一键对比 → 发现套利机会</li>
+        <li>订阅跨境资金流向日报（免费版）</li>
+        <li>参与诊断季投票 → 影响共识度因子</li>
+        <li>对成分股评价/提问 → 获取"全球视野"积分</li>
+        <li>分享中概科技投资观点到社交平台</li>
+      </ul>
+    </div>
+    <div class="role-interact-card">
+      <h3>🎓 专业投资者</h3>
+      <ul>
+        <li>下载完整跨市场套利数据（CSV/Excel）</li>
+        <li>API接入AH/美股实时溢价监控</li>
+        <li>发布深度中概分析报告 → 影响共识权重</li>
+        <li>13-F机构持仓变化追踪（专业版）</li>
+        <li>历史回测与因子归因分析</li>
+        <li>对因子权重方案提出优化提案</li>
+      </ul>
+    </div>
+    <div class="role-interact-card">
+      <h3>🏢 B端上市公司</h3>
+      <ul>
+        <li>认领公司并完善科技纯度档案</li>
+        <li>查看本公司5因子评分明细与排名</li>
+        <li>申请纳入指数 → 进入30强候选评估</li>
+        <li>回复投资者关于ADRs的提问</li>
+        <li>获得跨市场IR展示页面</li>
+        <li>获取中概科技同行对标报告</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 点赞评价 -->
+  <div class="card" style="margin-bottom:24px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px">💬 本页互动</div>
+    <div class="like-section">
+      <button class="like-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>92</span></button>
+      <button class="collect-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>41</span></button>
+      <button class="share-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <span style="font-size:11px;color:var(--text-light);margin-left:auto">92赞 · 41收藏 · 1.8k浏览</span>
+    </div>
+  </div>
+
+  <!-- 治理参与 -->
+  <div class="governance-card" style="margin-bottom:24px">
+    <h3>🤝 参与指数治理</h3>
+    <p>Heli-NasdaqCn 是全球投资者共识的产物，您的参与直接影响指数编制。不同角色拥有不同投票权重：C端×1.0 | 专业版×1.5 | B端(非利益冲突)×1.2</p>
+    <div class="governance-items">
+      <a href="diagnosis.html" class="governance-tag">投票调整因子权重</a>
+      <a href="diagnosis.html" class="governance-tag">提名新中概成分股</a>
+      <a href="apply.html" class="governance-tag">提交科技纯度复审</a>
+      <a href="web3.html" class="governance-tag">查看链上投票存证</a>
+      <a href="agent.html" class="governance-tag">向AI助手咨询套利策略</a>
+    </div>
+  </div>
+
+  <!-- 推荐链接 -->
+  <div class="recommend-section">
+    <h4>🔗 深度探索</h4>
+    <div class="recommend-links">
+      <a href="hkcd-tech.html" class="recommend-link"><span class="rl-icon">🏛️</span> 港商科指详情</a>
+      <a href="heli-300.html" class="recommend-link"><span class="rl-icon">⭐</span> 合力300详情</a>
+      <a href="heli-hktech.html" class="recommend-link"><span class="rl-icon">🌊</span> 港股通科技详情</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI助手咨询</a>
+    </div>
+  </div>
+
+  <!-- 风险提示 -->
+  <div class="risk-box">
+    ⚠️ <strong>风险提示</strong>：本页数据基于公开信息模拟，仅供参考，不构成投资建议。跨市场套利因子涉及汇率风险、政策风险及流动性风险，历史套利价差不保证未来收益。中概股面临中美监管政策变化、VIE架构风险等多重不确定性。指数历史表现不代表未来收益。投资者应充分了解相关风险并审慎决策。完整免责声明请参阅合力指数官方公告。
+  </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>合力纳斯达克中概指数(Heli-NasdaqCn)专注纳斯达克上市中国科技企业，独创跨市场套利因子，为全球投资者提供中概科技投资的精准基准。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>指数产品</h4><a href="hkcd-tech.html">港商科指</a><a href="heli-300.html">合力300</a><a href="heli-hktech.html">合力港股通科技</a><a href="heli-nasdaq.html" style="color:var(--gold)">合力纳斯达克中概</a></div>
+    <div><h4>功能</h4><a href="indices.html">指数中心</a><a href="diagnosis.html">诊断季</a><a href="awards.html">金鲲鹏</a><a href="agent.html">AI助手</a></div>
+  </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index · nebula@heli-ai.com</div>
 </footer>
+
+<!-- 底部Tab Bar -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item active">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
 
 <script src="ai-widget.js"></script>
 </body>

@@ -2,155 +2,200 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>B端工作台 · 合力指数</title>
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --deep-blue: #0a1628; --blue-900: #0f2044; --blue-800: #1a3260; --blue-700: #1e4090;
-  --consensus-gold: #c9a84c; --gold-light: #e8d48b; --gold-dark: #a68a34; --white: #ffffff;
-  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
-  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937;
-  --red: #ef4444; --green: #22c55e; --amber: #f59e0b; --indigo: #6366f1;
+/* 工作台头部 */
+.workspace-header {
+  background: linear-gradient(135deg, var(--deep-blue) 0%, var(--deep-blue-mid) 60%, var(--blue-700) 100%);
+  color: var(--white);
+  padding: 20px 16px;
+  position: relative;
+  overflow: hidden;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-
-/* 导航 */
-.nav { position: sticky; top: 0; z-index: 50; background: var(--deep-blue); }
-.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
-.nav-logo svg { width: 28px; height: 28px; }
-.nav-logo span { color: var(--white); font-weight: 700; font-size: 15px; }
-.nav-links { display: flex; gap: 16px; }
-.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; }
-.nav-links a:hover, .nav-links a.active { color: var(--consensus-gold); }
-.nav-cta { display: flex; gap: 10px; align-items: center; }
-.nav-cta a { font-size: 13px; text-decoration: none; padding: 5px 14px; border-radius: 20px; transition: all 0.2s; white-space: nowrap; }
-.btn-login { color: rgba(255,255,255,0.8); } .btn-login:hover { color: var(--white); }
-.btn-register { background: var(--consensus-gold); color: var(--deep-blue); font-weight: 600; } .btn-register:hover { background: var(--gold-light); }
-.btn-logout { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); padding: 5px 14px; border-radius: 20px; font-size: 12px; }
-
-/* 顶部横幅 */
-.workspace-header { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--blue-900) 60%, var(--blue-700) 100%); color: var(--white); padding: 24px 20px; }
-.workspace-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.company-info { display: flex; align-items: center; gap: 14px; }
-.company-avatar { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: var(--deep-blue); flex-shrink: 0; }
-.company-meta h2 { font-size: 18px; font-weight: 700; }
-.company-meta .code { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.workspace-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(201,168,76,.08) 0%, transparent 55%);
+}
+.workspace-header-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.company-info { display: flex; align-items: center; gap: 12px; }
+.company-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  flex-shrink: 0;
+}
+.company-meta h2 { font-size: 17px; font-weight: 700; }
+.company-meta .code { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
 .company-badges { display: flex; gap: 8px; align-items: center; }
-.badge { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
-.badge-gold { background: rgba(201,168,76,0.2); color: var(--consensus-gold); border: 1px solid rgba(201,168,76,0.3); }
-.badge-green { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+.badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.badge-gold { background: rgba(201,168,76,.2); color: var(--gold); border: 1px solid rgba(201,168,76,.3); }
+.badge-green { background: rgba(34,197,94,.15); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
 
-/* 主布局 */
-.container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; flex: 1; }
-.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 900px) { .dashboard-grid { grid-template-columns: 1fr; } }
+/* 快速操作 */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.quick-action {
+  padding: 14px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: all .2s;
+  background: var(--bg-card);
+}
+.quick-action:hover { border-color: var(--gold); background: var(--gold-bg); }
+.quick-action .icon { font-size: 22px; margin-bottom: 4px; }
+.quick-action .label { font-size: 12px; font-weight: 700; color: var(--text-primary); }
 
-/* 卡片 */
-.card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; overflow: hidden; }
-.card-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-100); display: flex; justify-content: space-between; align-items: center; }
-.card-header h3 { font-size: 15px; font-weight: 700; color: var(--gray-800); }
-.card-header .action { font-size: 12px; color: var(--consensus-gold); text-decoration: none; font-weight: 600; }
-.card-body { padding: 20px; }
-
-/* 热力值趋势 */
+/* 热力值 */
 .heat-gauge { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-.heat-circle { width: 80px; height: 80px; border-radius: 50%; background: conic-gradient(var(--consensus-gold) 0deg 288deg, var(--gray-200) 288deg 360deg); display: flex; align-items: center; justify-content: center; position: relative; }
-.heat-circle::after { content: ''; width: 62px; height: 62px; border-radius: 50%; background: var(--white); position: absolute; }
-.heat-value { position: relative; z-index: 1; font-size: 18px; font-weight: 800; color: var(--deep-blue); }
-.heat-info .rank { font-size: 13px; color: var(--gray-500); }
-.heat-info .score { font-size: 24px; font-weight: 800; color: var(--consensus-gold); }
+.heat-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: conic-gradient(var(--gold) 0deg 288deg, var(--border) 288deg 360deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.heat-circle::after {
+  content: '';
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  position: absolute;
+}
+.heat-value {
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--deep-blue);
+}
+.heat-info .rank { font-size: 12px; color: var(--text-light); }
+.heat-info .score { font-size: 22px; font-weight: 800; color: var(--gold); }
 .heat-bar { margin-top: 12px; }
 .heat-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.heat-bar-label { font-size: 12px; color: var(--gray-500); width: 70px; flex-shrink: 0; text-align: right; }
-.heat-bar-track { flex: 1; height: 8px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
-.heat-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--consensus-gold), var(--gold-light)); }
+.heat-bar-label { font-size: 12px; color: var(--text-light); width: 70px; flex-shrink: 0; text-align: right; }
+.heat-bar-track { flex: 1; height: 8px; background: var(--bg-main); border-radius: 4px; overflow: hidden; }
+.heat-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
 
 /* 问题列表 */
-.question-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+.question-item { padding: 14px 0; border-bottom: 1px solid var(--border); }
 .question-item:last-child { border-bottom: none; }
 .question-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.question-author { font-size: 12px; font-weight: 600; color: var(--gray-700); }
-.question-votes { font-size: 11px; color: var(--consensus-gold); background: rgba(201,168,76,0.08); padding: 2px 8px; border-radius: 10px; }
-.question-text { font-size: 13px; color: var(--gray-700); line-height: 1.5; margin-bottom: 8px; }
+.question-author { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+.question-votes { font-size: 11px; color: var(--gold); background: var(--gold-bg); padding: 2px 8px; border-radius: 10px; }
+.question-text { font-size: 13px; color: var(--text-primary); line-height: 1.5; margin-bottom: 8px; }
 .question-actions { display: flex; gap: 8px; }
-.btn-reply { font-size: 11px; padding: 4px 12px; border-radius: 6px; background: var(--consensus-gold); color: #fff; border: none; cursor: pointer; font-weight: 600; }
-.btn-reply:hover { background: var(--gold-dark); }
-.btn-skip { font-size: 11px; padding: 4px 12px; border-radius: 6px; background: var(--gray-100); color: var(--gray-500); border: none; cursor: pointer; }
+.btn-reply { font-size: 11px; padding: 4px 12px; border-radius: 6px; background: var(--gold); color: var(--deep-blue); border: none; cursor: pointer; font-weight: 700; font-family: inherit; }
+.btn-skip { font-size: 11px; padding: 4px 12px; border-radius: 6px; background: var(--bg-main); color: var(--text-light); border: 1px solid var(--border); cursor: pointer; font-family: inherit; }
 
-/* API Key区 */
-.api-key-box { background: var(--gray-50); border-radius: 10px; padding: 14px; font-family: monospace; font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.api-key-box code { background: var(--white); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--gray-200); word-break: break-all; }
-.btn-copy { font-size: 11px; padding: 4px 12px; border-radius: 6px; background: var(--deep-blue); color: #fff; border: none; cursor: pointer; }
+/* API Key */
+.api-key-box {
+  background: var(--bg-main);
+  border-radius: 10px;
+  padding: 14px;
+  font-family: monospace;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  border: 1px solid var(--border);
+}
+.api-key-box code { background: var(--bg-card); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); word-break: break-all; }
+.btn-copy { font-size: 11px; padding: 4px 12px; border-radius: 6px; background: var(--deep-blue); color: #fff; border: none; cursor: pointer; font-family: inherit; }
 .api-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
 .api-stat { text-align: center; }
-.api-stat .val { font-size: 18px; font-weight: 700; color: var(--deep-blue); }
-.api-stat .lbl { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+.api-stat .val { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.api-stat .lbl { font-size: 11px; color: var(--text-light); margin-top: 2px; }
 
 /* 活动状态 */
-.status-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
+.status-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
 .status-item:last-child { border-bottom: none; }
-.status-name { font-size: 13px; font-weight: 600; color: var(--gray-800); }
-.status-detail { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
-.status-tag { font-size: 11px; padding: 3px 10px; border-radius: 12px; }
+.status-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.status-detail { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+.status-tag { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
 .tag-yellow { background: #fef3c7; color: #92400e; }
 .tag-blue { background: #dbeafe; color: #1e40af; }
 .tag-green { background: #dcfce7; color: #166534; }
 .tag-red { background: #fee2e2; color: #991b1b; }
 
-/* 诊断入口 */
-.diag-entry { text-align: center; padding: 24px; }
-.diag-entry p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; }
-.btn-gold { display: inline-block; background: linear-gradient(135deg, var(--consensus-gold), var(--gold-light)); color: var(--deep-blue); padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
-
-/* 快速操作网格 */
-.quick-actions { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
-.quick-action { padding: 14px; border-radius: 10px; border: 1px solid var(--gray-200); text-align: center; cursor: pointer; text-decoration: none; color: inherit; transition: all 0.2s; }
-.quick-action:hover { border-color: var(--consensus-gold); background: rgba(201,168,76,0.03); }
-.quick-action .icon { font-size: 24px; margin-bottom: 6px; }
-.quick-action .label { font-size: 12px; font-weight: 600; color: var(--gray-700); }
-
-/* 页脚 */
-.footer { background: var(--deep-blue); color: rgba(255,255,255,0.5); padding: 24px 20px; font-size: 12px; text-align: center; margin-top: auto; }
-.footer a { color: var(--consensus-gold); text-decoration: none; }
-
-@media (max-width: 640px) {
-  .nav-links { gap: 8px; }
-  .nav-links a { font-size: 11px; }
-  .workspace-header-inner { flex-direction: column; align-items: flex-start; }
+/* card-actions */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-main);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
+.card-action-btn {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+  text-align: center;
+}
+.card-action-btn:hover { border-color: var(--gold); color: var(--gold); }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <svg viewBox="0 0 100 100"><polygon points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="none" stroke="#c9a84c" stroke-width="3"/><circle cx="50" cy="50" r="6" fill="#c9a84c"/></svg>
-      <span>合力指数</span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="index-detail.html">指数详情</a>
-      <a href="roadshow.html">全球路演</a>
-      <a href="awards.html">金鲲鹏</a>
-      <a href="diagnosis.html">诊断季</a>
-      <a href="achievements.html">成就</a>
-      <a href="agent.html">AI助手</a>
-      <a href="api.html">API</a>
-      <a href="workspace.html" class="active">工作台</a>
-      <a href="admin.html">管理后台</a>
-    </div>
-    <div class="nav-cta">
-      <span style="color:rgba(255,255,255,0.6);font-size:12px;">比亚迪 (002594.SZ) ▼</span>
-      <a href="login.html" class="btn-logout">退出</a>
-    </div>
+<!-- 顶部标题栏 -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <span class="topbar-title">合力指数</span>
   </div>
-</nav>
+  <div class="topbar-right">
+    <span style="color:rgba(255,255,255,.6);font-size:12px;margin-right:8px;">比亚迪 (002594.SZ) ▼</span>
+    <a href="login.html" class="topbar-btn">退出</a>
+  </div>
+</div>
 
-<div class="workspace-header">
+<!-- 工作台头部 -->
+<section class="workspace-header">
   <div class="workspace-header-inner">
     <div class="company-info">
       <div class="company-avatar">BYD</div>
@@ -164,10 +209,13 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
       <span class="badge badge-green">✓ 已认证</span>
     </div>
   </div>
-</div>
+</section>
 
-<div class="container">
+<!-- 页面内容 -->
+<div class="page-content">
+
   <!-- 快速操作 -->
+  <div class="section-title">🏢 B端工作台</div>
   <div class="card" style="margin-bottom:20px;">
     <div class="card-body">
       <div class="quick-actions">
@@ -181,9 +229,10 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
     </div>
   </div>
 
-  <div class="dashboard-grid">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
     <!-- 左侧列 -->
-    <div style="display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
       <!-- 热力值 -->
       <div class="card">
         <div class="card-header">
@@ -197,27 +246,31 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
               <div class="rank">📊 行业排名 · 新能源汽车</div>
               <div style="display:flex;align-items:center;gap:8px;">
                 <span class="score">第 2 名</span>
-                <span style="color:var(--red);font-size:13px;font-weight:600;">↑ 1</span>
+                <span style="color:var(--green);font-size:13px;font-weight:700;">↑ 1</span>
               </div>
             </div>
           </div>
           <div class="heat-bar">
-            <div class="heat-bar-row"><span class="heat-bar-label">AI+战略</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:92%;"></div></div><span style="font-size:12px;color:var(--gray-600);">92</span></div>
-            <div class="heat-bar-row"><span class="heat-bar-label">研发投入</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:88%;"></div></div><span style="font-size:12px;color:var(--gray-600);">88</span></div>
-            <div class="heat-bar-row"><span class="heat-bar-label">共识度</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:76%;"></div></div><span style="font-size:12px;color:var(--gray-600);">76</span></div>
-            <div class="heat-bar-row"><span class="heat-bar-label">投资人信心</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:82%;"></div></div><span style="font-size:12px;color:var(--gray-600);">82</span></div>
-            <div class="heat-bar-row"><span class="heat-bar-label">信息披露</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:71%;"></div></div><span style="font-size:12px;color:var(--gray-600);">71</span></div>
+            <div class="heat-bar-row"><span class="heat-bar-label">AI+战略</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:92%;"></div></div><span style="font-size:12px;color:var(--text-secondary);">92</span></div>
+            <div class="heat-bar-row"><span class="heat-bar-label">研发投入</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:88%;"></div></div><span style="font-size:12px;color:var(--text-secondary);">88</span></div>
+            <div class="heat-bar-row"><span class="heat-bar-label">共识度</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:76%;"></div></div><span style="font-size:12px;color:var(--text-secondary);">76</span></div>
+            <div class="heat-bar-row"><span class="heat-bar-label">投资人信心</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:82%;"></div></div><span style="font-size:12px;color:var(--text-secondary);">82</span></div>
+            <div class="heat-bar-row"><span class="heat-bar-label">信息披露</span><div class="heat-bar-track"><div class="heat-bar-fill" style="width:71%;"></div></div><span style="font-size:12px;color:var(--text-secondary);">71</span></div>
           </div>
+        </div>
+        <div class="card-actions">
+          <button class="card-action-btn">📈 查看趋势</button>
+          <button class="card-action-btn">📤 分享报告</button>
         </div>
       </div>
 
       <!-- 投资者提问 -->
       <div class="card">
         <div class="card-header">
-          <h3>💬 待回复提问 <span style="background:var(--red);color:#fff;font-size:11px;padding:1px 7px;border-radius:10px;">6</span></h3>
+          <h3>💬 待回复提问 <span style="background:var(--red);color:#fff;font-size:11px;padding:1px 7px;border-radius:10px;margin-left:6px;">6</span></h3>
           <a href="#" class="action">全部问题 →</a>
         </div>
-        <div class="card-body" style="max-height:420px;overflow-y:auto;">
+        <div class="card-body" style="max-height:400px;overflow-y:auto;">
           <div class="question-item">
             <div class="question-meta">
               <span class="question-author">👤 专业投资者 · 张明远</span>
@@ -252,11 +305,16 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
             </div>
           </div>
         </div>
+        <div class="card-actions">
+          <button class="card-action-btn">📝 批量回复</button>
+          <button class="card-action-btn">🔔 开启提醒</button>
+        </div>
       </div>
     </div>
 
     <!-- 右侧列 -->
-    <div style="display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
       <!-- 公司成就 -->
       <div class="card">
         <div class="card-header">
@@ -264,52 +322,56 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
           <a href="achievements.html" class="action">成就墙 →</a>
         </div>
         <div class="card-body">
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;">
             <div style="padding:8px;">
-              <div style="font-size:28px;">🏁</div>
-              <div style="font-size:10px;font-weight:600;color:var(--consensus-gold);margin-top:4px;">新质入场</div>
-              <div style="font-size:10px;color:var(--gray-400);">2026.03</div>
-            </div>
-            <div style="padding:8px;">
-              <div style="font-size:28px;">💬</div>
-              <div style="font-size:10px;font-weight:600;color:var(--consensus-gold);margin-top:4px;">坦诚对话</div>
-              <div style="font-size:10px;color:var(--gray-400);">2026.05</div>
+              <div style="font-size:24px;">🏁</div>
+              <div style="font-size:10px;font-weight:700;color:var(--gold);margin-top:4px;">新质入场</div>
+              <div style="font-size:10px;color:var(--text-light);">2026.03</div>
             </div>
             <div style="padding:8px;">
-              <div style="font-size:28px;">🔬</div>
-              <div style="font-size:10px;font-weight:600;color:var(--consensus-gold);margin-top:4px;">诊断勇气</div>
-              <div style="font-size:10px;color:var(--gray-400);">2026 Q2</div>
+              <div style="font-size:24px;">💬</div>
+              <div style="font-size:10px;font-weight:700;color:var(--gold);margin-top:4px;">坦诚对话</div>
+              <div style="font-size:10px;color:var(--text-light);">2026.05</div>
             </div>
             <div style="padding:8px;">
-              <div style="font-size:28px;">⭐</div>
-              <div style="font-size:10px;font-weight:600;color:var(--consensus-gold);margin-top:4px;">共识之选</div>
-              <div style="font-size:10px;color:var(--gray-400);">连续4周</div>
+              <div style="font-size:24px;">🔬</div>
+              <div style="font-size:10px;font-weight:700;color:var(--gold);margin-top:4px;">诊断勇气</div>
+              <div style="font-size:10px;color:var(--text-light);">2026 Q2</div>
             </div>
-            <div style="padding:8px;opacity:0.4;">
-              <div style="font-size:28px;">🌍</div>
-              <div style="font-size:10px;font-weight:600;color:var(--gray-500);margin-top:4px;">路演先锋</div>
-              <div style="font-size:10px;color:var(--gray-400);">未获得</div>
+            <div style="padding:8px;">
+              <div style="font-size:24px;">⭐</div>
+              <div style="font-size:10px;font-weight:700;color:var(--gold);margin-top:4px;">共识之选</div>
+              <div style="font-size:10px;color:var(--text-light);">连续4周</div>
             </div>
-            <div style="padding:8px;opacity:0.4;">
-              <div style="font-size:28px;">🏆</div>
-              <div style="font-size:10px;font-weight:600;color:var(--gray-500);margin-top:4px;">金鲲鹏提名</div>
-              <div style="font-size:10px;color:var(--gray-400);">评审中</div>
+            <div style="padding:8px;opacity:.4;">
+              <div style="font-size:24px;">🌍</div>
+              <div style="font-size:10px;font-weight:700;color:var(--text-light);margin-top:4px;">路演先锋</div>
+              <div style="font-size:10px;color:var(--text-light);">未获得</div>
             </div>
-            <div style="padding:8px;opacity:0.3;">
-              <div style="font-size:28px;">🥇</div>
-              <div style="font-size:10px;font-weight:600;color:var(--gray-500);margin-top:4px;">金鲲鹏得主</div>
-              <div style="font-size:10px;color:var(--gray-400);">待揭晓</div>
+            <div style="padding:8px;opacity:.4;">
+              <div style="font-size:24px;">🏆</div>
+              <div style="font-size:10px;font-weight:700;color:var(--text-light);margin-top:4px;">金鲲鹏提名</div>
+              <div style="font-size:10px;color:var(--text-light);">评审中</div>
             </div>
-            <div style="padding:8px;opacity:0.3;">
-              <div style="font-size:28px;">💎</div>
-              <div style="font-size:10px;font-weight:600;color:var(--gray-500);margin-top:4px;">新质标杆</div>
-              <div style="font-size:10px;color:var(--gray-400);">待冲击</div>
+            <div style="padding:8px;opacity:.3;">
+              <div style="font-size:24px;">🥇</div>
+              <div style="font-size:10px;font-weight:700;color:var(--text-light);margin-top:4px;">金鲲鹏得主</div>
+              <div style="font-size:10px;color:var(--text-light);">待揭晓</div>
+            </div>
+            <div style="padding:8px;opacity:.3;">
+              <div style="font-size:24px;">💎</div>
+              <div style="font-size:10px;font-weight:700;color:var(--text-light);margin-top:4px;">新质标杆</div>
+              <div style="font-size:10px;color:var(--text-light);">待冲击</div>
             </div>
           </div>
         </div>
+        <div class="card-actions">
+          <button class="card-action-btn">🏅 查看全部</button>
+          <button class="card-action-btn">📤 分享成就</button>
+        </div>
       </div>
 
-      <!-- API 用量 -->
+      <!-- API 接入状态 -->
       <div class="card">
         <div class="card-header">
           <h3>🔌 API 接入状态</h3>
@@ -325,11 +387,15 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
             <div class="api-stat"><div class="val">50,000</div><div class="lbl">月限额</div></div>
             <div class="api-stat"><div class="val">99.8%</div><div class="lbl">可用率</div></div>
           </div>
-          <div style="margin-top:12px;font-size:11px;color:var(--gray-500);">📅 下次重置：2026-08-01 · 套餐：专业版</div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-light);">📅 下次重置：2026-08-01 · 套餐：专业版</div>
+        </div>
+        <div class="card-actions">
+          <button class="card-action-btn">🔑 重置Key</button>
+          <button class="card-action-btn">📊 用量详情</button>
         </div>
       </div>
 
-      <!-- 活动状态 -->
+      <!-- 活动参与状态 -->
       <div class="card">
         <div class="card-header">
           <h3>📅 活动参与状态</h3>
@@ -365,25 +431,60 @@ body { font-family: "Inter", "Noto Sans SC", system-ui, sans-serif; color: var(-
             <span class="status-tag tag-yellow">筹备中</span>
           </div>
         </div>
+        <div class="card-actions">
+          <button class="card-action-btn">📝 报名新活动</button>
+          <button class="card-action-btn">📋 查看报名记录</button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- 诊断季入口 -->
   <div class="card" style="margin-top:20px;">
-    <div class="card-body">
-      <div class="diag-entry">
-        <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">🔬 2026 Q3 诊断季</h3>
-        <p>诊断季是投资者与公司深度互动的核心窗口。参与诊断季可提升热力值排名，受评为"共识之选"的公司将获金鲲鹏奖项提名加分。</p>
-        <a href="diagnosis-report.html" class="btn-gold">查看当前诊断报告</a>
-      </div>
+    <div class="card-body" style="text-align:center;padding:24px 16px;">
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">🔬 2026 Q3 诊断季</h3>
+      <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">诊断季是投资者与公司深度互动的核心窗口。参与诊断季可提升热力值排名，获评为"共识之选"的公司将获金鲲鹏奖项提名加分。</p>
+      <a href="diagnosis-report.html" class="btn-primary" style="display:inline-block;">查看当前诊断报告</a>
     </div>
   </div>
+
 </div>
 
+<!-- 页脚 -->
 <footer class="footer">
-  <p>© 2026 合力指数 Heli-Index · 新质生产力的资本市场共识平台 | <a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></p>
+  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界。</p>
+  <div class="footer-grid" style="margin-top:16px">
+    <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a><a href="agent.html">AI助手</a></div>
+    <div><h4>关于</h4><a href="#">团队介绍</a><a href="#">方法论</a><a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></div>
+  </div>
+  <div class="footer-bottom">© 2026 合力指数 Heli-Index. All rights reserved.</div>
 </footer>
+
+<!-- 底部Tab Bar（无特定active tab） -->
+<div class="tabbar">
+  <a href="index.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">首页</span>
+  </a>
+  <a href="indices.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-8 4 4 5-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">指数</span>
+  </a>
+  <a href="diagnosis.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="tab-label">活动</span>
+    <span class="tab-badge">新</span>
+  </a>
+  <a href="agent.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">AI助手</span>
+  </a>
+  <a href="profile.html" class="tab-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="tab-label">我的</span>
+  </a>
+</div>
 
 <script src="ai-widget.js"></script>
 </body>
