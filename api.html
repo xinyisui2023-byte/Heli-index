@@ -198,7 +198,8 @@
 <!-- 顶部标题栏 -->
 <div class="topbar">
   <div class="topbar-left">
-    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo" onerror="this.style.display='none';this.nextElementSibling.classList.add('active')">
+    <span class="topbar-logo-fallback">合</span>
     <span class="topbar-title">合力指数</span>
   </div>
   <div class="topbar-right">
@@ -448,9 +449,22 @@ curl -H <span class="str">"Authorization: Bearer YOUR_API_KEY"</span> \
 
 </div>
 
+<!-- 推荐链接 -->
+<div class="page-content">
+  <div class="recommend-section" style="margin-top:16px">
+    <h4>🔗 深度探索</h4>
+    <div class="recommend-links">
+      <a href="hkcd-tech.html" class="recommend-link"><span class="rl-icon">🏛️</span> 港商科指</a>
+      <a href="indices.html" class="recommend-link"><span class="rl-icon">📊</span> 指数中心</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI助手</a>
+      <a href="workspace.html" class="recommend-link"><span class="rl-icon">🏢</span> B端工作台</a>
+    </div>
+  </div>
+</div>
+
 <!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <div class="footer-brand"><img src="logo.svg" alt="logo" onerror="this.style.display='none'"><span>合力指数</span></div>
   <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界。</p>
   <div class="footer-grid" style="margin-top:16px">
     <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a><a href="agent.html">AI助手</a></div>
@@ -484,6 +498,9 @@ curl -H <span class="str">"Authorization: Bearer YOUR_API_KEY"</span> \
   </a>
 </div>
 
+<script>
+document.querySelectorAll('.topbar-logo').forEach(function(img){img.addEventListener('error',function(){this.style.display='none';var fb=this.nextElementSibling;if(fb&&fb.classList.contains('topbar-logo-fallback'))fb.classList.add('active');});});
+</script>
 <script src="ai-widget.js"></script>
 </body>
 </html>

@@ -39,7 +39,8 @@
 <!-- 顶部标题栏 -->
 <div class="topbar">
   <div class="topbar-left">
-    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo" onerror="this.style.display='none';this.nextElementSibling.classList.add('active')">
+    <span class="topbar-logo-fallback">合</span>
     <span class="topbar-title">诊断报告</span>
   </div>
   <div class="topbar-right">
@@ -205,7 +206,7 @@
 
 <!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <div class="footer-brand"><img src="logo.svg" alt="logo" onerror="this.style.display='none'"><span>合力指数</span></div>
   <p>诊断报告由 Heli-Agent AI 辅助生成，数据基于公开信息与投资者共识投票。</p>
   <div class="footer-grid" style="margin-top:16px">
     <div><h4>功能</h4><a href="diagnosis.html">诊断季</a><a href="diagnosis-report.html" style="color:var(--gold)">诊断报告</a><a href="achievements.html">成就体系</a></div>
@@ -238,6 +239,9 @@
   </a>
 </div>
 
+<script>
+document.querySelectorAll('.topbar-logo').forEach(function(img){img.addEventListener('error',function(){this.style.display='none';var fb=this.nextElementSibling;if(fb&&fb.classList.contains('topbar-logo-fallback'))fb.classList.add('active');});});
+</script>
 <script src="ai-widget.js"></script>
 </body>
 </html>

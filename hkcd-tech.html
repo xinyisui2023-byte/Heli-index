@@ -6,22 +6,27 @@
 <title>港商科指 HKCD-Tech | 合力指数</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.factor-expand{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:10px;font-size:11px;color:var(--text-secondary);line-height:1.7;display:none}
-.factor-expand.open{display:block}
-.factor-toggle{font-size:11px;color:var(--gold);cursor:pointer;font-weight:700;margin-top:4px;display:inline-block}
-.formula-box{background:var(--deep-blue);color:var(--gold);padding:8px 12px;border-radius:8px;font-size:11px;font-family:"SF Mono",monospace;margin:8px 0;line-height:1.6}
-.risk-box{background:#fff3cd;border:1px solid #ffc107;border-radius:10px;padding:14px;font-size:12px;color:#856404;margin-top:24px}
-.factor-matrix{width:100%;border-collapse:collapse;font-size:11px;margin-top:16px}
-.factor-matrix th{background:var(--deep-blue);color:white;padding:8px;text-align:center;font-weight:600}
-.factor-matrix td{padding:8px;text-align:center;border:1px solid var(--border)}
+.factor-expand{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:10px;font-size:11px;color:var(--text-secondary);line-height:1.7;display:none;border:1px solid var(--border-light)}
+.factor-expand.open{display:block;animation:fadeIn 0.3s}
+.factor-toggle{font-size:11px;color:var(--gold);cursor:pointer;font-weight:700;margin-top:4px;display:inline-flex;align-items:center;gap:4px}
+.factor-toggle::before{content:'▸ '}
+.factor-toggle.open::before{content:'▾ '}
+.risk-box{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #f59e0b;border-radius:var(--radius-md);padding:14px 18px;font-size:12px;color:#92400e;margin-top:24px;box-shadow:0 2px 8px rgba(245,158,11,0.1)}
+.factor-matrix{width:100%;border-collapse:separate;border-spacing:0;font-size:11px;margin-top:16px;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-xs)}
+.factor-matrix th{background:var(--deep-blue);color:var(--gold-light);padding:10px 8px;text-align:center;font-weight:600;white-space:nowrap;border-right:1px solid rgba(201,168,76,0.1)}
+.factor-matrix th:last-child{border-right:none}
+.factor-matrix td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--border-light);border-right:1px solid var(--border-light)}
+.factor-matrix tr:last-child td{border-bottom:none}
+.factor-matrix td:last-child{border-right:none}
 .factor-matrix .high{color:var(--gold);font-weight:700}
 .factor-matrix .med{color:var(--text-secondary)}
 .factor-matrix .low{color:var(--text-light)}
-.perf-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
-.perf-label{font-size:12px;font-weight:600;width:70px;flex-shrink:0}
-.perf-bar{flex:1;height:16px;background:var(--bg);border-radius:8px;overflow:hidden}
-.perf-fill{height:100%;border-radius:8px}
-.perf-val{font-size:12px;font-weight:700;width:60px;flex-shrink:0;text-align:right}
+.perf-row{display:flex;gap:10px;margin-bottom:10px;align-items:center}
+.perf-label{font-size:12px;font-weight:600;width:80px;flex-shrink:0}
+.perf-bar{flex:1;height:20px;background:var(--bg);border-radius:10px;overflow:hidden;border:1px solid var(--border-light)}
+.perf-fill{height:100%;border-radius:10px;position:relative}
+.perf-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:20px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2))}
+.perf-val{font-size:13px;font-weight:700;width:60px;flex-shrink:0;text-align:right}
 </style>
 </head>
 <body>
@@ -29,7 +34,8 @@
 <!-- 顶部标题栏 -->
 <div class="topbar">
   <div class="topbar-left">
-    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo" onerror="this.style.display='none';this.nextElementSibling.classList.add('active')">
+    <span class="topbar-logo-fallback">合</span>
     <span class="topbar-title">港商科指 HKCD-Tech</span>
   </div>
   <div class="topbar-right">
@@ -42,7 +48,7 @@
 <section class="page-hero">
   <span class="hero-badge">🏛️ 官方指数 · 2026年5月26日发布</span>
   <h1>香港商报港股科技指数<br><span class="gold">HKCD-Tech</span></h1>
-  <p>全球首只聚焦"硬科技+真创新"的港股科技基准指数，由香港商报与香港资本市场学院共同设计编制</p>
+  <p>全球首只聚焦"硬科技+真创新"的港股科技基准指数，50只港股科技成分股，硬科技收入≥50%门槛，由香港商报与香港资本市场学院共同设计编制</p>
   <div class="hero-price">
     <span class="val">3,847.62</span>
     <span class="change up">▲ +88.14 (+2.34%)</span>
@@ -66,19 +72,32 @@
       <tr><td style="color:var(--text-secondary);padding:5px 0">指数代码</td><td style="font-weight:700;color:var(--gold)">HKCD-Tech</td></tr>
       <tr><td style="color:var(--text-secondary);padding:5px 0">编制机构</td><td>香港商报 × 香港资本市场学院</td></tr>
       <tr><td style="color:var(--text-secondary);padding:5px 0">发布日期</td><td>2026年5月26日（全球商报经济论坛）</td></tr>
-      <tr><td style="color:var(--text-secondary);padding:5px 0">基日/基点</td><td>2024-12-31 / 3000</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">基日/基点</td><td style="font-weight:700;color:var(--gold)">2024-12-31 / 3000</td></tr>
       <tr><td style="color:var(--text-secondary);padding:5px 0">成分股数量</td><td style="font-weight:600">50只（首批）</td></tr>
       <tr><td style="color:var(--text-secondary);padding:5px 0">调仓频率</td><td>季度（3/6/9/12月）</td></tr>
       <tr><td style="color:var(--text-secondary);padding:5px 0">加权方式</td><td>自由流通市值加权 + 因子调整</td></tr>
       <tr><td style="color:var(--text-secondary);padding:5px 0">权重上限</td><td>单股≤10%，行业≤30%</td></tr>
+      <tr><td style="color:var(--text-secondary);padding:5px 0">硬科技门槛</td><td style="font-weight:700;color:var(--gold)">硬科技业务收入占比≥50%</td></tr>
     </table>
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>186</span></button>
+      <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>72</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <button class="action-btn" onclick="location.href='#comment-section'">💬 讨论</button>
+    </div>
   </div>
 
   <div class="card card-gold" style="margin-bottom:24px">
     <h3 style="font-size:14px;font-weight:700;margin-bottom:6px">🎯 核心定位</h3>
     <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
-      区别于偏重互联网平台的传统科技指数，港商科指聚焦<strong style="color:var(--gold-dark)">"硬科技+真创新"</strong>，覆盖人工智能、半导体、生物科技、新能源、智能制造、航空航天六大前沿领域，为全球投资者提供衡量港股科技板块的权威基准。
+      区别于偏重互联网平台的传统科技指数，港商科指聚焦<strong style="color:var(--gold-dark)">"硬科技+真创新"</strong>，覆盖人工智能、半导体、生物科技、新能源、智能制造、航空航天六大前沿领域，为全球投资者提供衡量港股科技板块的权威基准。纯消费互联网平台若硬科技占比&lt;50%则直接剔除。
     </p>
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>142</span></button>
+      <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>58</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <button class="action-btn">💬 讨论</button>
+    </div>
   </div>
 
   <!-- 编制方法论 -->
@@ -86,14 +105,14 @@
   <div class="step-flow" style="margin-bottom:24px">
     <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>样本空间确定</h4><p>香港交易所主板上市的大中华地区公司，日均成交额≥2000万港元，排除ST股及停牌超30日个股。自由流通市值≥10亿港元。</p></div></div>
     <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>行业与主题筛选</h4><p>主营业务须属六大前沿领域之一：AI/大数据、半导体/集成电路、生物科技/创新药、新能源/新能源汽车、智能制造/机器人、航空航天/低空经济。</p></div></div>
-    <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>硬科技门槛 ⭐</h4><p>硬科技业务收入占比≥50%；研发费用率≥5%或年度研发≥3亿港元；近两年营收CAGR≥10%。</p></div></div>
-    <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>综合评分排序</h4><p>按市值(40%)、研发强度(25%)、营收增长率(20%)、行业代表性(15%)加权评分，取前50名纳入。</p></div></div>
-    <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>权重限制与调整</h4><p>自由流通市值加权，单股≤10%，行业≤30%。季度调仓设10%缓冲区减少换手率。</p></div></div>
+    <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>硬科技门槛 ⭐</h4><p>硬科技业务收入占比≥50%；研发费用率≥5%或年度研发≥3亿港元；近两年营收CAGR≥10%。纯消费互联网平台硬科技占比&lt;50%直接剔除。</p></div></div>
+    <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>五因子综合评分</h4><p>按硬科技占比(30%)、研发投入(25%)、成长质量(20%)、行业代表性(15%)、流动性(10%)五因子加权评分，取前50名纳入。</p></div></div>
+    <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>权重限制与季度调仓</h4><p>自由流通市值加权，单股≤10%，行业≤30%。季度调仓设10%缓冲区减少换手率。因子间高相关性经Whitening正交化处理确保独立性。</p></div></div>
   </div>
 
   <!-- 因子体系（MSCI级别深度） -->
   <div class="section-title">🔬 核心因子体系与权重</div>
-  <p class="section-subtitle">参照MSCI因子框架，港商科指采用5因子模型，每因子包含2-3个子指标</p>
+  <p class="section-subtitle">参照MSCI因子框架，港商科指采用5因子模型，每因子包含2-3个子指标，经正交化处理确保独立性</p>
 
   <!-- 因子权重总览 -->
   <div class="card" style="margin-bottom:16px">
@@ -103,67 +122,134 @@
     <div class="factor-row"><span class="factor-name">成长质量</span><div class="factor-bar"><div class="factor-fill" style="width:20%"></div></div><span class="factor-pct">20%</span></div>
     <div class="factor-row"><span class="factor-name">行业代表性</span><div class="factor-bar"><div class="factor-fill" style="width:15%"></div></div><span class="factor-pct">15%</span></div>
     <div class="factor-row"><span class="factor-name">流动性</span><div class="factor-bar"><div class="factor-fill" style="width:10%"></div></div><span class="factor-pct">10%</span></div>
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>203</span></button>
+      <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>89</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <button class="action-btn">💬 讨论</button>
+    </div>
   </div>
 
   <!-- 因子详细拆解 -->
   <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px">
 
+    <!-- 因子1：硬科技占比因子 -->
     <div class="card factor-detail-card">
       <div class="fd-icon">💎</div>
       <h3>因子1：硬科技占比因子 — 权重30%</h3>
       <div class="fd-desc">衡量公司核心业务的"硬科技纯度"。硬科技业务指直接基于前沿科学技术研发和生产的产品/服务收入，排除纯互联网平台、纯渠道分销、纯金融投资收益。</div>
-      <div class="formula-box">F₁ = w₁₁ × (硬科技收入/总收入) + w₁₂ × 硬科技收入增速 + w₁₃ × 技术壁垒评分<br>w₁₁=0.6, w₁₂=0.2, w₁₃=0.2<br>门槛值：硬科技占比 ≥ 50%</div>
-      <div class="fd-data">数据来源：公司年报分部收入披露 + 合力指数AI行业分类引擎验证<br>评分细则：≥80% → 10分 | 65%-80% → 8分 | 50%-65% → 6分 | <50% → 淘汰</div>
-      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="fd-formula">HT_P = (硬科技业务收入 / 总营业收入) × 100<br>门槛值：HT_P ≥ 50%</div>
+      <div class="fd-data">
+        <strong>硬科技业务收入定义：</strong>半导体设计收入、AI算法授权收入、新药研发管线收入、新能源技术授权/设备收入、智能制造系统集成收入、航空航天器制造收入<br>
+        <strong>非硬科技剔除规则：</strong>纯消费互联网平台（社交/电商/游戏/广告）若硬科技占比＜50%则直接剔除，不参与后续评分<br>
+        <strong>评分分位表：</strong>≥80% → A档(100分) | 60%-80% → B档(75分) | 50%-60% → C档(50分) | ＜50% → 淘汰<br>
+        <strong>数据来源：</strong>公司年报主营业务分类、Wind行业分类、公司官方披露
+      </div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">展开子指标详解</span>
       <div class="factor-expand">
         <strong>子指标1：硬科技收入占比 (60%)</strong> — 公司年报中"研发/制造/技术服务"收入占总营收比例。需经AI引擎二次校验，排除将平台佣金伪装为技术服务收入的情况。<br><br>
         <strong>子指标2：硬科技收入增速 (20%)</strong> — 近3年硬科技业务收入CAGR，>20%加分，<5%扣分。<br><br>
         <strong>子指标3：技术壁垒评分 (20%)</strong> — 专利数、核心技术团队占比、国产替代率综合评分。
       </div>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>156</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>67</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
+      </div>
     </div>
 
+    <!-- 因子2：研发投入因子 -->
     <div class="card factor-detail-card">
       <div class="fd-icon">🔬</div>
       <h3>因子2：研发投入因子 — 权重25%</h3>
-      <div class="fd-desc">衡量公司持续创新能力。核心是研发费用率（R&D/Sales），同时纳入研发人员占比和专利产出效率作为辅助指标。</div>
-      <div class="formula-box">F₂ = w₂₁ × R&D/Sales + w₂₂ × (研发人员/总员工) + w₂₃ × (专利数/研发投入)<br>w₂₁=0.55, w₂₂=0.25, w₂₃=0.2<br>门槛值：R&D/Sales ≥ 5% 或年研发≥3亿港元</div>
-      <div class="fd-data">数据来源：公司年报研发费用明细 + 国家知识产权局专利数据<br>评分细则：R&D≥15% → 10分 | 10%-15% → 8分 | 5%-10% → 6分 | <5% → 淘汰</div>
-      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="fd-desc">衡量公司持续创新能力。核心是研发费用率（R&D/Sales），同时纳入研发人员占比和专利产出密度作为辅助指标，确保研发投入的真实性和转化效率。</div>
+      <div class="fd-formula">RD_S = (研发费用率 × 0.4) + (研发人员占比 × 0.3) + (专利密度 × 0.3)<br>门槛值：R&D/Sales ≥ 5% 或 年度研发≥3亿港元</div>
+      <div class="fd-data">
+        <strong>评分分位表：</strong>≥20% → A档 | 10%-20% → B档 | 5%-10% → C档 | ＜5% → D档（淘汰）<br>
+        <strong>数据来源：</strong>年报研发费用科目、员工结构披露、国家知识产权局专利数据<br>
+        <strong>特别说明：</strong>制造业公司可纳入资本化研发支出；互联网公司仅计入基础研发，排除营销费用伪装
+      </div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">展开子指标详解</span>
       <div class="factor-expand">
-        <strong>子指标1：研发费用率 (55%)</strong> — 年报研发费用/营业收入。制造业公司可纳入资本化研发支出。互联网公司仅计入基础研发，排除营销费用伪装。<br><br>
-        <strong>子指标2：研发人员占比 (25%)</strong> — 研发人员数/公司总员工数。≥30%优秀，≥15%合格。<br><br>
-        <strong>子指标3：专利产出效率 (20%)</strong> — 近3年发明专利授权数/研发投入(亿元)。反映研发投入的实际产出转化率。
+        <strong>子指标1：研发费用率 (40%)</strong> — 年报研发费用/营业收入。制造业公司可纳入资本化研发支出。互联网公司仅计入基础研发，排除营销费用伪装。<br><br>
+        <strong>子指标2：研发人员占比 (30%)</strong> — 研发人员数/公司总员工数。≥30%优秀，≥15%合格。<br><br>
+        <strong>子指标3：专利密度 (30%)</strong> — 近3年发明专利授权数/研发投入(亿元)。反映研发投入的实际产出转化率。
+      </div>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>134</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>52</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
       </div>
     </div>
 
+    <!-- 因子3：成长质量因子 -->
     <div class="card factor-detail-card">
       <div class="fd-icon">📈</div>
       <h3>因子3：成长质量因子 — 权重20%</h3>
-      <div class="fd-desc">衡量公司成长的真实性和可持续性。不仅看增速，更看利润质量和现金流支撑。</div>
-      <div class="formula-box">F₃ = w₃₁ × 营收CAGR + w₃₂ × 毛利率趋势 + w₃₃ × (经营现金流/净利润)<br>w₃₁=0.4, w₃₂=0.35, w₃₃=0.25<br>门槛值：近两年营收CAGR ≥ 10%</div>
-      <div class="fd-data">数据来源：公司年报 + Wind/Bloomberg财务数据<br>评分细则：CAGR≥30% → 10分 | 20%-30% → 8分 | 10%-20% → 6分</div>
-      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open')">▶ 展开子指标详解</span>
+      <div class="fd-desc">衡量公司成长的真实性和可持续性。不仅看增速，更看利润质量和现金流支撑，排除"纸面增长"。</div>
+      <div class="fd-formula">GQ_S = (营收CAGR × 0.4) + (毛利率趋势 × 0.3) + (经营现金流质量 × 0.3)<br>门槛值：营收CAGR ≥ 10%</div>
+      <div class="fd-data">
+        <strong>评分分位表：</strong>≥30% → A档 | 20%-30% → B档 | 10%-20% → C档 | ＜10% → D档<br>
+        <strong>数据来源：</strong>三年财报、经营性现金流/净利润比率<br>
+        <strong>特别说明：</strong>亏损公司需额外审核营收真实性，排除关联交易占比>30%的情况
+      </div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">展开子指标详解</span>
       <div class="factor-expand">
-        <strong>子指标1：营收复合增长率 (40%)</strong> — 近2年营收CAGR。亏损公司需额外审核营收真实性（排除关联交易占比>30%的情况）。<br><br>
-        <strong>子指标2：毛利率趋势 (35%)</strong> — 近3年毛利率走势。持续上升加分，持续下降扣分。毛利率≥50%优秀。<br><br>
-        <strong>子指标3：现金流质量 (25%)</strong> — 经营现金流/净利润比率。≥1.2优秀（利润有真金白银支撑），<0.5扣分（利润可能为纸面利润）。
+        <strong>子指标1：营收复合增长率 (40%)</strong> — 近3年营收CAGR。亏损公司需额外审核营收真实性（排除关联交易占比>30%的情况）。<br><br>
+        <strong>子指标2：毛利率趋势 (30%)</strong> — 近3年毛利率走势。持续上升加分，持续下降扣分。毛利率≥50%优秀。<br><br>
+        <strong>子指标3：经营现金流质量 (30%)</strong> — 经营现金流/净利润比率。≥1.2优秀（利润有真金白银支撑），<0.5扣分（利润可能为纸面利润）。
+      </div>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>98</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>41</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
       </div>
     </div>
 
+    <!-- 因子4：行业代表性因子 -->
     <div class="card factor-detail-card">
       <div class="fd-icon">🏛️</div>
       <h3>因子4：行业代表性因子 — 权重15%</h3>
-      <div class="fd-desc">衡量公司在所属细分领域的龙头地位、市场占有率和技术壁垒深度。</div>
-      <div class="formula-box">F₄ = w₄₁ × 行业市占率 + w₄₂ × 技术壁垒评分 + w₄₃ × 行业排名<br>w₄₁=0.45, w₄₂=0.35, w₄₃=0.2<br>无门槛值（所有通过前期筛选的公司均参与评分）</div>
-      <div class="fd-data">数据来源：行业研究报告 + 合力指数行业分类库 + 公司公开披露<br>评分细则：市占率≥20% → 10分 | 10%-20% → 7分 | 5%-10% → 5分</div>
+      <div class="fd-desc">衡量公司在所属细分领域的龙头地位、市场占有率和技术壁垒深度。六大前沿领域各取龙头，确保指数的行业覆盖均衡性。</div>
+      <div class="fd-formula">IR_S = (市占率 × 0.4) + (技术壁垒评分 × 0.3) + (行业龙头指数 × 0.3)</div>
+      <div class="fd-data">
+        <strong>六大前沿领域各取龙头：</strong>AI/大数据、半导体、生物科技、新能源、智能制造、航空航天<br>
+        <strong>评分分位表：</strong>市占率≥20% → A档 | 10%-20% → B档 | 5%-10% → C档 | ＜5% → D档<br>
+        <strong>数据来源：</strong>行业研究报告、专利壁垒分析、市场份额数据
+      </div>
+      <span class="factor-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">展开子指标详解</span>
+      <div class="factor-expand">
+        <strong>子指标1：市占率 (40%)</strong> — 公司在细分领域的全球/国内市场份额占比。≥20%为行业龙头级。<br><br>
+        <strong>子指标2：技术壁垒评分 (30%)</strong> — 核心专利数、技术护城河深度、国产替代率综合评分。高壁垒加分，低壁垒扣分。<br><br>
+        <strong>子指标3：行业龙头指数 (30%)</strong> — 公司在行业排名中的位置。前3名加分，前10名合格。结合行业分类库与公开披露综合评估。
+      </div>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>76</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>33</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
+      </div>
     </div>
 
+    <!-- 因子5：流动性因子 -->
     <div class="card factor-detail-card">
       <div class="fd-icon">🌊</div>
       <h3>因子5：流动性因子 — 权重10%</h3>
-      <div class="fd-desc">确保指数的可投资性。成分股须满足最低流动性要求，否则可能被调出。</div>
-      <div class="formula-box">F₅ = w₅₁ × 日均成交额 + w₅₂ × 换手率 + w₅₃ × 自由流通比<br>w₅₁=0.5, w₅₂=0.3, w₅₃=0.2<br>门槛值：日均成交额≥2000万港元</div>
-      <div class="fd-data">数据来源：港交所实时交易数据<br>评分细则：日均≥1亿 → 10分 | 5000万-1亿 → 7分 | 2000万-5000万 → 4分</div>
+      <div class="fd-desc">确保指数的可投资性。成分股须满足最低流动性要求，否则可能被调出。流动性过低影响指数的跟踪和复制效率。</div>
+      <div class="fd-formula">LF_S = (日均成交额 × 0.4) + (换手率 × 0.3) + (自由流通市值占比 × 0.3)<br>门槛值：日均成交额≥2000万港元</div>
+      <div class="fd-data">
+        <strong>评分分位表：</strong>日均≥1亿 → A档 | 5000万-1亿 → B档 | 2000万-5000万 → C档 | ＜2000万 → 淘汰<br>
+        <strong>数据来源：</strong>港交所交易数据
+      </div>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>62</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>28</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
+      </div>
     </div>
   </div>
 
@@ -174,14 +260,23 @@
     <div style="overflow-x:auto">
       <table class="factor-matrix">
         <tr><th></th><th>硬科技</th><th>研发</th><th>成长</th><th>代表性</th><th>流动性</th></tr>
-        <tr><th>硬科技</th><td class="high">1.00</td><td class="med">0.42</td><td class="med">0.38</td><td class="high">0.65</td><td class="low">0.12</td></tr>
-        <tr><th>研发</th><td class="med">0.42</td><td class="high">1.00</td><td class="med">0.45</td><td class="med">0.31</td><td class="low">-0.08</td></tr>
-        <tr><th>成长</th><td class="med">0.38</td><td class="med">0.45</td><td class="high">1.00</td><td class="low">0.22</td><td class="low">0.15</td></tr>
-        <tr><th>代表性</th><td class="high">0.65</td><td class="med">0.31</td><td class="low">0.22</td><td class="high">1.00</td><td class="med">0.35</td></tr>
-        <tr><th>流动性</th><td class="low">0.12</td><td class="low">-0.08</td><td class="low">0.15</td><td class="med">0.35</td><td class="high">1.00</td></tr>
+        <tr><th>硬科技</th><td class="high">1.00</td><td class="high">0.72</td><td class="med">0.45</td><td class="med">0.38</td><td class="low">&lt;0.2</td></tr>
+        <tr><th>研发</th><td class="high">0.72</td><td class="high">1.00</td><td class="med">0.61</td><td class="med">0.31</td><td class="low">&lt;0.2</td></tr>
+        <tr><th>成长</th><td class="med">0.45</td><td class="med">0.61</td><td class="high">1.00</td><td class="low">0.22</td><td class="low">&lt;0.2</td></tr>
+        <tr><th>代表性</th><td class="med">0.38</td><td class="med">0.31</td><td class="low">0.22</td><td class="high">1.00</td><td class="low">&lt;0.2</td></tr>
+        <tr><th>流动性</th><td class="low">&lt;0.2</td><td class="low">&lt;0.2</td><td class="low">&lt;0.2</td><td class="low">&lt;0.2</td><td class="high">1.00</td></tr>
       </table>
     </div>
-    <p style="font-size:11px;color:var(--text-light);margin-top:8px">* 硬科技与代表性相关度较高(0.65)，编制时已通过正交化处理降低重叠影响</p>
+    <div class="fd-data" style="margin-top:8px">
+      <strong>关键发现：</strong>硬科技-研发相关性0.72（高），研发-成长相关性0.61（中高），流动性与其他因子相关性＜0.2（近独立）<br>
+      <strong>正交化处理：</strong>对硬科技与研发的高相关性进行Whitening变换，确保因子间独立性，降低信息重叠对评分的扭曲影响
+    </div>
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>89</span></button>
+      <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>44</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <button class="action-btn">💬 讨论</button>
+    </div>
   </div>
 
   <!-- 行业分布 -->
@@ -196,20 +291,32 @@
       <div style="width:7%;background:#264653">航天 7%</div>
     </div>
     <p style="font-size:11px;color:var(--text-light);margin-top:8px">行业权重上限30%，防止单一行业过度集中</p>
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>55</span></button>
+      <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>22</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <button class="action-btn">💬 讨论</button>
+    </div>
   </div>
 
-  <!-- 历史表现 -->
+  <!-- 历史表现回测 -->
   <div class="section-title">📊 历史表现回测</div>
   <div class="card" style="margin-bottom:24px">
-    <div style="font-size:12px;font-weight:700;margin-bottom:12px;color:var(--deep-blue)">基准日(2024-12-31)以来表现 vs 恒生科技指数</div>
-    <div class="perf-row"><span class="perf-label">HKCD-Tech</span><div class="perf-bar"><div class="perf-fill" style="width:28.4%;background:var(--gold)"></div></div><span class="perf-val" style="color:var(--red-up)">+28.4%</span></div>
-    <div class="perf-row"><span class="perf-label">恒生科技</span><div class="perf-bar"><div class="perf-fill" style="width:18.2%;background:#457b9d"></div></div><span class="perf-val" style="color:var(--red-up)">+18.2%</span></div>
-    <div class="perf-row"><span class="perf-label">恒指</span><div class="perf-bar"><div class="perf-fill" style="width:12.6%;background:var(--text-light)"></div></div><span class="perf-val" style="color:var(--red-up)">+12.6%</span></div>
-    <div style="font-size:11px;color:var(--text-light);margin-top:8px">* 回测期间：2025-01-01 至 2026-06-30 | 年化波动率 HKCD-Tech 22.8% vs 恒生科技 26.4%</div>
+    <div style="font-size:12px;font-weight:700;margin-bottom:12px;color:var(--deep-blue)">基准日(2024-12-31, 基点3000)以来表现对比</div>
+    <div class="perf-row"><span class="perf-label">HKCD-Tech</span><div class="perf-bar"><div class="perf-fill" style="width:28.25%;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light))"></div></div><span class="perf-val" style="color:var(--red-up)">+28.25%</span></div>
+    <div class="perf-row"><span class="perf-label">恒生科技</span><div class="perf-bar"><div class="perf-fill" style="width:12.4%;background:#457b9d"></div></div><span class="perf-val" style="color:var(--green-down)">-12.4%</span></div>
+    <div class="perf-row"><span class="perf-label">恒指</span><div class="perf-bar"><div class="perf-fill" style="width:5.8%;background:var(--text-light)"></div></div><span class="perf-val" style="color:var(--red-up)">+5.8%</span></div>
+    <div style="font-size:11px;color:var(--text-light);margin-top:8px">* 回测期间：2025-01-01 至 2026-06-30 | HKCD-Tech基日3000→3847.62(+28.25%)，远超恒生科技(-12.4%)与恒指(+5.8%)</div>
+    <div class="card-actions">
+      <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>167</span></button>
+      <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>78</span></button>
+      <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+      <button class="action-btn">💬 讨论</button>
+    </div>
   </div>
 
   <!-- 成分股 -->
-  <div class="section-title">📊 成分股（代表性展示前10）</div>
+  <div class="section-title">📊 成分股（8只代表性展示）</div>
   <div style="overflow-x:auto;margin-bottom:24px">
     <table class="data-table">
       <thead><tr><th>代码</th><th>名称</th><th>行业</th><th>市值(亿HKD)</th><th>权重</th><th>硬科技占比</th><th>研发费率</th><th>涨跌</th></tr></thead>
@@ -222,8 +329,6 @@
         <tr><td>2269.HK</td><td>药明生物</td><td>生物科技</td><td>2,800</td><td>4.2%</td><td>92%</td><td>15.8%</td><td class="up">+2.9%</td></tr>
         <tr><td>1810.HK</td><td>小米集团</td><td>智能制造</td><td>6,200</td><td>7.8%</td><td>65%</td><td>7.5%</td><td class="up">+4.1%</td></tr>
         <tr><td>9868.HK</td><td>小鹏汽车</td><td>新能源</td><td>1,500</td><td>3.5%</td><td>82%</td><td>20.1%</td><td class="up">+8.7%</td></tr>
-        <tr><td>1347.HK</td><td>华虹半导体</td><td>半导体</td><td>1,200</td><td>2.8%</td><td>98%</td><td>22.4%</td><td class="down">-0.8%</td></tr>
-        <tr><td>6160.HK</td><td>百济神州</td><td>生物科技</td><td>2,400</td><td>3.8%</td><td>96%</td><td>38.2%</td><td class="up">+1.2%</td></tr>
       </tbody>
     </table>
     <p style="text-align:center;margin-top:12px;color:var(--text-light);font-size:11px">完整50只名单见香港商报官方公告 · 数据基于公开信息模拟，仅供参考</p>
@@ -237,11 +342,16 @@
       <ul>
         <li>查看实时指数与成分股行情</li>
         <li>参与成分股热力值投票 → 影响"共识热度"子因子</li>
-        <li>订阅指数异动微信通知</li>
+        <li>订阅指数异动微信提醒</li>
         <li>讨论区发帖交流观点 → 获积分+成就</li>
         <li>分享指数卡片到社交平台 → 获"传播者"积分</li>
-        <li>对成分股点评/评价 → 影响"共识偏差度"</li>
       </ul>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>234</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>91</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
+      </div>
     </div>
     <div class="role-interact-card">
       <h3>🎓 专业投资者</h3>
@@ -251,8 +361,13 @@
         <li>发布深度分析报告 → 影响"共识度因子"权重</li>
         <li>参与季度指数调整建议投票(×1.5权重)</li>
         <li>访问历史回测数据与因子归因分析</li>
-        <li>对因子权重方案提出优化提案</li>
       </ul>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>178</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>82</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
+      </div>
     </div>
     <div class="role-interact-card">
       <h3>🏢 B端上市公司</h3>
@@ -261,20 +376,13 @@
         <li>查看本公司5因子评分明细与行业排名</li>
         <li>申请纳入指数候选池 → 进入评估流程</li>
         <li>回复投资者提问 → 提升热力值+共识度</li>
-        <li>获得"金鲲鹏"提名加分 → 年度评选依据</li>
-        <li>参与治理提案投票 → 影响编制规则</li>
       </ul>
-    </div>
-  </div>
-
-  <!-- 评价点赞交互 -->
-  <div class="card" style="margin-bottom:24px">
-    <div style="font-size:13px;font-weight:700;margin-bottom:12px">💬 本页互动</div>
-    <div class="like-section">
-      <button class="like-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>128</span></button>
-      <button class="collect-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>56</span></button>
-      <button class="share-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
-      <span style="font-size:11px;color:var(--text-light);margin-left:auto">128赞 · 56收藏 · 2.3k浏览</span>
+      <div class="card-actions">
+        <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span>112</span></button>
+        <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏 <span>56</span></button>
+        <button class="action-btn" onclick="alert('分享链接已复制')">🔗 分享</button>
+        <button class="action-btn">💬 讨论</button>
+      </div>
     </div>
   </div>
 
@@ -284,30 +392,20 @@
     <p>注册用户可参与港商科指的编制规则优化和成分股调整建议。不同角色拥有不同权重：</p>
     <div class="governance-items">
       <a href="diagnosis.html" class="governance-tag">投票调整因子权重</a>
-      <a href="diagnosis.html" class="governance-tag">提名新成分股</a>
+      <a href="apply.html" class="governance-tag">提名新成分股</a>
       <a href="apply.html" class="governance-tag">提交编制规则提案</a>
       <a href="web3.html" class="governance-tag">查看链上投票存证</a>
-      <a href="agent.html" class="governance-tag">向AI助手咨询</a>
     </div>
-  </div>
-
-  <!-- 最新动态 -->
-  <div class="section-title">📰 最新动态</div>
-  <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:24px">
-    <div class="news-card"><span class="news-date">2026-05-26</span><div class="news-title">全球商报经济论坛隆重发布港商科指</div><div class="news-desc">HKCD-Tech正式发布，标志着港股科技投资进入"硬科技"基准时代。</div></div>
-    <div class="news-card"><span class="news-date">2026-05-29</span><div class="news-title">中航科工成为唯一入选航空制造商</div><div class="news-desc">凭借"硬科技"实力入选首批成分股，凸显航空航天战略地位。</div></div>
-    <div class="news-card"><span class="news-date">2026-06-30</span><div class="news-title">首次季度调仓完成：新增5只硬科技标的</div><div class="news-desc">纳入量子计算和可控核聚变两个新方向，指数硬科技纯度提升至72%。</div></div>
-    <div class="news-card"><span class="news-date">2026-07-01</span><div class="news-title">合力指数宣布接入港商科指数据</div><div class="news-desc">投资者可一站式查看四大指数实时行情与交互分析。</div></div>
   </div>
 
   <!-- 推荐链接 -->
   <div class="recommend-section">
     <h4>🔗 深度探索</h4>
     <div class="recommend-links">
-      <a href="heli-300.html" class="recommend-link"><span class="rl-icon">⭐</span> 合力300详情</a>
-      <a href="heli-hktech.html" class="recommend-link"><span class="rl-icon">🌊</span> 港股通科技详情</a>
-      <a href="diagnosis.html" class="recommend-link"><span class="rl-icon">🔬</span> 诊断季投票</a>
-      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI助手咨询</a>
+      <a href="hkcd-tech.html" class="recommend-link"><span class="rl-icon">⭐</span> 港商科指详情</a>
+      <a href="indices.html" class="recommend-link"><span class="rl-icon">📊</span> 其他指数</a>
+      <a href="agent.html" class="recommend-link"><span class="rl-icon">🤖</span> AI助手</a>
+      <a href="diagnosis.html" class="recommend-link"><span class="rl-icon">🔬</span> 诊断季</a>
     </div>
   </div>
 
@@ -319,7 +417,11 @@
 
 <!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <div class="footer-brand">
+    <img src="logo.svg" alt="合力指数" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'">
+    <span style="display:none;width:28px;height:28px;background:var(--gold);border-radius:50%;color:var(--deep-blue);font-size:12px;font-weight:800;line-height:28px;text-align:center;align-items:center;justify-content:center">合</span>
+    <span>合力指数</span>
+  </div>
   <p>港商科指(HKCD-Tech)由香港商报与香港资本市场学院共同设计编制。合力指数作为官方数据合作平台提供展示与交互服务。</p>
   <div class="footer-grid" style="margin-top:16px">
     <div><h4>指数产品</h4><a href="hkcd-tech.html" style="color:var(--gold)">港商科指</a><a href="heli-300.html">合力300</a><a href="heli-hktech.html">合力港股通科技</a><a href="heli-nasdaq.html">合力纳斯达克中概</a></div>
@@ -328,7 +430,7 @@
   <div class="footer-bottom">© 2026 合力指数 Heli-Index · 香港商报旗下 · nebula@heli-ai.com</div>
 </footer>
 
-<!-- 底部Tab Bar -->
+<!-- 底部 Tab Bar -->
 <div class="tabbar">
   <a href="index.html" class="tab-item">
     <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -352,6 +454,15 @@
   </a>
 </div>
 
+<script>
+document.querySelectorAll('.topbar-logo').forEach(function(img) {
+  img.addEventListener('error', function() {
+    this.style.display = 'none';
+    var fb = this.nextElementSibling;
+    if (fb && fb.classList.contains('topbar-logo-fallback')) fb.classList.add('active');
+  });
+});
+</script>
 <script src="ai-widget.js"></script>
 </body>
 </html>

@@ -67,7 +67,8 @@
 <!-- 顶部标题栏 -->
 <div class="topbar">
   <div class="topbar-left">
-    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo" onerror="this.style.display='none';this.nextElementSibling.classList.add('active')">
+    <span class="topbar-logo-fallback">合</span>
     <span class="topbar-title">AI 智能助手</span>
   </div>
   <div class="topbar-right">
@@ -171,7 +172,7 @@
 
 <!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <div class="footer-brand"><img src="logo.svg" alt="logo" onerror="this.style.display='none'"><span>合力指数</span></div>
   <p>AI Agent 由 Heli-API 驱动，基于合力指数数据提供智能问答服务。</p>
   <div class="footer-grid" style="margin-top:16px">
     <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="diagnosis.html">诊断季</a><a href="awards.html">金鲲鹏</a><a href="agent.html" style="color:var(--gold)">AI助手</a></div>
@@ -261,6 +262,9 @@ function sendPreset(text) {
   document.getElementById('chatInput').value = text;
   sendMessage();
 }
+</script>
+<script>
+document.querySelectorAll('.topbar-logo').forEach(function(img){img.addEventListener('error',function(){this.style.display='none';var fb=this.nextElementSibling;if(fb&&fb.classList.contains('topbar-logo-fallback'))fb.classList.add('active');});});
 </script>
 <script src="ai-widget.js"></script>
 </body>

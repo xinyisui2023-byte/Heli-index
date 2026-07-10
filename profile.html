@@ -259,7 +259,7 @@
 <!-- 顶部标题栏 -->
 <div class="topbar">
   <div class="topbar-left">
-    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo" onerror="this.style.display='none';this.nextElementSibling.classList.add('active')"><span class="topbar-logo-fallback">合</span>
     <span class="topbar-title">合力指数</span>
   </div>
   <div class="topbar-right">
@@ -470,6 +470,12 @@
           <div class="vote-a">我的选择：值得，技术壁垒坚实</div>
         </div>
         <div class="vote-date">2026.07.05</div>
+        <div class="card-actions">
+          <button class="card-action-btn">👍 点赞</button>
+          <button class="card-action-btn">⭐ 收藏</button>
+          <button class="card-action-btn">📤 分享</button>
+          <button class="card-action-btn">💬 讨论</button>
+        </div>
       </div>
       <div class="vote-item">
         <div class="vote-icon">🗳️</div>
@@ -478,6 +484,12 @@
           <div class="vote-a">我的选择：部分可控，需关注地缘政治</div>
         </div>
         <div class="vote-date">2026.07.04</div>
+        <div class="card-actions">
+          <button class="card-action-btn">👍 点赞</button>
+          <button class="card-action-btn">⭐ 收藏</button>
+          <button class="card-action-btn">📤 分享</button>
+          <button class="card-action-btn">💬 讨论</button>
+        </div>
       </div>
       <div class="vote-item">
         <div class="vote-icon">🗳️</div>
@@ -486,6 +498,12 @@
           <div class="vote-a">我的选择：华为技术</div>
         </div>
         <div class="vote-date">2026.07.03</div>
+        <div class="card-actions">
+          <button class="card-action-btn">👍 点赞</button>
+          <button class="card-action-btn">⭐ 收藏</button>
+          <button class="card-action-btn">📤 分享</button>
+          <button class="card-action-btn">💬 讨论</button>
+        </div>
       </div>
       <div class="vote-item">
         <div class="vote-icon">🗳️</div>
@@ -494,6 +512,12 @@
           <div class="vote-a">我的选择：可持续，订单回暖明显</div>
         </div>
         <div class="vote-date">2026.07.01</div>
+        <div class="card-actions">
+          <button class="card-action-btn">👍 点赞</button>
+          <button class="card-action-btn">⭐ 收藏</button>
+          <button class="card-action-btn">📤 分享</button>
+          <button class="card-action-btn">💬 讨论</button>
+        </div>
       </div>
       <div class="vote-item">
         <div class="vote-icon">🗳️</div>
@@ -502,6 +526,12 @@
           <div class="vote-a">我的选择：进展顺利，2026年有望量产</div>
         </div>
         <div class="vote-date">2026.06.28</div>
+        <div class="card-actions">
+          <button class="card-action-btn">👍 点赞</button>
+          <button class="card-action-btn">⭐ 收藏</button>
+          <button class="card-action-btn">📤 分享</button>
+          <button class="card-action-btn">💬 讨论</button>
+        </div>
       </div>
     </div>
   </div>
@@ -552,7 +582,7 @@
 
 <!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <div class="footer-brand"><img src="logo.svg" alt="logo" onerror="this.style.display='none'"><span>合力指数</span></div>
   <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界。</p>
   <div class="footer-grid" style="margin-top:16px">
     <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a><a href="agent.html">AI助手</a></div>
@@ -593,6 +623,9 @@ function switchTab(tab) {
   event.target.classList.add('active');
   document.getElementById('tab-' + tab).classList.add('active');
 }
+</script>
+<script>
+document.querySelectorAll('.topbar-logo').forEach(function(img){img.addEventListener('error',function(){this.style.display='none';var fb=this.nextElementSibling;if(fb&&fb.classList.contains('topbar-logo-fallback'))fb.classList.add('active');});});
 </script>
 <script src="ai-widget.js"></script>
 </body>

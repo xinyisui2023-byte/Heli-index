@@ -6,33 +6,36 @@
 <title>合力指数 | 新质生产力的资本市场共识平台</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.home-hero{background:linear-gradient(135deg,var(--deep-blue) 0%,var(--deep-blue-mid) 100%);color:white;padding:48px 16px 36px;text-align:center;position:relative;overflow:hidden}
-.home-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 25% 40%,rgba(201,168,76,.1) 0%,transparent 55%),radial-gradient(circle at 75% 60%,rgba(201,168,76,.06) 0%,transparent 50%)}
-.home-hero>*{position:relative}
-.home-hero h1{font-size:clamp(22px,5vw,36px);font-weight:800;margin-bottom:8px;line-height:1.3}
-.home-hero h1 .gold{color:var(--gold)}
-.home-hero p{font-size:13px;color:rgba(255,255,255,.7);max-width:460px;margin:0 auto 20px;line-height:1.7}
-.home-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.index-quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0}
-.index-quick-card{background:var(--bg-card);border-radius:var(--radius-md);padding:14px;border:1px solid var(--border);box-shadow:var(--shadow-sm);cursor:pointer;transition:all .2s}
-.index-quick-card:hover{border-color:var(--gold-border)}
-.index-quick-card .iq-name{font-size:13px;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
-.index-quick-card .iq-badge{font-size:10px;background:var(--gold-bg);color:var(--gold);padding:2px 8px;border-radius:8px;font-weight:700}
-.index-quick-card .iq-val{font-size:20px;font-weight:800;color:var(--deep-blue)}
-.index-quick-card .iq-change{font-size:11px;font-weight:600;margin-top:2px}
-.feature-grid-main{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.feature-entry{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-card);border-radius:var(--radius-md);padding:14px 8px;border:1px solid var(--border);cursor:pointer;transition:all .2s;text-align:center}
-.feature-entry:hover{border-color:var(--gold-border);transform:translateY(-2px);box-shadow:var(--shadow-md)}
-.feature-entry .fe-icon{font-size:26px;margin-bottom:4px}
-.feature-entry .fe-label{font-size:13px;font-weight:700;color:var(--text-primary)}
-.feature-entry .fe-desc{font-size:10px;color:var(--text-light);margin-top:2px}
-.news-quick{margin-top:24px}
-.news-item{display:flex;gap:8px;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer}
-.news-item:last-child{border-bottom:none}
-.news-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
-.news-text{flex:1}
-.news-text .nt-date{font-size:11px;color:var(--gold);font-weight:700}
-.news-text .nt-title{font-size:13px;font-weight:600;margin-top:2px}
+/* 首页专属动画与布局 */
+.hero-glow-ring {
+  position: absolute;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+  animation: breathe 4s ease-in-out infinite;
+  top: 10%; left: 50%; transform: translateX(-50%);
+}
+.home-hero h1 { animation: fadeInUp 0.5s ease-out both; }
+.home-hero p { animation: fadeInUp 0.5s ease-out 0.15s both; }
+.hero-cta { animation: fadeInUp 0.5s ease-out 0.3s both; }
+.index-quick-card { animation: fadeInUp 0.4s ease-out both; }
+.index-quick-card:nth-child(1) { animation-delay: 0.1s; }
+.index-quick-card:nth-child(2) { animation-delay: 0.15s; }
+.index-quick-card:nth-child(3) { animation-delay: 0.2s; }
+.index-quick-card:nth-child(4) { animation-delay: 0.25s; }
+.feature-entry { animation: fadeInUp 0.3s ease-out both; }
+.feature-entry:nth-child(1) { animation-delay: 0.3s; }
+.feature-entry:nth-child(2) { animation-delay: 0.35s; }
+.feature-entry:nth-child(3) { animation-delay: 0.4s; }
+.feature-entry:nth-child(4) { animation-delay: 0.45s; }
+.feature-entry:nth-child(5) { animation-delay: 0.5s; }
+.feature-entry:nth-child(6) { animation-delay: 0.55s; }
+.feature-entry:nth-child(7) { animation-delay: 0.6s; }
+.feature-entry:nth-child(8) { animation-delay: 0.65s; }
+.feature-entry:nth-child(9) { animation-delay: 0.7s; }
+.feature-entry:nth-child(10) { animation-delay: 0.75s; }
+.feature-entry:nth-child(11) { animation-delay: 0.8s; }
+.feature-entry:nth-child(12) { animation-delay: 0.85s; }
 </style>
 </head>
 <body>
@@ -40,7 +43,8 @@
 <!-- 顶部标题栏 -->
 <div class="topbar">
   <div class="topbar-left">
-    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo" onerror="this.style.display='none';this.nextElementSibling.classList.add('active')">
+    <span class="topbar-logo-fallback">合</span>
     <span class="topbar-title">合力指数</span>
   </div>
   <div class="topbar-right">
@@ -51,6 +55,7 @@
 
 <!-- Hero -->
 <section class="home-hero">
+  <div class="hero-glow-ring"></div>
   <span class="hero-badge">🚀 2026 Q3 诊断季进行中</span>
   <h1>新质生产力的<br><span class="gold">资本市场共识平台</span></h1>
   <p>合力指数是《香港商报》旗下，连接上市公司、投资者、专业机构与学研界的多方共识平台。追踪新质生产力在资本市场的真实共识。</p>
@@ -124,6 +129,27 @@
     </a>
   </div>
 
+  <!-- 社区治理 -->
+  <div class="section-title" style="margin-top:24px">🗳️ 社区治理</div>
+  <div class="card governance-card">
+    <p style="font-size:12px;color:var(--text-secondary);line-height:1.7;margin-bottom:12px">合力指数采用"共识驱动"机制，社区成员可参与指数编制规则治理。投票权重由持仓时间×共识准确度×活跃度决定。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <a href="web3.html" class="btn-primary" style="text-align:center;font-size:13px;padding:10px">📋 投票调权</a>
+      <a href="apply.html" class="btn-outline" style="text-align:center;font-size:13px;padding:10px">📝 提名成分股</a>
+      <a href="web3.html" class="btn-outline" style="text-align:center;font-size:13px;padding:10px">⚖️ 编制提案</a>
+      <a href="web3.html" class="btn-outline" style="text-align:center;font-size:13px;padding:10px">🔗 链上存证</a>
+    </div>
+    <div style="margin-top:12px;padding:10px;background:rgba(201,168,76,0.06);border-radius:8px;font-size:11px;color:var(--text-light)">
+      💡 本季治理参与：1,247人 | 提案数：38 | 通过率：64%
+    </div>
+  </div>
+  <div class="card-actions" style="margin-top:8px">
+    <button class="action-btn" onclick="this.classList.toggle('liked')">❤️ 点赞 <span class="action-count">356</span></button>
+    <button class="action-btn" onclick="this.classList.toggle('collected')">⭐ 收藏</button>
+    <button class="action-btn">🔗 分享</button>
+    <button class="action-btn">💬 讨论</button>
+  </div>
+
   <!-- 推荐链接 -->
   <div class="recommend-section" style="margin-top:24px">
     <h4>🔗 深度探索</h4>
@@ -138,9 +164,12 @@
 
 <!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
-  <p>新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界。</p>
-  <div class="footer-grid" style="margin-top:16px">
+  <div class="footer-brand">
+    <img src="logo.svg" alt="logo" onerror="this.style.display='none'">
+    <span>合力指数</span>
+  </div>
+  <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.8">新质生产力的资本市场共识平台。由《香港商报》旗下，连接上市公司、投资者、专业机构与学研界。</p>
+  <div class="footer-grid" style="margin-top:20px">
     <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a><a href="agent.html">AI助手</a></div>
     <div><h4>关于</h4><a href="#">团队介绍</a><a href="#">方法论</a><a href="mailto:nebula@heli-ai.com">nebula@heli-ai.com</a></div>
   </div>
@@ -172,6 +201,18 @@
   </a>
 </div>
 
+<!-- Logo加载失败JS fallback -->
+<script>
+document.querySelectorAll('.topbar-logo').forEach(function(img) {
+  img.addEventListener('error', function() {
+    this.style.display = 'none';
+    var fb = this.nextElementSibling;
+    if (fb && fb.classList.contains('topbar-logo-fallback')) {
+      fb.classList.add('active');
+    }
+  });
+});
+</script>
 <script src="ai-widget.js"></script>
 </body>
 </html>

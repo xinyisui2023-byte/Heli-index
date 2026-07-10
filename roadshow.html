@@ -35,7 +35,8 @@
 <!-- 顶部标题栏 -->
 <div class="topbar">
   <div class="topbar-left">
-    <img src="logo.svg" alt="合力指数" class="topbar-logo">
+    <img src="logo.svg" alt="合力指数" class="topbar-logo" onerror="this.style.display='none';this.nextElementSibling.classList.add('active')">
+    <span class="topbar-logo-fallback">合</span>
     <span class="topbar-title">全球路演</span>
   </div>
   <div class="topbar-right">
@@ -162,7 +163,7 @@
 
 <!-- 页脚 -->
 <footer class="footer">
-  <div class="footer-brand"><img src="logo.svg" alt="logo"><span>合力指数</span></div>
+  <div class="footer-brand"><img src="logo.svg" alt="logo" onerror="this.style.display='none'"><span>合力指数</span></div>
   <p>全球路演由合力指数与《香港商报》联合举办，连接中国新质生产力与全球投资者。</p>
   <div class="footer-grid" style="margin-top:16px">
     <div><h4>产品</h4><a href="indices.html">指数中心</a><a href="roadshow.html" style="color:var(--gold)">全球路演</a><a href="awards.html">金鲲鹏</a><a href="diagnosis.html">诊断季</a></div>
@@ -195,6 +196,9 @@
   </a>
 </div>
 
+<script>
+document.querySelectorAll('.topbar-logo').forEach(function(img){img.addEventListener('error',function(){this.style.display='none';var fb=this.nextElementSibling;if(fb&&fb.classList.contains('topbar-logo-fallback'))fb.classList.add('active');});});
+</script>
 <script src="ai-widget.js"></script>
 </body>
 </html>
